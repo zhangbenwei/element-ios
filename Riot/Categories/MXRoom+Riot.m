@@ -637,7 +637,7 @@
         }];
     }
     
-    [notificationCenter enableRule:rule isEnabled:YES completion:nil];
+    [notificationCenter enableRule:rule isEnabled:YES ];
 }
 
 - (void)setNotificationCenterDidFailObserver:(id)anObserver

@@ -63,8 +63,8 @@
 
 - (BOOL)hasUnread
 {
-    bool isRoomUnread = [[self mxSession] isRoomMarkedAsUnread:roomSummary.roomId];
-    return (roomSummary.localUnreadEventCount != 0 || isRoomUnread);
+
+    return (roomSummary.localUnreadEventCount != 0 );
 }
 
 - (NSString *)roomIdentifier

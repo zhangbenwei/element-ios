@@ -67,7 +67,6 @@ class EncryptionKeyManager: NSObject, MXKeyProviderDelegate {
             || dataType == MXKAccountManagerDataType
             || dataType == MXCryptoOlmPickleKeyDataType
             || dataType == MXRoomLastMessageDataType
-            || dataType == MXCryptoSDKStoreKeyDataType
     }
             
     func hasKeyForData(ofType dataType: String) -> Bool {
@@ -81,8 +80,8 @@ class EncryptionKeyManager: NSObject, MXKeyProviderDelegate {
         case MXRoomLastMessageDataType:
             return keychainStore.containsObject(forKey: EncryptionKeyManager.roomLastMessageIv) &&
                 keychainStore.containsObject(forKey: EncryptionKeyManager.roomLastMessageAesKey)
-        case MXCryptoSDKStoreKeyDataType:
-            return keychainStore.containsObject(forKey: EncryptionKeyManager.cryptoSDKStoreKey)
+        //case MXCryptoSDKStoreKeyDataType:
+         //   return keychainStore.containsObject(forKey: EncryptionKeyManager.cryptoSDKStoreKey)
         default:
             MXLog.warning("[EncryptionKeyManager] hasKeyForData: No key for \(dataType)")
             return false
@@ -110,10 +109,10 @@ class EncryptionKeyManager: NSObject, MXKeyProviderDelegate {
                let aesKey = try? keychainStore.data(forKey: EncryptionKeyManager.roomLastMessageAesKey) {
                 return MXAesKeyData(iv: ivKey, key: aesKey)
             }
-        case MXCryptoSDKStoreKeyDataType:
-            if let key = try? keychainStore.data(forKey: EncryptionKeyManager.cryptoSDKStoreKey) {
-                return MXRawDataKey(key: key)
-            }
+//        case MXCryptoSDKStoreKeyDataType:
+//            if let key = try? keychainStore.data(forKey: EncryptionKeyManager.cryptoSDKStoreKey) {
+//                return MXRawDataKey(key: key)
+//            }
         default:
             MXLog.failure("[EncryptionKeyManager] keyDataForData: Attempting to get data for unknown type", dataType)
             return nil
