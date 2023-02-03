@@ -105,9 +105,7 @@ final class OnboardingCoordinator: NSObject, OnboardingCoordinatorProtocol {
             }
             startLoading()
             if BuildSettings.onboardingEnableNewAuthenticationFlow {
-                beginAuthentication(with: .login) { [weak self] in
-                    self?.stopLoading()
-                }
+                stopLoading()
             } else {
                 showLegacyAuthenticationScreen(forceAsRootModule: true)
             }

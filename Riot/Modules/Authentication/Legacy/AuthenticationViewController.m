@@ -1226,7 +1226,7 @@ static const CGFloat kAuthInputContainerViewMinHeightConstraintConstant = 150.0;
         }
         else
         {
-            [self checkIdentityServer];
+           // [self checkIdentityServer];
         }
         NSString *customIdentityServerURL = [[NSUserDefaults standardUserDefaults] objectForKey:@"customIdentityServerURL"];
         if (customIdentityServerURL.length)

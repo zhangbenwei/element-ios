@@ -373,7 +373,7 @@
         [self.screenTracker trackScreen];
     }
     
-    [self checkIdentityServer];
+  //  [self checkIdentityServer];
 }
 
 - (void)setAuthInputsView:(MXKAuthInputsView *)authInputsView
@@ -671,7 +671,7 @@
                     
                 } failure:^(NSError *error) {
                     
-                    [self onFailureDuringMXOperation:error];
+                   // [self onFailureDuringMXOperation:error];
                     
                 }];
             }
@@ -1073,8 +1073,8 @@
                                     
                                     if (parameters && self->mxRestClient)
                                     {
-                                        [self->_authenticationActivityIndicator startAnimating];
-                                        [self registerWithParameters:parameters];
+//                                        [self->_authenticationActivityIndicator startAnimating];
+//                                        [self registerWithParameters:parameters];
                                     }
                                     else
                                     {
@@ -1130,8 +1130,8 @@
                         
                         if (parameters && self->mxRestClient)
                         {
-                            [self->_authenticationActivityIndicator startAnimating];
-                            [self registerWithParameters:parameters];
+//                            [self->_authenticationActivityIndicator startAnimating];
+//                            [self registerWithParameters:parameters];
                         }
                         else
                         {
@@ -1162,8 +1162,8 @@
                         
                         if (parameters && self->mxRestClient)
                         {
-                            [self->_authenticationActivityIndicator startAnimating];
-                            [self resetPasswordWithParameters:parameters];
+//                            [self->_authenticationActivityIndicator startAnimating];
+//                            [self resetPasswordWithParameters:parameters];
                         }
                         else
                         {
@@ -1725,9 +1725,10 @@
     // Add the device name
     NSMutableDictionary *theParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
     theParameters[@"initial_device_display_name"] = self.deviceDisplayName;
-    
+//    NSMutableSet * mSet = [[NSMutableSet alloc] initWithSet:mxRestClient.acceptableContentTypes];
+//    [mSet addObject:@"application/json"];
+//    mxRestClient.acceptableContentTypes = mSet;
     mxCurrentOperation = [mxRestClient login:theParameters success:^(NSDictionary *JSONResponse) {
-
         MXLoginResponse *loginResponse;
         MXJSONModelSetMXJSONModel(loginResponse, MXLoginResponse, JSONResponse);
 
@@ -1830,8 +1831,8 @@
                         {
                             MXLogDebug(@"[MXKAuthenticationVC] Pursue registration");
                             
-                            [self->_authenticationActivityIndicator startAnimating];
-                            [self registerWithParameters:parameters];
+//                            [self->_authenticationActivityIndicator startAnimating];
+//                            [self registerWithParameters:parameters];
                         }
                         else
                         {
@@ -1947,78 +1948,78 @@
         return;
     }
     
-    MXLogDebug(@"[MXKAuthenticationVC] Failed to get %@ flows: %@", (_authType == MXKAuthenticationTypeLogin ? @"Login" : @"Register"), error);
+  //  MXLogDebug(@"[MXKAuthenticationVC] Failed to get %@ flows: %@", (_authType == MXKAuthenticationTypeLogin ? @"Login" : @"Register"), error);
     
     // Cancel external registration parameters if any
-    _externalRegistrationParameters = nil;
-    
-    // Alert user
-    NSString *title = [error.userInfo valueForKey:NSLocalizedFailureReasonErrorKey];
-    if (!title)
-    {
-        title = [VectorL10n error];
-    }
-    NSString *msg = [error.userInfo valueForKey:NSLocalizedDescriptionKey];
-    
-    if (alert)
-    {
-        [alert dismissViewControllerAnimated:NO completion:nil];
-    }
-    
-    alert = [UIAlertController alertControllerWithTitle:title message:msg preferredStyle:UIAlertControllerStyleAlert];
-    
-    [alert addAction:[UIAlertAction actionWithTitle:[VectorL10n dismiss]
-                                              style:UIAlertActionStyleDefault
-                                            handler:^(UIAlertAction * action) {
-                                                
-                                                self->alert = nil;
-                                                
-                                            }]];
-    
-    
-    [self presentViewController:alert animated:YES completion:nil];
-    
-    // Handle specific error code here
-    if ([error.domain isEqualToString:NSURLErrorDomain])
-    {
-        // Check network reachability
-        if (error.code == NSURLErrorNotConnectedToInternet)
-        {
-            // Add reachability observer in order to launch a new request when network will be available
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onReachabilityStatusChange:) name:AFNetworkingReachabilityDidChangeNotification object:nil];
-        }
-        else if (error.code == kCFURLErrorTimedOut)
-        {
-            // Send a new request in 2 sec
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self refreshAuthenticationSession];
-            });
-        }
-        else
-        {
-            // Remove the potential auth inputs view
-            self.authInputsView = nil;
-        }
-    }
+//    _externalRegistrationParameters = nil;
+//
+//    // Alert user
+//    NSString *title = [error.userInfo valueForKey:NSLocalizedFailureReasonErrorKey];
+//    if (!title)
+//    {
+//        title = [VectorL10n error];
+//    }
+//    NSString *msg = [error.userInfo valueForKey:NSLocalizedDescriptionKey];
+//
+//    if (alert)
+//    {
+//        [alert dismissViewControllerAnimated:NO completion:nil];
+//    }
+//
+//    alert = [UIAlertController alertControllerWithTitle:title message:msg preferredStyle:UIAlertControllerStyleAlert];
+//
+//    [alert addAction:[UIAlertAction actionWithTitle:[VectorL10n dismiss]
+//                                              style:UIAlertActionStyleDefault
+//                                            handler:^(UIAlertAction * action) {
+//
+//                                                self->alert = nil;
+//
+//                                            }]];
+//
+//
+//    [self presentViewController:alert animated:YES completion:nil];
+//
+//    // Handle specific error code here
+//    if ([error.domain isEqualToString:NSURLErrorDomain])
+//    {
+//        // Check network reachability
+//        if (error.code == NSURLErrorNotConnectedToInternet)
+//        {
+//            // Add reachability observer in order to launch a new request when network will be available
+//            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onReachabilityStatusChange:) name:AFNetworkingReachabilityDidChangeNotification object:nil];
+//        }
+//        else if (error.code == kCFURLErrorTimedOut)
+//        {
+//            // Send a new request in 2 sec
+//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//                [self refreshAuthenticationSession];
+//            });
+//        }
+//        else
+//        {
+//            // Remove the potential auth inputs view
+//         //   self.authInputsView = nil;
+//        }
+//    }
     else
     {
         // Remove the potential auth inputs view
-        self.authInputsView = nil;
+     //   self.authInputsView = nil;
     }
     
-    if (!_authInputsView)
-    {
-        // Display failure reason
-        _noFlowLabel.hidden = NO;
-        _noFlowLabel.text = [error.userInfo valueForKey:NSLocalizedDescriptionKey];
-        if (!_noFlowLabel.text.length)
-        {
-            _noFlowLabel.text = [VectorL10n loginErrorNoLoginFlow];
-        }
-        [_retryButton setTitle:[VectorL10n retry] forState:UIControlStateNormal];
-        [_retryButton setTitle:[VectorL10n retry] forState:UIControlStateNormal];
-        _retryButton.hidden = NO;
-    }
+//    if (!_authInputsView)
+//    {
+//        // Display failure reason
+//        _noFlowLabel.hidden = NO;
+//        _noFlowLabel.text = [error.userInfo valueForKey:NSLocalizedDescriptionKey];
+//        if (!_noFlowLabel.text.length)
+//        {
+//            _noFlowLabel.text = [VectorL10n loginErrorNoLoginFlow];
+//        }
+//        [_retryButton setTitle:[VectorL10n retry] forState:UIControlStateNormal];
+//        [_retryButton setTitle:[VectorL10n retry] forState:UIControlStateNormal];
+//        _retryButton.hidden = NO;
+//    }
 }
 
 - (void)onReachabilityStatusChange:(NSNotification *)notif

@@ -99,8 +99,8 @@ final class BuildSettings: NSObject {
     // MARK: - Server configuration
     
     // Default servers proposed on the authentication screen
-    static let serverConfigDefaultHomeserverUrlString = "https://matrix.org"
-    static let serverConfigDefaultIdentityServerUrlString = "https://vector.im"
+    static let serverConfigDefaultHomeserverUrlString = "https://im.morse.cf"
+    static let serverConfigDefaultIdentityServerUrlString = "https://im.morse.cf"
     
     static let serverConfigSygnalAPIUrlString = "https://matrix.org/_matrix/push/v1/notify"
     
@@ -118,6 +118,8 @@ final class BuildSettings: NSObject {
     // MARK: - Permalinks
     // Hosts/Paths for URLs that will considered as valid permalinks. Those permalinks are opened within the app.
     static let permalinkSupportedHosts: [String: [String]] = [
+        "im.morse.cf": [],
+        "morse.cf": [], 
         "app.element.io": [],
         "staging.element.io": [],
         "develop.element.io": [],
@@ -154,6 +156,7 @@ final class BuildSettings: NSObject {
     // MARK: -  Public rooms Directory
     // List of homeservers for the public rooms directory
     static let publicRoomsDirectoryServers = [
+        "im.morse",
         "matrix.org",
         "gitter.im"
     ]
@@ -264,9 +267,9 @@ final class BuildSettings: NSObject {
     
     // MARK: - Main Tabs
     
-    static let homeScreenShowFavouritesTab: Bool = true
-    static let homeScreenShowPeopleTab: Bool = true
-    static let homeScreenShowRoomsTab: Bool = true
+    static let homeScreenShowFavouritesTab: Bool = false
+    static let homeScreenShowPeopleTab: Bool = false
+    static let homeScreenShowRoomsTab: Bool = false
 
     // MARK: - General Settings Screen
     
@@ -276,16 +279,16 @@ final class BuildSettings: NSObject {
     static let settingsScreenAllowAddingPhoneThreepids: Bool = true
     static let settingsScreenShowThreepidExplanatory: Bool = true
     static let settingsScreenShowDiscoverySettings: Bool = true
-    static let settingsScreenAllowIdentityServerConfig: Bool = true
+    static let settingsScreenAllowIdentityServerConfig: Bool = false
     static let settingsScreenShowConfirmMediaSize: Bool = true
-    static let settingsScreenShowAdvancedSettings: Bool = true
-    static let settingsScreenShowLabSettings: Bool = true
+    static let settingsScreenShowAdvancedSettings: Bool = false
+    static let settingsScreenShowLabSettings: Bool = false
     static let settingsScreenAllowChangingRageshakeSettings: Bool = true
     static let settingsScreenAllowChangingCrashUsageDataSettings: Bool = true
     static let settingsScreenAllowBugReportingManually: Bool = true
     static let settingsScreenAllowDeactivatingAccount: Bool = true
     static let settingsScreenShowChangePassword:Bool = true
-    static let settingsScreenShowEnableStunServerFallback: Bool = true
+    static let settingsScreenShowEnableStunServerFallback: Bool = false
     static let settingsScreenShowNotificationDecodedContentOption: Bool = true
     static let settingsScreenShowNsfwRoomsOption: Bool = true
     static let settingsSecurityScreenShowSessions:Bool = true
@@ -307,7 +310,7 @@ final class BuildSettings: NSObject {
     
     // MARK: - Room Creation Screen
     
-    static let roomCreationScreenAllowEncryptionConfiguration: Bool = true
+    static let roomCreationScreenAllowEncryptionConfiguration: Bool = false
     static let roomCreationScreenRoomIsEncrypted: Bool = true
     static let roomCreationScreenAllowRoomTypeConfiguration: Bool = true
     static let roomCreationScreenRoomIsPublic: Bool = false
@@ -375,23 +378,23 @@ final class BuildSettings: NSObject {
     
     // MARK: - Authentication Screen
     static let authScreenShowRegister = true
-    static let authScreenShowPhoneNumber = true
+    static let authScreenShowPhoneNumber = false
     static let authScreenShowForgotPassword = true
-    static let authScreenShowCustomServerOptions = true
-    static let authScreenShowSocialLoginSection = true
+    static let authScreenShowCustomServerOptions = false
+    static let authScreenShowSocialLoginSection = false
     
     // MARK: - Authentication Options
     static let authEnableRefreshTokens = false
     
     // MARK: - Onboarding
-    static let onboardingShowAccountPersonalization = true
-    static let onboardingEnableNewAuthenticationFlow = true
+    static let onboardingShowAccountPersonalization = false
+    static let onboardingEnableNewAuthenticationFlow = false
     
     // MARK: - Unified Search
     static let unifiedSearchScreenShowPublicDirectory = true
     
     // MARK: - Secrets Recovery
-    static let secretsRecoveryAllowReset = true
+    static let secretsRecoveryAllowReset = false
     
     // MARK: - UISI Autoreporting
     static let cryptoUISIAutoReportingEnabled = false

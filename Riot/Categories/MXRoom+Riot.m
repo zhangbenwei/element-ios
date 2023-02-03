@@ -637,7 +637,9 @@
         }];
     }
     
-    [notificationCenter enableRule:rule isEnabled:YES ];
+    [notificationCenter enableRule:rule isEnabled:YES completion:^(NSError * _Nullable error) {
+         
+    }];
 }
 
 - (void)setNotificationCenterDidFailObserver:(id)anObserver
