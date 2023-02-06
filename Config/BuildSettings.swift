@@ -99,8 +99,8 @@ final class BuildSettings: NSObject {
     // MARK: - Server configuration
     
     // Default servers proposed on the authentication screen
-    static let serverConfigDefaultHomeserverUrlString = "https://im.morse.cf"
-    static let serverConfigDefaultIdentityServerUrlString = "https://im.morse.cf"
+    static let serverConfigDefaultHomeserverUrlString = "https://morse.cf"
+    static let serverConfigDefaultIdentityServerUrlString = "https://morse.cf"
     
     static let serverConfigSygnalAPIUrlString = "https://matrix.org/_matrix/push/v1/notify"
     
