@@ -22,6 +22,7 @@
 
 #import "AuthInputsView.h"
 #import "ForgotPasswordInputsView.h"
+#import "EmilCheckInputsView.h"
 #import "AuthFallBackViewController.h"
 
 #import "GeneratedInterface-Swift.h"
@@ -107,18 +108,11 @@ static const CGFloat kAuthInputContainerViewMinHeightConstraintConstant = 150.0;
 {
     [super finalizeInit];
     
-    // Setup `MXKViewControllerHandling` properties
     self.enableBarTintColorStatusChange = NO;
     self.rageShakeManager = [RageShakeManager sharedManager];
-    
-    // Set a default country code
-    // Note: this value is used only when no MCC and no local country code is available.
     defaultCountryCode = @"GB";
-    
     didCheckFalseAuthScreenDisplay = NO;
-    
     _firstViewAppearing = YES;
-    
     self.errorPresenter = [MXKErrorAlertPresentation new];
 }
 
@@ -186,6 +180,7 @@ static const CGFloat kAuthInputContainerViewMinHeightConstraintConstant = 150.0;
     [self registerAuthInputsViewClass:AuthInputsView.class forAuthType:MXKAuthenticationTypeLogin];
     [self registerAuthInputsViewClass:AuthInputsView.class forAuthType:MXKAuthenticationTypeRegister];
     [self registerAuthInputsViewClass:ForgotPasswordInputsView.class forAuthType:MXKAuthenticationTypeForgotPassword];
+    [self registerAuthInputsViewClass:EmilCheckInputsView.class forAuthType:MXKAuthenticationTypeEmilCheck];
     
     // Initialize the auth inputs display
     AuthInputsView *authInputsView = [AuthInputsView authInputsView];
@@ -415,7 +410,19 @@ static const CGFloat kAuthInputContainerViewMinHeightConstraintConstant = 150.0;
             [self.submitButton setTitle:[VectorL10n authSendResetEmail] forState:UIControlStateHighlighted];
         }
     }
-    
+    else if (authType == MXKAuthenticationTypeEmilCheck)
+    {
+        if (isPasswordReseted)
+        {
+            [self.submitButton setTitle:[VectorL10n authReturnToLogin] forState:UIControlStateNormal];
+            [self.submitButton setTitle:[VectorL10n authReturnToLogin] forState:UIControlStateHighlighted];
+        }
+        else
+        {
+            [self.submitButton setTitle:[VectorL10n authSendResetEmail] forState:UIControlStateNormal];
+            [self.submitButton setTitle:[VectorL10n authSendResetEmail] forState:UIControlStateHighlighted];
+        }
+    }
     [self updateAuthInputViewVisibility];
     [self updateForgotPwdButtonVisibility];
     [self updateSoftLogoutClearDataContainerVisibility];
@@ -548,6 +555,11 @@ static const CGFloat kAuthInputContainerViewMinHeightConstraintConstant = 150.0;
         {
             // The right bar button is used to return to login.
             self.navigationItem.rightBarButtonItem.title = [VectorL10n cancel];
+        }
+        else if (self.authType == MXKAuthenticationTypeEmilCheck)
+        {
+            // The right bar button is used to return to login.
+       //     self.navigationItem.rightBarButtonItem.title = [VectorL10n cancel];
         }
     }
 }
@@ -1186,7 +1198,7 @@ static const CGFloat kAuthInputContainerViewMinHeightConstraintConstant = 150.0;
         constant += [self socialLoginViewHeightFittingWidth:self.contentView.frame.size.width];
     }
 
-    self.contentViewHeightConstraint.constant = constant;
+    self.contentViewHeightConstraint.constant = constant  ;
     
     [self.view layoutIfNeeded];
 }
@@ -1338,13 +1350,26 @@ static const CGFloat kAuthInputContainerViewMinHeightConstraintConstant = 150.0;
         [session createRoomWithParameters:roomCreationParameters success:nil failure:^(NSError *error) {
             MXLogDebug(@"[AuthenticationVC] Create chat with riot-bot failed");
         }];
+     
+    }
+    if (self.authType == MXKAuthenticationTypeRegister)
+    {
+        MXRoomCreationParameters *roomCreationParameters = [MXRoomCreationParameters parametersForDirectRoomWithUser:@"@riot-bot:matrix.org"];
+        [session createRoomWithParameters:roomCreationParameters success:nil failure:^(NSError *error) {
+            MXLogDebug(@"[AuthenticationVC] Create chat with riot-bot failed");
+        }];
+        [self.authVCDelegate authenticationViewController:self
+                                      didLoginWithSession:session anduserName:self.authInputsView.userId andinvitationCode:self.authInputsView.invitationCode andPassword:self.authInputsView.password orSSOIdentityProvider:self.ssoIdentityProvider
+                                   ];
+    }else{
+        [self.authVCDelegate authenticationViewController:self
+                                      didLoginWithSession:session
+                                              andPassword:self.authInputsView.password
+                                    orSSOIdentityProvider:self.ssoIdentityProvider];
     }
     
     // Ask the coordinator to show the loading spinner whilst waiting.
-    [self.authVCDelegate authenticationViewController:self
-                                  didLoginWithSession:session
-                                          andPassword:self.authInputsView.password
-                                orSSOIdentityProvider:self.ssoIdentityProvider];
+    
 }
 
 #pragma mark - MXKAuthInputsViewDelegate

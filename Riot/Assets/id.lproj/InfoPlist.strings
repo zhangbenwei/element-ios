@@ -1,6 +1,6 @@
 
 
-"NSContactsUsageDescription" = "Mereka akan dibagikan dengan server identitas Anda untuk membantu mencari kontak Anda di Matrix.";
+"NSContactsUsageDescription" = "Mereka akan dibagikan dengan server identitas Anda untuk membantu mencari kontak Anda di Morse.";
 // Permissions usage explanations
 "NSCameraUsageDescription" = "Kamera digunakan untuk melakukan panggilan video, atau mengambil dan mengunggah foto dan video.";
 "NSFaceIDUsageDescription" = "Face ID digunakan untuk mengakses aplikasi Anda.";

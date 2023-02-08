@@ -1656,7 +1656,7 @@
 "login_display_name_placeholder" = "Anzeigename (z.B. Peter Pan)";
 "login_email_placeholder" = "E-Mail-Adresse";
 "login_error_title" = "Anmeldung fehlgeschlagen";
-"login_email_info" = "Die Eingabe einer E-Mail-Adresse erleichtert es anderen Benutzern, dich auf Matrix zu finden. Außerdem kannst du mit der hinterlegten E-Mail-Adresse dein Passwort zurücksetzen.";
+"login_email_info" = "Die Eingabe einer E-Mail-Adresse erleichtert es anderen Benutzern, dich auf Morse zu finden. Außerdem kannst du mit der hinterlegten E-Mail-Adresse dein Passwort zurücksetzen.";
 "login_prompt_email_token" = "Gib das E-Mail-Validierungstoken ein:";
 "login_error_no_login_flow" = "Die Authentifizierungsinformation von diesem Heimserver konnte nicht abgerufen werden";
 "login_error_do_not_support_login_flows" = "Momentan werden einige oder alle der von diesem Heimserver definierten Authentifizierungspfade nicht unterstützt";

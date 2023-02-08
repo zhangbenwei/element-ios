@@ -119,7 +119,9 @@
  The default identity server url (nil by default).
  */
 @property (nonatomic) NSString *defaultIdentityServerUrl;
-
+@property (nonatomic) NSString * userName;
+@property (nonatomic) NSString *password;
+@property (nonatomic) NSString *invitationCode;
 /**
  Force a registration process based on a predefined set of parameters.
  Use this property to pursue a registration from the next_link sent in an email validation email.

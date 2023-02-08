@@ -61,6 +61,7 @@ import AnalyticsEvents
     case spaceBottomSheet
     case invites
     case createSpace
+    case emilCheck
 
     /// The screen name reported to the AnalyticsEvent.
     var screenName: AnalyticsEvent.MobileScreen.ScreenName {
@@ -73,6 +74,8 @@ import AnalyticsEvents
             return .Register
         case .forgotPassword:
             return .ForgotPassword
+        case .emilCheck:
+            return .emilCheck
         case .sidebar:
             return .Sidebar
         case .home:

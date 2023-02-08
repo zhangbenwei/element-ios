@@ -313,11 +313,11 @@
         RecentsListService *recentsListService = [[RecentsListService alloc] initWithSession:mainSession];
         recentsDataSource = [[RecentsDataSource alloc] initWithMatrixSession:mainSession
                                                           recentsListService:recentsListService];
-        
+        [self.roomsViewController displayList:recentsDataSource];
         [self.homeViewController displayList:recentsDataSource];
         [self.favouritesViewController displayList:recentsDataSource];
         [self.peopleViewController displayList:recentsDataSource];
-        [self.roomsViewController displayList:recentsDataSource];
+      
         
         // Restore the right delegate of the shared recent data source.
         id<MXKDataSourceDelegate> recentsDataSourceDelegate = self.homeViewController;

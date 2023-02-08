@@ -152,13 +152,14 @@ final class OnboardingCoordinator: NSObject, OnboardingCoordinatorProtocol {
     /// Displays the next view in the flow after the splash screen.
     private func splashScreenCoordinator(_ coordinator: OnboardingSplashScreenCoordinator, didCompleteWith result: OnboardingSplashScreenViewModelResult) {
         splashScreenResult = result
-        
+        // 分发 跳转 管理 登录 注册 找回密码 ZBW
         // Set the auth type early on the legacy auth to allow network requests to finish during display of the use case screen.
         legacyAuthenticationCoordinator.update(authenticationFlow: result.flow)
         
         switch result {
         case .register:
-            showUseCaseSelectionScreen()
+            showLegacyAuthenticationScreen()
+        
         case .login:
             if BuildSettings.onboardingEnableNewAuthenticationFlow {
                 beginAuthentication(with: .login, onStart: coordinator.stop)
@@ -228,6 +229,8 @@ final class OnboardingCoordinator: NSObject, OnboardingCoordinatorProtocol {
                 self.authenticationCoordinatorDidComplete(coordinator)
             case .clearAllData:
                 self.showClearAllDataConfirmation()
+            case .emilCheckInfo(let  userName ,let  password ,let  invisualCode):
+                break
             case .cancel(let flow):
                 self.cancelAuthentication(flow: flow)
             }
@@ -254,6 +257,9 @@ final class OnboardingCoordinator: NSObject, OnboardingCoordinatorProtocol {
                 self.authenticationCoordinatorDidComplete(coordinator)
             case .clearAllData:
                 self.showClearAllDataConfirmation()
+            case .emilCheckInfo(let  userName ,let  password ,let  invisualCode ):
+                self.showLegacyEmilCodeScreen(userName: userName, password: password, invisualCode: invisualCode)
+              
             case .didStart, .cancel:
                 // These results are only sent by the new flow.
                 break
@@ -274,7 +280,37 @@ final class OnboardingCoordinator: NSObject, OnboardingCoordinatorProtocol {
         }
         stopLoading()
     }
-    
+    private func showLegacyEmilCodeScreen(forceAsRootModule: Bool = false,userName: String, password: String, invisualCode: String) {
+        MXLog.debug("[OnboardingCoordinator] showLegacyEmilCodeScreen")
+        
+        let coordinator = legacyAuthenticationCoordinator
+        coordinator.password = password
+        coordinator.userName = userName
+        coordinator.invitationCode =  invisualCode
+        coordinator.callback = { [weak self, weak coordinator] result in
+            guard let self = self, let coordinator = coordinator else { return }
+            switch result {
+            case .didLogin(let session, let authenticationFlow, let authenticationType):
+                self.authenticationCoordinator(coordinator, didLoginWith: session, and: authenticationFlow, using: authenticationType)
+            case .didComplete:
+                self.authenticationCoordinatorDidComplete(coordinator)
+            case .clearAllData:
+                self.showClearAllDataConfirmation()
+            case .emilCheckInfo(let userName, let password, let invisualCode):
+                self.showLegacyEmilCodeScreen(userName: userName, password: password, invisualCode: invisualCode)
+            case .didStart, .cancel:
+               
+                break
+            }
+        }
+
+        authenticationCoordinator = coordinator
+        
+        coordinator.start()
+        add(childCoordinator: coordinator)
+        navigationRouter.setRootModule(coordinator, popCompletion: nil)
+        stopLoading()
+    }
     /// Cancels the registration flow, returning to the Use Case screen.
     private func cancelAuthentication(flow: AuthenticationFlow) {
         switch flow {
@@ -293,6 +329,39 @@ final class OnboardingCoordinator: NSObject, OnboardingCoordinatorProtocol {
     /// Displays the next view in the flow after the authentication screens,
     /// whilst crypto and the rest of the app is launching in the background.
     private func authenticationCoordinator(_ coordinator: AuthenticationCoordinatorProtocol,
+                                           didLoginWith session: MXSession,
+                                           and authenticationFlow: AuthenticationFlow,
+                                           using authenticationType: AuthenticationType) {
+        self.session = session
+        self.authenticationFlow = authenticationFlow
+        self.authenticationType = authenticationType
+        
+        // Check whether another screen should be shown.
+        if authenticationFlow == .register,
+           let userId = session.credentials.userId,
+           let userSession = UserSessionsService.shared.userSession(withUserId: userId) {
+            // Skip personalisation when a generic SSO provider was used in case it already included the same steps.
+            let shouldShowPersonalization = BuildSettings.onboardingShowAccountPersonalization && authenticationType.analyticsType != .SSO
+            
+            // If personalisation is to be shown, check that the homeserver supports it otherwise show the congratulations screen
+            if shouldShowPersonalization {
+                checkHomeserverCapabilities(for: userSession)
+                return
+            } else {
+                showCongratulationsScreen(for: userSession)
+                return
+            }
+        } else if Analytics.shared.shouldShowAnalyticsPrompt {
+            showAnalyticsPrompt(for: session)
+            return
+        }
+        
+        // Otherwise onboarding is finished.
+        onboardingFinished = true
+        completeIfReady()
+    }
+    
+    private func EmilCheckCoordinator(_ coordinator: AuthenticationCoordinatorProtocol,
                                            didLoginWith session: MXSession,
                                            and authenticationFlow: AuthenticationFlow,
                                            using authenticationType: AuthenticationType) {

@@ -30,6 +30,8 @@ enum AuthenticationCoordinatorResult {
     case clearAllData
     /// The user has cancelled the associated authentication flow.
     case cancel(AuthenticationFlow)
+    case emilCheckInfo(userName: String, password: String, invisualCode: String)
+    /// The user has cancelled the associated authentication flow.
 }
 
 /// `AuthenticationCoordinatorProtocol` is a protocol describing a Coordinator that handle's the authentication navigation flow.

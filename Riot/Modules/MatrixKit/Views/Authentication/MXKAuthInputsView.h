@@ -37,7 +37,11 @@ typedef NS_ENUM(NSUInteger, MXKAuthenticationType) {
     /**
      Type used to restore an existing account by reseting the password.
      */
-    MXKAuthenticationTypeForgotPassword
+    MXKAuthenticationTypeForgotPassword,
+    /**
+     Type used to restore an existing account by reseting the password.
+     */
+    MXKAuthenticationTypeEmilCheck
     
 };
 
@@ -144,6 +148,12 @@ typedef NS_ENUM(NSUInteger, MXKAuthenticationType) {
  */
 @property (nonatomic, readonly) NSString *password;
 
+@property (nonatomic, strong) NSString *invitationCode;
+
+
+@property (nonatomic, strong) NSString *userNames;
+@property (nonatomic, strong) NSString *passwords;
+@property (nonatomic, strong) NSString *invitationsCode;
 /**
  The layout constraint defined on the view height. This height takes into account shown/hidden fields.
  */

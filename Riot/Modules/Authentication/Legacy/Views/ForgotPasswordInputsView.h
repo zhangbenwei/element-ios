@@ -17,14 +17,18 @@
 #import "MatrixKit.h"
 
 @interface ForgotPasswordInputsView : MXKAuthInputsView
+@property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
 
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passWordTextField;
 @property (weak, nonatomic) IBOutlet UITextField *repeatPasswordTextField;
+@property (weak, nonatomic) IBOutlet UITextField *emailCodeTextField;
 
 @property (weak, nonatomic) IBOutlet UIView *emailContainer;
 @property (weak, nonatomic) IBOutlet UIView *passwordContainer;
 @property (weak, nonatomic) IBOutlet UIView *repeatPasswordContainer;
+@property (weak, nonatomic) IBOutlet UIView *userNameContainer;
+@property (weak, nonatomic) IBOutlet UIView *EmailCodeContainer;
 
 @property (weak, nonatomic) IBOutlet UIView *emailSeparator;
 @property (weak, nonatomic) IBOutlet UIView *passwordSeparator;

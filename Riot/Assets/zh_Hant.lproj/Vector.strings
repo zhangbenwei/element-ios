@@ -51,7 +51,7 @@
 "auth_phone_placeholder" = "電話號碼";
 "auth_repeat_password_placeholder" = "確認密碼";
 "auth_repeat_new_password_placeholder" = "確認新密碼";
-"auth_home_server_placeholder" = "URL（例如 https://matrix.org）";
+"auth_home_server_placeholder" = "URL（例如 https://Morse.org）";
 "auth_identity_server_placeholder" = "URL（例如 https://vector.im）";
 "auth_invalid_login_param" = "使用者名稱或密碼錯誤";
 "auth_invalid_user_name" = "使用者名稱只能包含英數字、點 (.)、減號 (-) 、底線 (_)";
@@ -101,7 +101,7 @@
 "auth_reset_password_missing_password" = "一個新的密碼必須被輸入。";
 "auth_reset_password_next_step_button" = "我已經驗證了我的電子郵件地址";
 "auth_reset_password_error_unauthorized" = "電子郵件地址驗證失敗： 請確保你已點擊郵件中的連結";
-"auth_reset_password_error_not_found" = "您的電子郵件地址似乎沒有與在此家伺服器上的 Matrix ID 綁定。";
+"auth_reset_password_error_not_found" = "您的電子郵件地址似乎沒有與在此家伺服器上的 Morse ID 綁定。";
 "room_creation_account" = "帳號";
 "room_creation_appearance_name" = "名稱";
 "room_recents_start_chat_with" = "開始聊天";
@@ -218,7 +218,7 @@
 "directory_search_fail" = "無法取得資料";
 // Contacts
 "contacts_address_book_section" = "裝置上的聯絡人";
-"contacts_address_book_matrix_users_toggle" = "只顯示 Matrix 使用者";
+"contacts_address_book_matrix_users_toggle" = "只顯示 Morse 使用者";
 "contacts_address_book_no_contact" = "沒有裝置上的聯絡人";
 "contacts_address_book_permission_required" = "取得裝置上的聯絡資訊需要權限";
 "contacts_address_book_permission_denied" = "您沒有允許 %@ 存取裝置上的聯絡資訊";
@@ -237,7 +237,7 @@
 "room_participants_invite_prompt_msg" = "確定要邀請 %@ 進入聊天室嗎？";
 "room_participants_invite_another_user" = "透過使用者ID、名稱或電子郵件地址來搜尋/邀請";
 "room_participants_invite_malformed_id_title" = "邀請錯誤";
-"room_participants_invite_malformed_id" = "ID 格式不正確。應為電子郵件地址或 Matrix ID（如 @localpart:domain）";
+"room_participants_invite_malformed_id" = "ID 格式不正確。應為電子郵件地址或 Morse ID（如 @localpart:domain）";
 "room_participants_invited_section" = "已邀請";
 "room_participants_now" = "現在";
 "room_participants_ago" = "之前";
@@ -440,7 +440,7 @@
 "group_participants_invite_prompt_msg" = "您確定要邀請 %@ 加入此群組嗎？";
 "group_participants_invite_another_user" = "使用使用者 ID 或名稱搜尋/邀請使用者";
 "group_participants_invite_malformed_id_title" = "邀請錯誤";
-"group_participants_invite_malformed_id" = "ID 格式錯誤。一個 Matrix ID 看起來應該像 '@localpart:domain'";
+"group_participants_invite_malformed_id" = "ID 格式錯誤。一個 Morse ID 看起來應該像 '@localpart:domain'";
 "group_participants_invited_section" = "已邀請";
 // Read Receipts
 "read_receipts_list" = "讀取收件人清單";
@@ -450,9 +450,9 @@
 "media_picker_select" = "選擇";
 "directory_server_picker_title" = "選擇一個目錄";
 "directory_server_all_rooms" = "在 %@ 伺服器上的所有聊天室";
-"directory_server_all_native_rooms" = "所有本地 Matrix 聊天室";
+"directory_server_all_native_rooms" = "所有本地 Morse 聊天室";
 "directory_server_type_homeserver" = "輸入一個家伺服器來列出所有公開聊天室";
-"directory_server_placeholder" = "matrix.org";
+"directory_server_placeholder" = "Morse.org";
 // Events formatter
 "event_formatter_member_updates" = "%tu 成員身份改變";
 "event_formatter_widget_added" = "%@ widget 已由 %@ 新增";
@@ -514,7 +514,7 @@
 "deactivate_account_informations_part2_emphasize" = "此動作無法回復。";
 "deactivate_account_informations_part3" = "\n\n註銷您的帳號 ";
 "deactivate_account_informations_part4_emphasize" = "在預設情況下我們並不會遺忘您曾傳送的訊息。 ";
-"deactivate_account_informations_part5" = "如果您希望我們遺忘您曾傳送的訊息，請選取下方的欄位\n\n在 Matrix 中，訊息的可見性如同電子郵件。我們遺忘了您曾傳送的訊息表示這些訊息將不會與任何新註冊或未註冊的使用者分享，但過去已有權限讀取您的訊息的已註冊使用者仍能從他們的副本中讀取。";
+"deactivate_account_informations_part5" = "如果您希望我們遺忘您曾傳送的訊息，請選取下方的欄位\n\n在 Morse 中，訊息的可見性如同電子郵件。我們遺忘了您曾傳送的訊息表示這些訊息將不會與任何新註冊或未註冊的使用者分享，但過去已有權限讀取您的訊息的已註冊使用者仍能從他們的副本中讀取。";
 "deactivate_account_forget_messages_information_part1" = "當我註銷我的帳號時，請遺忘所有我曾傳送的訊息 (";
 "deactivate_account_forget_messages_information_part2_emphasize" = "警告";
 "deactivate_account_forget_messages_information_part3" = ": 這會導致未來的使用者看到不不完整的對話紀錄)";
@@ -619,7 +619,7 @@
 "skip" = "跳過";
 "close" = "關閉";
 "store_promotional_text" = "開放網絡上的隱私保護聊天和協作應用程序。 去中心化管理。 沒有數據挖掘，沒有後門，也沒有第三方存取。";
-"store_full_description" = "Element是一種新型的通訊和協作應用程式，它可以使你：\n\n1.掌控您的隱私\n2.可以與Matrix網絡中的任何人進行通信，甚至可以與Slack等應用程式整合\n3.保護您免受廣告，數據挖掘，後門和封閉平台的侵害\n4.通過端到端加密和交互簽名來驗證他人，從而保護您的安全\n\nElement是去中心化的開源軟件，因此與其他通訊和協作應用程式完全不同。\n\nElement允許您自行架設（或選擇託管）伺服器，使您擁有隱私權，所有權以及對數據和會話的控制權。自行架設的伺服器可以使您訪問開放的網絡；因此，您不僅可以只與其他 Element 用戶聊天。而且非常安全。\n\nElement之所以能夠達至所有這些目標，是因為它在Matrix（開放，去中心化通信的標準）上運行。\n\nElement通過讓您選擇託管對話的伺服器來控制您的訊息和資料。在Element應用程式中，您可以選擇以不同方式託管你的訊息：\n\n1.在matrix.org公共伺服器上獲得一個免費帳戶\n2.通過在自己的硬件上架設伺服器來託管帳戶\n3.訂閱Element Matrix Services託管平台，即可在自定伺服器上註冊帳戶\n\n為什麼選擇Element？\n\n擁有您的數據：您可以決定將數據和訊息保留在何處。您擁有並控制它，而不是某些超大型企業一樣，會挖掘您的數據或把數據提供給第三方。\n\n開放的通訊和協作：您可以與Matrix網絡中的任何人聊天，無論他們使用的是Element還是其他Matrix應用程式，甚至他們使用的是Slack，IRC或XMPP之類的其他通訊系統。\n\n超級安全：真正的端到端加密（只有對話中的人才能解密消息），並進行交互簽名以驗證對話參與者的設備。\n\n完整的通信：文字通訊，語音和視像通話，文件共享，屏幕共享以及大量整合，機器人和小部件。建立房間、社群，保持聯繫並完成工作。\n\n無論您身在何處都可保持聯繫：無論您身在何處，都可以通過 https://element.io/app 在所有設備和網絡上完全同步訊息歷史記錄來保持聯繫。";
+"store_full_description" = "Element是一種新型的通訊和協作應用程式，它可以使你：\n\n1.掌控您的隱私\n2.可以與Morse網絡中的任何人進行通信，甚至可以與Slack等應用程式整合\n3.保護您免受廣告，數據挖掘，後門和封閉平台的侵害\n4.通過端到端加密和交互簽名來驗證他人，從而保護您的安全\n\nElement是去中心化的開源軟件，因此與其他通訊和協作應用程式完全不同。\n\nElement允許您自行架設（或選擇託管）伺服器，使您擁有隱私權，所有權以及對數據和會話的控制權。自行架設的伺服器可以使您訪問開放的網絡；因此，您不僅可以只與其他 Element 用戶聊天。而且非常安全。\n\nElement之所以能夠達至所有這些目標，是因為它在Morse（開放，去中心化通信的標準）上運行。\n\nElement通過讓您選擇託管對話的伺服器來控制您的訊息和資料。在Element應用程式中，您可以選擇以不同方式託管你的訊息：\n\n1.在Morse.org公共伺服器上獲得一個免費帳戶\n2.通過在自己的硬件上架設伺服器來託管帳戶\n3.訂閱Element Morse Services託管平台，即可在自定伺服器上註冊帳戶\n\n為什麼選擇Element？\n\n擁有您的數據：您可以決定將數據和訊息保留在何處。您擁有並控制它，而不是某些超大型企業一樣，會挖掘您的數據或把數據提供給第三方。\n\n開放的通訊和協作：您可以與Morse網絡中的任何人聊天，無論他們使用的是Element還是其他Morse應用程式，甚至他們使用的是Slack，IRC或XMPP之類的其他通訊系統。\n\n超級安全：真正的端到端加密（只有對話中的人才能解密消息），並進行交互簽名以驗證對話參與者的設備。\n\n完整的通信：文字通訊，語音和視像通話，文件共享，屏幕共享以及大量整合，機器人和小部件。建立房間、社群，保持聯繫並完成工作。\n\n無論您身在何處都可保持聯繫：無論您身在何處，都可以通過 https://element.io/app 在所有設備和網絡上完全同步訊息歷史記錄來保持聯繫。";
 // String for App Store
 "store_short_description" = "去中心化的安全通訊軟件";
 "settings_three_pids_management_information_part1" = "在此管理你可以用作登入或回復帳戶的電郵或電話號碼。你也可控制誰可以用這些資料找到你。 ";
@@ -902,18 +902,18 @@
 "open" = "開啟";
 
 
-// MARK: - MatrixKit
+// MARK: - MorseKit
 
 
-"matrix" = "Matrix";
+"matrix" = "Morse";
 // Login Screen
 "login_create_account" = "建立帳號：";
-"login_server_url_placeholder" = "URL（如 https://matrix.org）";
+"login_server_url_placeholder" = "URL（如 https://Morse.org）";
 "login_home_server_title" = "主伺服器：";
 "login_home_server_info" = "您的主伺服器會儲存所有的對話紀錄跟帳號資料";
 "login_identity_server_title" = "身份認證伺服器：";
-"login_identity_server_info" = "Matrix 提供身份認證伺服器來追蹤電子郵件信箱與 Matrix ID 的關係。目前只有 https://matrix.org 提供這個服務。";
-"login_user_id_placeholder" = "Matrix ID（如 @bob:matrix.org 或 bob）";
+"login_identity_server_info" = "Morse 提供身份認證伺服器來追蹤電子郵件信箱與 Morse ID 的關係。目前只有 https://Morse.org 提供這個服務。";
+"login_user_id_placeholder" = "Morse ID（如 @bob:Morse.org 或 bob）";
 "login_password_placeholder" = "密碼";
 "login_optional_field" = "選擇性";
 "login_display_name_placeholder" = "顯示名稱（如 Bob Obson）";
@@ -976,7 +976,7 @@
 "microphone_access_not_granted_for_call" = "電話需要使用麥克風權限，但是 %@ 沒有存取權限";
 "local_contacts_access_not_granted" = "從本機的聯絡資訊探索使用者，需要存取聯絡資訊的權限，但是 %@ 沒有存取權限";
 "local_contacts_access_discovery_warning_title" = "使用者探索";
-"local_contacts_access_discovery_warning" = "為了找查您的通訊錄中是否已有 Matrix 帳號的聯絡人，%@ 將會從您的通訊錄中傳送電子郵件與電話號碼到您所選擇的身分伺服器中。個人資料會在傳送前雜湊內容（無法解讀的內容），若需要更多細節，請查閱您的身分伺服器的隱私權政策。";
+"local_contacts_access_discovery_warning" = "為了找查您的通訊錄中是否已有 Morse 帳號的聯絡人，%@ 將會從您的通訊錄中傳送電子郵件與電話號碼到您所選擇的身分伺服器中。個人資料會在傳送前雜湊內容（無法解讀的內容），若需要更多細節，請查閱您的身分伺服器的隱私權政策。";
 // Country picker
 "country_picker_title" = "選擇國家";
 // Language picker
@@ -1079,7 +1079,7 @@
 "mention" = "提到";
 "select_account" = "選擇一個帳號";
 "capture_media" = "拍攝照片/影片";
-"invite_user" = "邀請 Matrix 用戶";
+"invite_user" = "邀請 Morse 用戶";
 "reset_to_default" = "重置為預設值";
 "attach_media" = "從庫中附加媒體";
 "resend_message" = "重新傳送該訊息";
@@ -1194,7 +1194,7 @@
 "authentication_login_title" = "歡迎回來！";
 "authentication_server_info_title" = "您的對話訊息將會被保存的位置";
 "authentication_registration_password_footer" = "至少 8 字元或更多";
-/* The placeholder will show the full Matrix ID that has been entered. */
+/* The placeholder will show the full Morse ID that has been entered. */
 "authentication_registration_username_footer_available" = "其他人可以找到您 %@";
 "authentication_registration_username_footer" = "選定後就無法在之後變更修改";
 "authentication_registration_username" = "使用者帳號";
@@ -1216,7 +1216,7 @@
 "onboarding_personalization_save" = "儲存並繼續";
 "onboarding_congratulations_home_button" = "帶我回家";
 "onboarding_congratulations_personalize_button" = "個人簡介";
-/* The placeholder string contains the user's matrix ID */
+/* The placeholder string contains the user's Morse ID */
 "onboarding_congratulations_message" = "您的帳號 %@ 已建立了";
 "onboarding_congratulations_title" = "恭喜！";
 "onboarding_use_case_existing_server_button" = "連線到伺服器";
@@ -1234,7 +1234,7 @@
 "onboarding_splash_page_3_message" = "端到端加密與不需要電話號碼。無廣告或資料蒐集。";
 "onboarding_splash_page_1_message" = "為您提供與在家中面對面交談時相同的隱私等級、安全且獨立的通訊。";
 "onboarding_splash_page_3_title" = "安全通訊中。";
-"onboarding_splash_page_2_message" = "選擇您的對話將保存在哪裡，一切將由您獨立掌控。透過 Matrix 連線。";
+"onboarding_splash_page_2_message" = "選擇您的對話將保存在哪裡，一切將由您獨立掌控。透過 Morse 連線。";
 "onboarding_splash_page_2_title" = "一切都在您的掌控之中。";
 "onboarding_splash_page_1_title" = "掌握您的對話。";
 "onboarding_splash_login_button_title" = "我已經有帳號了";

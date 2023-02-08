@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pO8-VA-gOZ" userLabel="Emil Check Inputs View" customClass="EmilCheckInputsView">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="134"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tRG-OP-ut7">
+                    <rect key="frame" x="8" y="8" width="38" height="18"/>
+                    <accessibility key="accessibilityConfiguration" identifier="ForgotPasswordInputViewMessageLabel"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" systemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="59h-0P-fhu">
+                    <rect key="frame" x="0.0" y="34" width="600" height="50"/>
+                    <subviews>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email address" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EWH-H4-C5P">
+                            <rect key="frame" x="18" y="18" width="564" height="21"/>
+                            <accessibility key="accessibilityConfiguration" identifier="ForgotPasswordInputViewEmailTextField"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="21" id="KLZ-Iv-amt"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress" returnKeyType="next" textContentType="email"/>
+                            <connections>
+                                <outlet property="delegate" destination="pO8-VA-gOZ" id="xJD-XN-2tk"/>
+                            </connections>
+                        </textField>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PvS-La-g2j">
+                            <rect key="frame" x="10" y="49" width="580" height="1"/>
+                            <color key="backgroundColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="2eF-EK-2hC"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <accessibility key="accessibilityConfiguration" identifier="ForgotPasswordInputViewEmailContainer"/>
+                    <constraints>
+                        <constraint firstItem="EWH-H4-C5P" firstAttribute="top" secondItem="59h-0P-fhu" secondAttribute="top" constant="18" id="311-Wd-bnY"/>
+                        <constraint firstItem="PvS-La-g2j" firstAttribute="leading" secondItem="59h-0P-fhu" secondAttribute="leading" constant="10" id="Y53-XU-iO6"/>
+                        <constraint firstAttribute="height" constant="50" id="Yki-sM-5H5"/>
+                        <constraint firstItem="EWH-H4-C5P" firstAttribute="leading" secondItem="59h-0P-fhu" secondAttribute="leading" constant="18" id="bdS-uW-Iri"/>
+                        <constraint firstAttribute="bottom" secondItem="PvS-La-g2j" secondAttribute="bottom" id="pRa-h3-zBc"/>
+                        <constraint firstAttribute="trailing" secondItem="PvS-La-g2j" secondAttribute="trailing" constant="10" id="sdj-97-3nf"/>
+                        <constraint firstAttribute="trailing" secondItem="EWH-H4-C5P" secondAttribute="trailing" constant="18" id="tug-QC-R46"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zml-68-vvN">
+                    <rect key="frame" x="0.0" y="84" width="600" height="50"/>
+                    <subviews>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="emil code" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XXU-wM-aUC">
+                            <rect key="frame" x="18" y="18" width="564" height="21"/>
+                            <accessibility key="accessibilityConfiguration" identifier="ForgotPasswordInputViewPasswordTextField">
+                                <bool key="isElement" value="YES"/>
+                            </accessibility>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="21" id="IIF-hH-vGu"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="next" textContentType="new-password"/>
+                            <connections>
+                                <outlet property="delegate" destination="pO8-VA-gOZ" id="D9n-3l-TTK"/>
+                            </connections>
+                        </textField>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Foq-EP-f3O">
+                            <rect key="frame" x="10" y="49" width="580" height="1"/>
+                            <color key="backgroundColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="idB-f6-s3m"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <accessibility key="accessibilityConfiguration" identifier="ForgotPasswordInputViewPasswordContainer"/>
+                    <constraints>
+                        <constraint firstItem="XXU-wM-aUC" firstAttribute="top" secondItem="zml-68-vvN" secondAttribute="top" constant="18" id="1Fi-vL-sGB"/>
+                        <constraint firstAttribute="trailing" secondItem="Foq-EP-f3O" secondAttribute="trailing" constant="10" id="H8N-uq-pnt"/>
+                        <constraint firstItem="XXU-wM-aUC" firstAttribute="leading" secondItem="zml-68-vvN" secondAttribute="leading" constant="18" id="IKi-2B-7Sl"/>
+                        <constraint firstAttribute="bottom" secondItem="Foq-EP-f3O" secondAttribute="bottom" id="RBo-nI-jMG"/>
+                        <constraint firstAttribute="trailing" secondItem="XXU-wM-aUC" secondAttribute="trailing" constant="18" id="SIU-nu-kO6"/>
+                        <constraint firstAttribute="height" constant="50" id="oXD-gB-e0e"/>
+                        <constraint firstItem="Foq-EP-f3O" firstAttribute="leading" secondItem="zml-68-vvN" secondAttribute="leading" constant="10" id="onI-5v-1rp"/>
+                    </constraints>
+                </view>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WUk-s6-Ikg">
+                    <rect key="frame" x="475" y="96" width="135" height="30"/>
+                    <color key="backgroundColor" red="0.028153735480000001" green="0.82494870580000002" blue="0.051896891280000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <accessibility key="accessibilityConfiguration" identifier="ForgotPasswordInputViewNextStepButton"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="ZSM-JD-YKG"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                    <inset key="contentEdgeInsets" minX="30" minY="0.0" maxX="30" maxY="0.0"/>
+                    <state key="normal" title="Next Step">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+            <accessibility key="accessibilityConfiguration" identifier="ForgotPasswordInputView"/>
+            <constraints>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="tRG-OP-ut7" secondAttribute="trailing" constant="8" id="1eS-CW-1YM"/>
+                <constraint firstItem="59h-0P-fhu" firstAttribute="leading" secondItem="pO8-VA-gOZ" secondAttribute="leading" id="1jy-8N-o2U"/>
+                <constraint firstAttribute="height" constant="134" id="5Ax-Ny-006"/>
+                <constraint firstAttribute="trailing" secondItem="59h-0P-fhu" secondAttribute="trailing" id="C5u-mI-VOG"/>
+                <constraint firstItem="tRG-OP-ut7" firstAttribute="leading" secondItem="pO8-VA-gOZ" secondAttribute="leading" constant="8" id="Ib4-Yd-WSJ"/>
+                <constraint firstItem="WUk-s6-Ikg" firstAttribute="trailing" secondItem="pO8-VA-gOZ" secondAttribute="trailing" constant="10" id="W44-dZ-N3H"/>
+                <constraint firstItem="59h-0P-fhu" firstAttribute="top" secondItem="tRG-OP-ut7" secondAttribute="bottom" constant="8" id="cHi-TS-UyE"/>
+                <constraint firstItem="zml-68-vvN" firstAttribute="leading" secondItem="pO8-VA-gOZ" secondAttribute="leading" id="gXO-0T-QRc"/>
+                <constraint firstItem="WUk-s6-Ikg" firstAttribute="top" secondItem="59h-0P-fhu" secondAttribute="bottom" constant="12" id="joY-8V-D91"/>
+                <constraint firstItem="zml-68-vvN" firstAttribute="top" secondItem="59h-0P-fhu" secondAttribute="bottom" id="o1j-sK-smB"/>
+                <constraint firstItem="tRG-OP-ut7" firstAttribute="top" secondItem="pO8-VA-gOZ" secondAttribute="top" constant="8" id="oOl-lB-Dp1"/>
+                <constraint firstAttribute="trailing" secondItem="zml-68-vvN" secondAttribute="trailing" id="rTZ-HZ-Xit"/>
+                <constraint firstItem="59h-0P-fhu" firstAttribute="top" secondItem="zml-68-vvN" secondAttribute="bottom" constant="-100" id="set-G6-SN4"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="emailContainer" destination="59h-0P-fhu" id="LYE-RT-ynF"/>
+                <outlet property="emailSeparator" destination="PvS-La-g2j" id="gui-dx-aYm"/>
+                <outlet property="emailTextField" destination="EWH-H4-C5P" id="MQM-oo-cno"/>
+                <outlet property="messageLabel" destination="tRG-OP-ut7" id="w5k-2c-2Jp"/>
+                <outlet property="nextStepButton" destination="WUk-s6-Ikg" id="uta-FG-KI2"/>
+                <outlet property="passWordTextField" destination="XXU-wM-aUC" id="OcL-Li-nu9"/>
+                <outlet property="passwordContainer" destination="zml-68-vvN" id="go4-8n-SaY"/>
+                <outlet property="passwordSeparator" destination="Foq-EP-f3O" id="G2X-zr-uxG"/>
+                <outlet property="viewHeightConstraint" destination="5Ax-Ny-006" id="p19-3v-R3s"/>
+            </connections>
+            <point key="canvasLocation" x="11" y="-11"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="darkTextColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

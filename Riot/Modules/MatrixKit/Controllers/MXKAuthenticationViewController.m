@@ -17,7 +17,7 @@
  */
 
 #import "MXKAuthenticationViewController.h"
-
+#import <CommonCrypto/CommonDigest.h>
 #import "MXKAuthInputsEmailCodeBasedView.h"
 #import "MXKAuthInputsPasswordBasedView.h"
 
@@ -58,6 +58,8 @@
      The MXKAuthInputsView class or a sub-class used to handle forgot password case.
      */
     Class forgotPasswordAuthInputsViewClass;
+    
+    Class EmilCheckAuthInputsViewClass;
     
     /**
      Customized block used to handle unrecognized certificate (nil by default).
@@ -294,6 +296,9 @@
     else if (authType == MXKAuthenticationTypeForgotPassword)
     {
         forgotPasswordAuthInputsViewClass = authInputsViewClass;
+    } else if (authType == MXKAuthenticationTypeEmilCheck)
+    {
+        EmilCheckAuthInputsViewClass = authInputsViewClass;
     }
 }
 
@@ -366,6 +371,27 @@
         [_authSwitchButton setTitle:[VectorL10n back] forState:UIControlStateHighlighted];
         
         self.screenTracker = [[AnalyticsScreenTracker alloc] initWithScreen:AnalyticsScreenForgotPassword];
+    } else if (authType == MXKAuthenticationTypeEmilCheck)
+    {
+        _subTitleLabel.hidden = YES;
+        
+        if (isPasswordReseted)
+        {
+            [_submitButton setTitle:[VectorL10n back] forState:UIControlStateNormal];
+            [_submitButton setTitle:[VectorL10n back] forState:UIControlStateHighlighted];
+        }
+        else
+        {
+            [_submitButton setTitle:@"验证" forState:UIControlStateNormal];
+            [_submitButton setTitle:@"验证" forState:UIControlStateHighlighted];
+            
+            [self refreshEmilCheckSession];
+        }
+        
+        [_authSwitchButton setTitle:[VectorL10n back] forState:UIControlStateNormal];
+        [_authSwitchButton setTitle:[VectorL10n back] forState:UIControlStateHighlighted];
+        
+        self.screenTracker = [[AnalyticsScreenTracker alloc] initWithScreen:AnalyticsScreenEmilCheck];
     }
 
     if (self.isViewVisible)
@@ -382,7 +408,6 @@
     _submitButton.hidden = YES;
     _noFlowLabel.hidden = YES;
     _retryButton.hidden = YES;
-    
     if (_authInputsView)
     {
         [_authInputsView removeObserver:self forKeyPath:@"viewHeightConstraint.constant"];
@@ -408,7 +433,7 @@
         _submitButton.hidden = NO;
         _authInputsView.hidden = NO;
         
-        _authInputContainerViewHeightConstraint.constant = _authInputsView.viewHeightConstraint.constant;
+        _authInputContainerViewHeightConstraint.constant = _authInputsView.viewHeightConstraint.constant + 51;
         
         NSLayoutConstraint* topConstraint = [NSLayoutConstraint constraintWithItem:_authInputsContainerView
                                                                          attribute:NSLayoutAttributeTop
@@ -445,7 +470,11 @@
         // No input fields are displayed
         _authInputContainerViewHeightConstraint.constant = _authInputContainerViewMinHeightConstraint.constant;
     }
-    
+    if(self.authType == MXKAuthenticationTypeEmilCheck){
+        self.authInputsView.userNames = self.userName;
+        self.authInputsView.passwords = self.password;
+        self.authInputsView.invitationsCode = self.invitationCode;
+    }
     [self.view layoutIfNeeded];
     
     // Refresh content view height by considering the updated height of inputs container
@@ -662,18 +691,8 @@
             if (self.authType == MXKAuthenticationTypeRegister)
             {
                 MXWeakify(self);
-                self->mxCurrentOperation = [self->mxRestClient getRegisterSession:^(MXAuthenticationSession* registerAuthSession) {
-                    MXStrongifyAndReturnIfNil(self);
-                    
-                    // Handle the register session along with any SSO flows from the login session
-                    MXLoginSSOFlow *loginSSOFlow = [self loginSSOFlowWithProvidersFromFlows:loginAuthSession.flows];
-                    [self handleAuthenticationSession:registerAuthSession withFallbackSSOFlow:loginSSOFlow];
-                    
-                } failure:^(NSError *error) {
-                    
-                   // [self onFailureDuringMXOperation:error];
-                    
-                }];
+                MXLoginSSOFlow *loginSSOFlow = [self loginSSOFlowWithProvidersFromFlows:loginAuthSession.flows];
+                [self handleAuthenticationSession:loginAuthSession withFallbackSSOFlow:loginSSOFlow];
             }
             else
             {
@@ -684,7 +703,8 @@
         } failure:^(NSError *error) {
             
             MXStrongifyAndReturnIfNil(self);
-            [self onFailureDuringMXOperation:error];
+            if(error.code != -999){[self onFailureDuringMXOperation:error]; return;}
+          
             
         }];
     }
@@ -964,7 +984,8 @@
     
     return ssoFlowWithProviders;
 }
-
+ 
+ 
 - (IBAction)onButtonPressed:(id)sender
 {
     [self dismissKeyboard];
@@ -1005,28 +1026,76 @@
             }
             else if (_authType == MXKAuthenticationTypeRegister)
             {
+                
+                if(self.authInputsView.userId.length && self.authInputsView.invitationCode.length && self.authInputsView.password.length){
+                    if (_delegate)
+                    {
+                        self.password = self.authInputsView.password;
+                        self.userName = self.authInputsView.userId;
+                        self.invitationCode = self.authInputsView.invitationCode;
+                        self.authType = MXKAuthenticationTypeEmilCheck;
+                    }
+                    return;
+                }
                 // Check here the availability of the userId
-                if (self.authInputsView.userId.length)
+                 
+            }
+            else if (_authType == MXKAuthenticationTypeForgotPassword)
+            {
+                // Check whether the password has been reseted
+                if (isPasswordReseted)
                 {
+                    // Return to login screen
+                    self.authType = MXKAuthenticationTypeLogin;
+                }
+                else
+                {
+                    // Prepare the parameters dict
+                    [self.authInputsView prepareParameters:^(NSDictionary *parameters, NSError *error) {
+                        
+                        if (parameters && self->mxRestClient)
+                        {
+                            [self->_authenticationActivityIndicator startAnimating];
+                            [self resetPasswordWithParameters:parameters];
+                        }
+                        else
+                        {
+                            MXLogDebug(@"[MXKAuthenticationVC] Failed to prepare parameters");
+                            [self onFailureDuringAuthRequest:error];
+                        }
+                        
+                    }];
+                }
+            }else if (_authType == MXKAuthenticationTypeEmilCheck)
+            {
+                // Check whether the password has been reseted
+                if (isPasswordReseted)
+                {
+                    // Return to login screen
+                    self.authType = MXKAuthenticationTypeLogin;
+                }
+                else if (self.userName.length)
+                {
+                    
+                 
                     [_authenticationActivityIndicator startAnimating];
                     
-                    if (self.authInputsView.password.length)
+                    if (self.password.length)
                     {
                         // Trigger here a register request in order to associate the filled userId and password to the current session id
                         // This will check the availability of the userId at the same time
-                        NSDictionary *parameters = @{@"auth": @{
-                                                        @"session": self.authInputsView.authSession.session,
-                                                        @"type": kMXLoginFlowTypeDummy
-                                                     },
-                                                     @"username": self.authInputsView.userId,
-                                                     @"password": self.authInputsView.password,
-                                                     @"bind_email": @(NO),
-                                                     @"initial_device_display_name":self.deviceDisplayName
-                                                     };
+                        NSDictionary *parameters = @{
+                            @"realName": self.userName,
+                            @"username": self.userName,
+                            @"password": self.password,
+                            @"invitationCode":self.invitationCode,
+                            @"email":self.authInputsView.userId,
+                            @"verifyCode":self.authInputsView.password,
+                            @"key": [self.userName  stringByAppendingString:@"tyq8mkg8d778d4546iin66hcuh"].md5Checksum.lowercaseString,// 是username md5加盐
+                            @"imei":[NSString stringWithUUID] };
                         
                         mxCurrentOperation = [mxRestClient registerWithParameters:parameters success:^(NSDictionary *JSONResponse) {
-                            
-                            // Unexpected case where the registration succeeds without any other stages
+                       
                             MXLoginResponse *loginResponse;
                             MXJSONModelSetMXJSONModel(loginResponse, MXLoginResponse, JSONResponse);
 
@@ -1122,56 +1191,6 @@
                             
                         }];
                     }
-                }
-                else if (self.externalRegistrationParameters)
-                {
-                    // Launch registration by preparing parameters dict
-                    [self.authInputsView prepareParameters:^(NSDictionary *parameters, NSError *error) {
-                        
-                        if (parameters && self->mxRestClient)
-                        {
-//                            [self->_authenticationActivityIndicator startAnimating];
-//                            [self registerWithParameters:parameters];
-                        }
-                        else
-                        {
-                            MXLogDebug(@"[MXKAuthenticationVC] Failed to prepare parameters");
-                            [self onFailureDuringAuthRequest:error];
-                        }
-                        
-                    }];
-                }
-                else
-                {
-                    MXLogDebug(@"[MXKAuthenticationVC] User name is missing");
-                    [self onFailureDuringAuthRequest:[NSError errorWithDomain:MXKAuthErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey:[VectorL10n authInvalidUserName]}]];
-                }
-            }
-            else if (_authType == MXKAuthenticationTypeForgotPassword)
-            {
-                // Check whether the password has been reseted
-                if (isPasswordReseted)
-                {
-                    // Return to login screen
-                    self.authType = MXKAuthenticationTypeLogin;
-                }
-                else
-                {
-                    // Prepare the parameters dict
-                    [self.authInputsView prepareParameters:^(NSDictionary *parameters, NSError *error) {
-                        
-                        if (parameters && self->mxRestClient)
-                        {
-//                            [self->_authenticationActivityIndicator startAnimating];
-//                            [self resetPasswordWithParameters:parameters];
-                        }
-                        else
-                        {
-                            MXLogDebug(@"[MXKAuthenticationVC] Failed to prepare parameters");
-                            [self onFailureDuringAuthRequest:error];
-                        }
-                        
-                    }];
                 }
             }
         }
@@ -1632,7 +1651,52 @@
         _noFlowLabel.hidden = NO;
     }
 }
-
+- (void)refreshEmilCheckSession
+{
+    [_authenticationActivityIndicator stopAnimating];
+    
+    MXKAuthInputsView *authInputsView = nil;
+    if (EmilCheckAuthInputsViewClass)
+    {
+        // Instantiate a new auth inputs view, except if the current one is already an instance of this class.
+        if (self.authInputsView && self.authInputsView.class == EmilCheckAuthInputsViewClass)
+        {
+            // Use the current view
+            authInputsView = self.authInputsView;
+        }
+        else
+        {
+            authInputsView = [EmilCheckAuthInputsViewClass authInputsView];
+        }
+    }
+    
+    if (authInputsView)
+    {
+        // Update authentication inputs view to return in initial step
+        [authInputsView setAuthSession:nil withAuthType:MXKAuthenticationTypeEmilCheck];
+        
+        // Check whether the current view must be replaced
+        if (self.authInputsView != authInputsView)
+        {
+            // Refresh layout
+            self.authInputsView = authInputsView;
+        }
+        
+        // Refresh user interaction
+        self.userInteractionEnabled = _userInteractionEnabled;
+    }
+    else
+    {
+        // Remove the potential auth inputs view
+        self.authInputsView = nil;
+        
+        _noFlowLabel.text = [VectorL10n loginErrorForgotPasswordIsNotSupported];
+        
+        MXLogDebug(@"[MXKAuthenticationVC] Warning: %@", _noFlowLabel.text);
+        
+        _noFlowLabel.hidden = NO;
+    }
+}
 - (void)updateRESTClient
 {
     NSString *homeserverURL = [HomeserverAddress sanitized:_homeServerTextField.text];

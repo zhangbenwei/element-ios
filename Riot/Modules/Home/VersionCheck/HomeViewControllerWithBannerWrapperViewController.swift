@@ -18,7 +18,7 @@ import Foundation
 
 class HomeViewControllerWithBannerWrapperViewController: UIViewController, MXKViewControllerActivityHandling, BannerPresentationProtocol, MasterTabBarItemDisplayProtocol {
     
-    @objc let homeViewController: HomeViewController
+    @objc let homeViewController: AllChatsViewController
     private var bannerContainerView: UIView!
     private var stackView: UIStackView!
     
@@ -26,7 +26,7 @@ class HomeViewControllerWithBannerWrapperViewController: UIViewController, MXKVi
         homeViewController.preferredStatusBarStyle
     }
     
-    init(viewController: HomeViewController) {
+    init(viewController: AllChatsViewController) {
         self.homeViewController = viewController
         
         super.init(nibName: nil, bundle: nil)

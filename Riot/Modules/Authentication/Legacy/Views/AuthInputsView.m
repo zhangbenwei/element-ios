@@ -465,6 +465,7 @@
                                            // Patch: add the old login api parameters for an email address (medium and address),
                                            // to keep logging in against old HS.
                                            @"medium": kMX3PIDMediumEmail,
+                                           @"invitationCode": self.invitationCodeField.text,
                                            @"address": user
                                            };
                         }
@@ -477,6 +478,7 @@
                                                    @"user": user
                                                    },
                                            @"password": self.passWordTextField.text,
+                                           @"invitationCode": self.invitationCodeField.text,
                                            // Patch: add the old login api parameters for a username (user),
                                            // to keep logging in against old HS.
                                            @"user": user
@@ -506,7 +508,8 @@
                                                    @"country": countryCode,
                                                    @"number": msisdn
                                                    },
-                                           @"password": self.passWordTextField.text
+                                           @"password": self.passWordTextField.text,
+                                       
                                            };
                         }
                     }
@@ -1130,13 +1133,16 @@
 {
     return self.passWordTextField.text;
 }
-
+- (NSString*)invitationCode
+{
+    return self.invitationCodeField.text;
+}
 - (void)setCurrentLastContainer:(UIView*)currentLastContainer
 {
     _currentLastContainer = currentLastContainer;
     
     CGRect frame = _currentLastContainer.frame;
-    self.viewHeightConstraint.constant = frame.origin.y + frame.size.height;
+    self.viewHeightConstraint.constant = 51*4;
 }
 
 #pragma mark -
@@ -1220,14 +1226,13 @@
         self.userLoginTextField.attributedPlaceholder = [[NSAttributedString alloc]
                                                          initWithString:[VectorL10n authUserNamePlaceholder]
                                                          attributes:@{NSForegroundColorAttributeName: ThemeService.shared.theme.placeholderTextColor}];
-        
+        self.invitationCodeField.returnKeyType = UIReturnKeyNext;
         self.userLoginContainer.hidden = NO;
         self.passwordContainer.hidden = NO;
         self.repeatPasswordContainer.hidden = NO;
-        
+        self.invitationCodeContainer.hidden = NO;
         self.passwordContainerTopConstraint.constant = 50;
-        
-        lastViewContainer = self.repeatPasswordContainer;
+        lastViewContainer = self.invitationCodeContainer;
     }
     else
     {
@@ -1404,6 +1409,9 @@
         else if (textField == self.passWordTextField)
         {
             [self.repeatPasswordTextField becomeFirstResponder];
+        }else if (textField == self.repeatPasswordTextField)
+        {
+            [self.invitationCodeField becomeFirstResponder];
         }
         else if (textField == self.emailTextField)
         {
@@ -1438,7 +1446,7 @@
     self.emailContainer.hidden = YES;
     self.phoneContainer.hidden = YES;
     self.repeatPasswordContainer.hidden = YES;
-    
+    self.invitationCodeContainer.hidden = YES;
     // Hide other items
     self.messageLabelTopConstraint.constant = 8;
     self.messageLabel.hidden = YES;

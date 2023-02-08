@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -17,7 +16,7 @@
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ckH-mV-Yds">
                     <rect key="frame" x="0.0" y="37.5" width="600" height="183"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fSJ-23-bFN">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fSJ-23-bFN">
                             <rect key="frame" x="180" y="75.5" width="240" height="32"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="240" id="VLC-VR-Z4I"/>
@@ -243,10 +242,10 @@
                     <accessibility key="accessibilityConfiguration" identifier="AuthInputsViewRepeatPasswordContainer"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="ddx-5u-PbG" secondAttribute="trailing" constant="10" id="1BD-IR-hbK"/>
-                        <constraint firstAttribute="bottom" secondItem="ddx-5u-PbG" secondAttribute="bottom" id="20V-Dg-8wr"/>
                         <constraint firstAttribute="height" constant="50" id="3q4-4P-iJB"/>
                         <constraint firstItem="ddx-5u-PbG" firstAttribute="leading" secondItem="rb1-L5-udI" secondAttribute="leading" constant="10" id="5hT-vS-fCs"/>
                         <constraint firstItem="BQM-LP-8Eq" firstAttribute="leading" secondItem="rb1-L5-udI" secondAttribute="leading" constant="18" id="Q4d-UG-Pdq"/>
+                        <constraint firstItem="ddx-5u-PbG" firstAttribute="top" secondItem="BQM-LP-8Eq" secondAttribute="bottom" constant="10" id="U00-Uj-CSl"/>
                         <constraint firstAttribute="trailing" secondItem="BQM-LP-8Eq" secondAttribute="trailing" constant="18" id="szW-TY-aUw"/>
                         <constraint firstItem="BQM-LP-8Eq" firstAttribute="top" secondItem="rb1-L5-udI" secondAttribute="top" constant="18" id="yhI-hm-zp5"/>
                     </constraints>
@@ -255,7 +254,7 @@
                     <rect key="frame" x="10" y="8" width="580" height="19.5"/>
                     <accessibility key="accessibilityConfiguration" identifier="AuthInputsViewMessageLabel"/>
                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="textColor" systemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view hidden="YES" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="whs-Ob-uzD">
@@ -268,7 +267,38 @@
                         <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="AuthInputsViewRecaptchaWebView"/>
                     </userDefinedRuntimeAttributes>
                 </view>
-                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sz8-Gm-Piu" customClass="TermsView" customModule="Riot" customModuleProvider="target">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="caL-cj-KZA" userLabel="Invitation code Container">
+                    <rect key="frame" x="0.0" y="150" width="582" height="50"/>
+                    <subviews>
+                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="邀请码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zi3-1k-Kfh">
+                            <rect key="frame" x="18" y="14.5" width="564" height="21"/>
+                            <rect key="contentStretch" x="0.0" y="0.0" width="0.0" height="0.0"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="21" id="ZRI-an-hFG"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2au-sg-Ghm" userLabel="Invitation code Separator">
+                            <rect key="frame" x="0.0" y="49" width="600" height="1"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="xTr-rs-AOQ"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="2au-sg-Ghm" secondAttribute="bottom" id="6Is-QW-aqL"/>
+                        <constraint firstItem="2au-sg-Ghm" firstAttribute="leading" secondItem="caL-cj-KZA" secondAttribute="leading" id="Zjd-AC-zsf"/>
+                        <constraint firstAttribute="height" constant="50" id="gmx-h0-f5Z"/>
+                        <constraint firstAttribute="trailing" secondItem="Zi3-1k-Kfh" secondAttribute="trailing" id="mIm-uR-I77"/>
+                        <constraint firstItem="2au-sg-Ghm" firstAttribute="leading" secondItem="caL-cj-KZA" secondAttribute="leading" id="qkn-mY-Tw0"/>
+                        <constraint firstItem="Zi3-1k-Kfh" firstAttribute="centerY" secondItem="caL-cj-KZA" secondAttribute="centerY" id="sHF-XO-Qrl"/>
+                        <constraint firstItem="Zi3-1k-Kfh" firstAttribute="centerX" secondItem="2au-sg-Ghm" secondAttribute="centerX" id="soI-6V-RXh"/>
+                        <constraint firstItem="Zi3-1k-Kfh" firstAttribute="leading" secondItem="caL-cj-KZA" secondAttribute="leading" constant="18" id="wie-cp-cHT"/>
+                    </constraints>
+                </view>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sz8-Gm-Piu" customClass="TermsView" customModule="Element" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="27.5" width="600" height="183"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
@@ -281,6 +311,7 @@
             <constraints>
                 <constraint firstItem="UfH-jv-6w4" firstAttribute="top" secondItem="x74-04-ezp" secondAttribute="top" constant="50" id="1LY-GW-rgL"/>
                 <constraint firstItem="ckH-mV-Yds" firstAttribute="leading" secondItem="x74-04-ezp" secondAttribute="leading" id="1SM-3z-RE3"/>
+                <constraint firstItem="rb1-L5-udI" firstAttribute="top" secondItem="UfH-jv-6w4" secondAttribute="bottom" id="5EX-kO-NYI"/>
                 <constraint firstItem="rb1-L5-udI" firstAttribute="top" secondItem="x74-04-ezp" secondAttribute="top" constant="100" id="75U-tx-PsQ"/>
                 <constraint firstItem="UfH-jv-6w4" firstAttribute="leading" secondItem="x74-04-ezp" secondAttribute="leading" id="7Bk-GF-MZ0"/>
                 <constraint firstItem="IB7-1E-eeL" firstAttribute="leading" secondItem="x74-04-ezp" secondAttribute="leading" id="7Lr-fy-W8L"/>
@@ -292,20 +323,25 @@
                 <constraint firstItem="Sz8-Gm-Piu" firstAttribute="centerX" secondItem="x74-04-ezp" secondAttribute="centerX" id="B9b-wC-tsj"/>
                 <constraint firstItem="68j-f9-JG4" firstAttribute="top" secondItem="x74-04-ezp" secondAttribute="top" constant="8" id="BK1-XE-vz5"/>
                 <constraint firstItem="bXz-VI-5FS" firstAttribute="leading" secondItem="x74-04-ezp" secondAttribute="leading" id="Frq-sH-HZT"/>
+                <constraint firstAttribute="trailing" secondItem="caL-cj-KZA" secondAttribute="trailing" constant="18" id="Fvh-4E-OCC"/>
+                <constraint firstAttribute="bottom" secondItem="caL-cj-KZA" secondAttribute="bottom" id="Io9-io-K1x"/>
+                <constraint firstItem="caL-cj-KZA" firstAttribute="top" secondItem="rb1-L5-udI" secondAttribute="bottom" id="KNo-ez-FFN"/>
                 <constraint firstItem="xOW-lo-QGC" firstAttribute="leading" secondItem="x74-04-ezp" secondAttribute="leading" id="NOu-LR-RvE"/>
                 <constraint firstAttribute="trailing" secondItem="bXz-VI-5FS" secondAttribute="trailing" id="NiV-pJ-PfV"/>
                 <constraint firstItem="ckH-mV-Yds" firstAttribute="centerY" secondItem="x74-04-ezp" secondAttribute="centerY" priority="100" id="PNx-SK-FZY"/>
+                <constraint firstItem="caL-cj-KZA" firstAttribute="leading" secondItem="UfH-jv-6w4" secondAttribute="leading" id="RKo-EG-zsr"/>
                 <constraint firstAttribute="trailing" secondItem="xOW-lo-QGC" secondAttribute="trailing" id="SNm-WQ-Piu"/>
                 <constraint firstItem="xOW-lo-QGC" firstAttribute="top" secondItem="x74-04-ezp" secondAttribute="top" id="WmX-gO-hPJ"/>
-                <constraint firstItem="rb1-L5-udI" firstAttribute="leading" secondItem="x74-04-ezp" secondAttribute="leading" id="XAJ-ST-sWV"/>
                 <constraint firstItem="Sz8-Gm-Piu" firstAttribute="width" secondItem="x74-04-ezp" secondAttribute="width" id="ZWc-mu-VrY"/>
                 <constraint firstItem="68j-f9-JG4" firstAttribute="leading" secondItem="x74-04-ezp" secondAttribute="leading" constant="10" id="aYh-VJ-bss"/>
-                <constraint firstAttribute="trailing" secondItem="rb1-L5-udI" secondAttribute="trailing" id="c49-Cf-H9a"/>
                 <constraint firstItem="bXz-VI-5FS" firstAttribute="top" secondItem="x74-04-ezp" secondAttribute="top" id="enV-j0-cgR"/>
                 <constraint firstItem="whs-Ob-uzD" firstAttribute="top" secondItem="68j-f9-JG4" secondAttribute="bottom" id="g87-rp-bgb"/>
+                <constraint firstAttribute="trailing" secondItem="rb1-L5-udI" secondAttribute="trailing" id="grX-8Y-MdJ"/>
                 <constraint firstAttribute="height" constant="200" id="qBF-0J-3VM"/>
+                <constraint firstItem="rb1-L5-udI" firstAttribute="leading" secondItem="caL-cj-KZA" secondAttribute="leading" id="r2S-An-s04"/>
                 <constraint firstItem="Sz8-Gm-Piu" firstAttribute="top" secondItem="68j-f9-JG4" secondAttribute="bottom" id="sQW-Yb-hDW"/>
                 <constraint firstItem="IB7-1E-eeL" firstAttribute="top" secondItem="x74-04-ezp" secondAttribute="top" id="sZH-Qr-87A"/>
+                <constraint firstItem="rb1-L5-udI" firstAttribute="height" secondItem="caL-cj-KZA" secondAttribute="height" id="sej-Rh-QIi"/>
                 <constraint firstAttribute="trailing" secondItem="IB7-1E-eeL" secondAttribute="trailing" id="vU9-1q-KfI"/>
                 <constraint firstItem="whs-Ob-uzD" firstAttribute="width" secondItem="x74-04-ezp" secondAttribute="width" id="wa3-pP-FzX"/>
             </constraints>
@@ -320,6 +356,9 @@
                 <outlet property="emailContainerTopConstraint" destination="enV-j0-cgR" id="zY3-YX-7Bg"/>
                 <outlet property="emailSeparator" destination="YQ4-Kj-XPh" id="iub-NG-iJR"/>
                 <outlet property="emailTextField" destination="odF-W1-Vdr" id="DOS-H7-MZy"/>
+                <outlet property="invitationCodeContainer" destination="2au-sg-Ghm" id="A0n-4z-gRT"/>
+                <outlet property="invitationCodeField" destination="Zi3-1k-Kfh" id="yru-EH-MGn"/>
+                <outlet property="invitationCodeSeparator" destination="caL-cj-KZA" id="zls-Ep-nub"/>
                 <outlet property="isoCountryCodeLabel" destination="u0g-Z1-e7a" id="gfa-7T-Zgb"/>
                 <outlet property="messageLabel" destination="68j-f9-JG4" id="LfM-qs-gEM"/>
                 <outlet property="messageLabelTopConstraint" destination="BK1-XE-vz5" id="Kc9-ub-nge"/>
@@ -344,9 +383,16 @@
                 <outlet property="userLoginTextField" destination="i51-ym-i9T" id="XKi-6m-tFv"/>
                 <outlet property="viewHeightConstraint" destination="qBF-0J-3VM" id="GLh-gg-bh5"/>
             </connections>
+            <point key="canvasLocation" x="116" y="-11"/>
         </view>
     </objects>
     <resources>
         <image name="shrink_icon" width="12" height="6"/>
+        <systemColor name="darkTextColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

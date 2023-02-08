@@ -152,5 +152,9 @@ NSString *const MXKAuthErrorDomain = @"MXKAuthErrorDomain";
 {
     return nil;
 }
+- (NSString*)invitationCode
+{
+    return nil;
+}
 
 @end

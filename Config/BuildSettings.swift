@@ -97,11 +97,14 @@ final class BuildSettings: NSObject {
     
     
     // MARK: - Server configuration
-    
+#if DEBUG
     // Default servers proposed on the authentication screen
+    static let serverConfigDefaultHomeserverUrlString = "https://chat.xrzl.xyz"
+    static let serverConfigDefaultIdentityServerUrlString = "https://chat.xrzl.xyz"
+    #else
     static let serverConfigDefaultHomeserverUrlString = "https://morse.cf"
     static let serverConfigDefaultIdentityServerUrlString = "https://morse.cf"
-    
+    #endif
     static let serverConfigSygnalAPIUrlString = "https://matrix.org/_matrix/push/v1/notify"
     
     
@@ -117,8 +120,7 @@ final class BuildSettings: NSObject {
     
     // MARK: - Permalinks
     // Hosts/Paths for URLs that will considered as valid permalinks. Those permalinks are opened within the app.
-    static let permalinkSupportedHosts: [String: [String]] = [
-        "im.morse.cf": [],
+    static let permalinkSupportedHosts: [String: [String]] = [ 
         "morse.cf": [], 
         "app.element.io": [],
         "staging.element.io": [],
@@ -267,9 +269,9 @@ final class BuildSettings: NSObject {
     
     // MARK: - Main Tabs
     
-    static let homeScreenShowFavouritesTab: Bool = false
-    static let homeScreenShowPeopleTab: Bool = false
-    static let homeScreenShowRoomsTab: Bool = false
+    static let homeScreenShowFavouritesTab: Bool = true
+    static let homeScreenShowPeopleTab: Bool = true
+    static let homeScreenShowRoomsTab: Bool = true
 
     // MARK: - General Settings Screen
     
@@ -429,7 +431,7 @@ final class BuildSettings: NSObject {
     static let syncLocalContacts: Bool = false
     
     // MARK: - New App Layout
-    static let newAppLayoutEnabled = true
+    static let newAppLayoutEnabled = false
 
     // MARK: - QR Login
     

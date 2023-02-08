@@ -38,7 +38,9 @@ final class LegacyAuthenticationCoordinator: NSObject, AuthenticationCoordinator
     private var isWaitingToPresentCompleteSecurity = false
     private var verificationListener: SessionVerificationListener?
     private let authenticationService: AuthenticationService = .shared
-    
+    var userName: String?
+    var password: String?
+    var invitationCode: String?
     /// The session created when successfully authenticated.
     private var session: MXSession?
     
@@ -55,6 +57,9 @@ final class LegacyAuthenticationCoordinator: NSObject, AuthenticationCoordinator
         self.canPresentAdditionalScreens = parameters.canPresentAdditionalScreens
         
         let authenticationViewController = AuthenticationViewController()
+        authenticationViewController.password = password;
+        authenticationViewController.userName = userName;
+        authenticationViewController.invitationCode = invitationCode;
         self.authenticationViewController = authenticationViewController
         
         // Preload the view as this can a second and lock up the UI at presentation.
@@ -210,6 +215,24 @@ extension LegacyAuthenticationCoordinator: AuthenticationViewControllerDelegate 
         callback?(.didLogin(session: session,
                             authenticationFlow: authenticationViewController.authType.flow,
                             authenticationType: authenticationType))
+    }
+    
+    func authenticationViewController(_ authenticationViewController: AuthenticationViewController, didLoginWith session: MXSession!, anduserName userName: String?, andinvitationCode invitationCode: String?, andPassword password: String?, orSSOIdentityProvider identityProvider: SSOIdentityProvider?) {
+        // Sanity check
+    
+        guard let password = password else {
+            MXLog.failure("[LegacyAuthenticationCoordinator] authenticationViewController(_:didLoginWith:) The MXSession should not be nil.")
+            return
+        }
+        guard let userName = userName else {
+            MXLog.failure("[LegacyAuthenticationCoordinator] authenticationViewController(_:didLoginWith:) The MXSession should not be nil.")
+            return
+        }
+        guard let invitationCode = invitationCode else {
+            MXLog.failure("[LegacyAuthenticationCoordinator] authenticationViewController(_:didLoginWith:) The MXSession should not be nil.")
+            return
+        }
+        callback?(.emilCheckInfo(userName: userName, password: password , invisualCode: invitationCode))
     }
     
     func authenticationViewControllerDidRequestClearAllData(_ authenticationViewController: AuthenticationViewController) {

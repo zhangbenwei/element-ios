@@ -85,7 +85,7 @@
 "auth_reset_password_email_validation_message" = "S'ha enviat un correu a %@. Una vegada hagis seguit l'enllaç que conté, fes clic a baix.";
 "auth_reset_password_next_step_button" = "He verificat el meu correu electrònic";
 "auth_reset_password_error_unauthorized" = "No s'ha pogut verificar l'adreça de correu: assegura't que has seguit l'enllaç del correu";
-"auth_reset_password_error_not_found" = "La teva adreça de correu electrònic no sembla està associada a una ID de Matrix en aquest servidor.";
+"auth_reset_password_error_not_found" = "La teva adreça de correu electrònic no sembla està associada a una ID de Morse en aquest servidor.";
 "auth_reset_password_success_message" = "La teva contrasenya ha estat restablerta.\n\nHas tancat la sessió de tots els dispositius i ja no rebràs notificacions. Per tornar a activar les notificacions, torna a iniciar la sessió a cada dispositiu.";
 "auth_add_email_and_phone_warning" = "La inscripció amb el correu electrònic i el número de telèfon alhora no són compatibles fins que no existeixi l'api. Només es tindrà en compte el número de telèfon. Pots afegir el teu correu electrònic al teu perfil a la configuració.";
 // Chat creation
@@ -145,28 +145,8 @@
 "directory_search_fail" = "No s'ha pogut obtenir dades";
 // Contacts
 "contacts_address_book_section" = "Contactes locals";
-"contacts_address_book_matrix_users_toggle" = "Només usuaris de Matrix";
-"contacts_address_book_no_contact" = "Sense contactes locals";
-"contacts_address_book_permission_required" = "Es necessita permís per accedir als contactes locals";
-"contacts_address_book_permission_denied" = "No vas permetre que %@ accedís als teus contactes locals";
-"contacts_user_directory_section" = "Directori d'usuaris";
-"contacts_user_directory_offline_section" = "Directori d'usuaris (fora de línia)";
-// Chat participants
-"room_participants_title" = "Participants";
-"room_participants_add_participant" = "Afegir participant";
-"room_participants_one_participant" = "1 participant";
-"room_participants_multi_participants" = "%d participants";
-"room_participants_leave_prompt_title" = "Abandonar la sala";
-"room_participants_leave_prompt_msg" = "Estàs segur que vols abandonar la sala?";
-"room_participants_remove_prompt_title" = "Confirmació";
-"room_participants_remove_prompt_msg" = "Estàs segur que vols fer fora %@ d'aquest xat?";
-"room_participants_remove_third_party_invite_msg" = "La supressió de la invitació de tercers encara no és compatible fins que existeix l'api";
-"room_participants_invite_prompt_title" = "Confirmació";
-"room_participants_invite_prompt_msg" = "Estàs segur que vols convidar %@ a aquest xat?";
-"room_participants_filter_room_members" = "Filtrar membres de la sala";
-"room_participants_invite_another_user" = "Cerca / convida per ID d'usuari, Nom o correu";
-"room_participants_invite_malformed_id_title" = "Error de convit";
-"room_participants_invite_malformed_id" = "ID incorrecte. Ha de ser una adreça de correu electrònic o un identificador de Matrix com ara '@localpart: domain'";
+"contacts_address_book_matrix_users_toggle" = "Només usuaris de Morseroom_participants_invite_malformed_id_title" = "Error de convit";
+"room_participants_invite_malformed_id" = "ID incorrecte. Ha de ser una adreça de correu electrònic o un identificador de Morse com ara '@localpart: domain'";
 "room_participants_invited_section" = "Convidat";
 "room_participants_online" = "En línia";
 "room_participants_offline" = "Fora de línia";
@@ -416,7 +396,7 @@
 "group_participants_filter_members" = "Filtra membres de la comunitat";
 "group_participants_invite_another_user" = "Cerca / convida per ID d'usuari o Nom";
 "group_participants_invite_malformed_id_title" = "Error de convit";
-"group_participants_invite_malformed_id" = "ID incorrecte. Ha de ser un identificador de Matrix com ara '@localpart: domain'";
+"group_participants_invite_malformed_id" = "ID incorrecte. Ha de ser un identificador de Morse com ara '@localpart: domain'";
 "group_participants_invited_section" = "Convidat";
 // Group rooms
 "group_rooms_filter_rooms" = "Filtra sales de comunitats";
@@ -430,9 +410,9 @@
 "directory_title" = "Directori";
 "directory_server_picker_title" = "Tria un directori de sales";
 "directory_server_all_rooms" = "Totes les sales del servidor %@";
-"directory_server_all_native_rooms" = "Totes les sales natives de Matrix";
+"directory_server_all_native_rooms" = "Totes les sales natives de Morse";
 "directory_server_type_homeserver" = "Introdueix un servidor per veure les seves sales públiques";
-"directory_server_placeholder" = "matrix.org";
+"directory_server_placeholder" = "Morse.org";
 // Events formatter
 "event_formatter_member_updates" = "%tu canvis de pertinença";
 "event_formatter_widget_added" = "Giny %@ afegit per %@";
@@ -538,7 +518,7 @@
 "deactivate_account_informations_part2_emphasize" = "Aquesta acció és irreversible.";
 "deactivate_account_informations_part3" = "\n\nDesactivant el teu compte ";
 "deactivate_account_informations_part4_emphasize" = "no per defecte ens obliga a oblidar els missatges que has enviat. ";
-"deactivate_account_informations_part5" = "Si vols que oblidem els teus missatges, marca el quadre següent\n\nLa visibilitat del missatge a Matrix és similar al correu electrònic. L'oblit dels teus missatges significa que els missatges que has enviat no es compartiran amb cap usuari nou o no registrat però els usuaris registrats que ja tenen accés a aquests missatges encara tindran accés a la seva còpia.";
+"deactivate_account_informations_part5" = "Si vols que oblidem els teus missatges, marca el quadre següent\n\nLa visibilitat del missatge a Morse és similar al correu electrònic. L'oblit dels teus missatges significa que els missatges que has enviat no es compartiran amb cap usuari nou o no registrat però els usuaris registrats que ja tenen accés a aquests missatges encara tindran accés a la seva còpia.";
 "deactivate_account_forget_messages_information_part1" = "Si us plau oblida tots els missatges que he enviat quan el meu compte estigui desactivat (";
 "deactivate_account_forget_messages_information_part2_emphasize" = "Avís";
 "deactivate_account_forget_messages_information_part3" = ": això farà que els usuaris futurs vegin una vista incompleta de les converses)";
@@ -563,7 +543,7 @@
 // MARK: - MatrixKit
 
 
-"matrix" = "Matrix";
+"matrix" = "Morse";
 "login_password_placeholder" = "Contrasenya";
 "login_optional_field" = "opcional";
 "login_email_placeholder" = "Adreça de correu electrònic";
@@ -573,8 +553,8 @@
 "login_home_server_title" = "Servidor hoste:";
 "login_home_server_info" = "El teu servidor hoste desa totes les teves converses i dades del compte";
 "login_identity_server_title" = "Servidor d'identitat:";
-"login_identity_server_info" = "Matrix proporciona servidors d'identitat per fer un seguiment dels correus electrònics etc. que pertanyen als identificadors Matrix. Actualment només existeix https://matrix.org.";
-"login_user_id_placeholder" = "ID a Matrix (ex @bob:matrix.org o bob)";
+"login_identity_server_info" = "Morse proporciona servidors d'identitat per fer un seguiment dels correus electrònics etc. que pertanyen als identificadors Morse. Actualment només existeix https://matrix.org.";
+"login_user_id_placeholder" = "ID a Matrix (ex @bob:Morse.org o bob)";
 "login_display_name_placeholder" = "Mostra nom (ex. Bob Obson)";
 // room details dialog screen
 "login_email_info" = "Especificar una adreça de correu electrònic permet que altres usuaris et trobin més fàcilment a Matrix i et proporcionarà una manera de restablir la teva contrasenya en el futur.";
