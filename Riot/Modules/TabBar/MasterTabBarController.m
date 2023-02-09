@@ -315,7 +315,7 @@
                                                           recentsListService:recentsListService];
         [self.roomsViewController displayList:recentsDataSource];
         [self.homeViewController displayList:recentsDataSource];
-        [self.favouritesViewController displayList:recentsDataSource];
+     //   [self.favouritesViewController displayList:recentsDataSource];
         [self.peopleViewController displayList:recentsDataSource];
       
         
@@ -330,7 +330,7 @@
             case TABBAR_HOME_INDEX:
                 break;
             case TABBAR_FAVOURITES_INDEX:
-                recentsDataSourceDelegate = self.favouritesViewController;
+              //  recentsDataSourceDelegate = self.favouritesViewController;
                 recentsDataSourceMode = RecentsDataSourceModeFavourites;
                 break;
             case TABBAR_PEOPLE_INDEX:
@@ -422,7 +422,7 @@
         [[NSNotificationCenter defaultCenter] removeObserver:self name:kMXSessionStateDidChangeNotification object:nil];
         
         [self.homeViewController displayList:nil];
-        [self.favouritesViewController displayList:nil];
+       // [self.favouritesViewController displayList:nil];
         [self.peopleViewController displayList:nil];
         [self.roomsViewController displayList:nil];
         

@@ -17,6 +17,25 @@
 #import "MXKViewControllerHandling.h"
 #import "MXKActivityHandlingViewController.h"
 
+#define kScreenWidth [UIScreen mainScreen].bounds.size.width 
+#define kScreenHeight [UIScreen mainScreen].bounds.size.Height
+#define IPHONE_6P_kScreenWidth 414.0f // iPhone6P屏幕的宽
+#define RealWidth (kScreenWidth < kScreenHeight ? kScreenWidth : kScreenHeight)
+#define kRPViewRatio (RealWidth/IPHONE_6P_kScreenWidth)  // 缩放比例
+#define kRPRealValue(value) ((value)* kRPViewRatio) // 根据比例得到实际的尺寸
+
+#define isIphoneXFamily ((kScreenWidth / kScreenHeight) < 0.56 ? YES : NO)
+#define Height_StatusBar [[NSUserDefaults standardUserDefaults] doubleForKey:@"HVStatusBarHeight"]
+#define Height_NavBar (Height_StatusBar + 44.f)
+#define ISIPHONE_XSERIES   ((Height_StatusBar == (20.0)) ? NO : YES)
+#define Height_TabBar (ISIPHONE_XSERIES ? 84.0 : 49.0)
+#define Height_NOTabBar (ISIPHONE_XSERIES ? (35.0f) : 0)
+#define Height_NOStatus (ISIPHONE_XSERIES ? (44.0f) : 0)
+#define playWidth  ((Height_StatusBar == (20.0) ) ? kScreenWidth:((kScreenHeight - Height_TabBar)/16.0*9.0))
+#define statusBarHeight Height_StatusBar
+
+#define playHeight  ((Height_StatusBar == (20.0)) ? kScreenHeight:(kScreenHeight - Height_TabBar))
+
 /**
  MXKViewController extends UIViewController to handle requirements for
  any matrixKit view controllers (see MXKViewControllerHandling protocol).

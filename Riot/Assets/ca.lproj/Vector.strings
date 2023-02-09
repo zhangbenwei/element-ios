@@ -145,8 +145,29 @@
 "directory_search_fail" = "No s'ha pogut obtenir dades";
 // Contacts
 "contacts_address_book_section" = "Contactes locals";
-"contacts_address_book_matrix_users_toggle" = "Només usuaris de Morseroom_participants_invite_malformed_id_title" = "Error de convit";
-"room_participants_invite_malformed_id" = "ID incorrecte. Ha de ser una adreça de correu electrònic o un identificador de Morse com ara '@localpart: domain'";
+"contacts_address_book_matrix_users_toggle" = "Només usuaris de Matrix";
+"contacts_address_book_no_contact" = "Sense contactes locals";
+"contacts_address_book_permission_required" = "Es necessita permís per accedir als contactes locals";
+"contacts_address_book_permission_denied" = "No vas permetre que %@ accedís als teus contactes locals";
+"contacts_user_directory_section" = "Directori d'usuaris";
+"contacts_user_directory_offline_section" = "Directori d'usuaris (fora de línia)";
+// Chat participants
+"room_participants_title" = "Participants";
+"room_participants_add_participant" = "Afegir participant";
+"room_participants_one_participant" = "1 participant";
+"room_participants_multi_participants" = "%d participants";
+"room_participants_leave_prompt_title" = "Abandonar la sala";
+"room_participants_leave_prompt_msg" = "Estàs segur que vols abandonar la sala?";
+"room_participants_remove_prompt_title" = "Confirmació";
+"room_participants_remove_prompt_msg" = "Estàs segur que vols fer fora %@ d'aquest xat?";
+"room_participants_remove_third_party_invite_msg" = "La supressió de la invitació de tercers encara no és compatible fins que existeix l'api";
+"room_participants_invite_prompt_title" = "Confirmació";
+"room_participants_invite_prompt_msg" = "Estàs segur que vols convidar %@ a aquest xat?";
+"room_participants_filter_room_members" = "Filtrar membres de la sala";
+"room_participants_invite_another_user" = "Cerca / convida per ID d'usuari, Nom o correu";
+"room_participants_invite_malformed_id_title" = "Error de convit";
+"room_participants_invite_malformed_id" = "ID incorrecte. Ha de ser una adreça de correu electrònic o un identificador de Matrix com ara '@localpart: domain'";
+ 
 "room_participants_invited_section" = "Convidat";
 "room_participants_online" = "En línia";
 "room_participants_offline" = "Fora de línia";

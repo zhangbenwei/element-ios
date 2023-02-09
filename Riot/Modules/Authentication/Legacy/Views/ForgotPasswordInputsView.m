@@ -52,15 +52,15 @@
 {
     [super awakeFromNib];
     
-    [self.nextStepButton setTitle:[VectorL10n authResetPasswordNextStepButton] forState:UIControlStateNormal];
-    [self.nextStepButton setTitle:[VectorL10n authResetPasswordNextStepButton] forState:UIControlStateHighlighted];
+    [self.nextStepButton setTitle:@"验证码" forState:UIControlStateNormal];
+    [self.nextStepButton setTitle:@"验证码" forState:UIControlStateHighlighted];
 
     self.emailTextField.placeholder = [VectorL10n authEmailPlaceholder];
     self.passWordTextField.placeholder = [VectorL10n authNewPasswordPlaceholder];
     self.repeatPasswordTextField.placeholder = [VectorL10n authRepeatNewPasswordPlaceholder];
     
     self.emailCodeTextField.placeholder =  [VectorL10n submitCode]; ;
-    self.userNameTextField.placeholder = [VectorL10n authUsernameInUse]; ;
+    self.userNameTextField.placeholder = @"用户名"; ;
     [self customizeViewRendering];
 }
 
@@ -93,7 +93,7 @@
         lastItemFrame = self.messageLabel.frame;
     }
     
-    self.viewHeightConstraint.constant = 51 *5 + 38;
+    self.viewHeightConstraint.constant = CGRectGetMaxY(lastItemFrame)  + 10;
 }
 
 #pragma mark - Override MXKView
@@ -109,14 +109,14 @@
     self.repeatPasswordTextField.textColor = ThemeService.shared.theme.textPrimaryColor;
     self.userNameTextField.textColor = ThemeService.shared.theme.textPrimaryColor;
     self.emailCodeTextField.textColor = ThemeService.shared.theme.textPrimaryColor;
+    
     self.emailSeparator.backgroundColor = ThemeService.shared.theme.lineBreakColor;
     self.passwordSeparator.backgroundColor = ThemeService.shared.theme.lineBreakColor;
     self.repeatPasswordSeparator.backgroundColor = ThemeService.shared.theme.lineBreakColor;
-    self.userNameContainer.backgroundColor = ThemeService.shared.theme.lineBreakColor;
-    self.EmailCodeContainer.backgroundColor = ThemeService.shared.theme.lineBreakColor;
+
     
     self.messageLabel.numberOfLines = 0;
-    
+    self. nextStepButton.hidden = NO;
     [self.nextStepButton.layer setCornerRadius:10];
     self.nextStepButton.clipsToBounds = YES;
     self.nextStepButton.backgroundColor = ThemeService.shared.theme.tintColor;
@@ -187,6 +187,7 @@
     }
     else if (!self.passWordTextField.text.length)
     {
+      
         MXLogDebug(@"[ForgotPasswordInputsView] Missing Passwords");
         errorMsg = [VectorL10n authResetPasswordMissingPassword];
     }
@@ -202,6 +203,21 @@
     }
     else
     {
+        if(self.userNameTextField.text){
+        NSRegularExpression *passWordRegex = [NSRegularExpression regularExpressionWithPattern:@"^[a-z][a-zA-Z0-9]{4,15}$" options:NSRegularExpressionCaseInsensitive error:nil];
+        BOOL  isMatch = [passWordRegex firstMatchInString:self.userNameTextField.text options:0 range:NSMakeRange(0, self.userNameTextField.text.length)] == nil;
+        
+        if(isMatch){
+            errorMsg = @"用户名必须字母开头，只能数字字母，不能包含特殊字符空格";
+        }
+       }else  if(self.passWordTextField.text){
+            NSRegularExpression *passWordRegex = [NSRegularExpression regularExpressionWithPattern:@"^(?![0-9]+$)(?![a-zA-Z]+$)(?![A-Z0-9]+$)(?![a-z0-9]+$)[0-9A-Za-z]{8,20}$" options:NSRegularExpressionCaseInsensitive error:nil];
+            BOOL  isMatch = [passWordRegex firstMatchInString:self.passWordTextField.text options:0 range:NSMakeRange(0, self.passWordTextField.text.length)] == nil;
+            
+            if(isMatch){
+                errorMsg = @"密码要求8-20位，由数字、大小写字母组成";
+            }
+        }else
         // Check validity of the non empty email
         if ([MXTools isEmailAddress:self.emailTextField.text] == NO)
         {
@@ -256,103 +272,16 @@
             {
                 [self checkIdentityServerRequirement:restClient success:^{
 
-                    // Launch email validation
-                    NSString *clientSecret = [MXTools generateSecret];
-                    __weak typeof(self) weakSelf = self;
-                    [restClient forgetPasswordForEmail:self.emailTextField.text
-                                          clientSecret:clientSecret
-                                           sendAttempt:1
-                                               success:^(NSString *sid)
-                     {
-                         typeof(weakSelf) strongSelf = weakSelf;
-                         if (strongSelf) {
-                             strongSelf.didPrepareParametersCallback = callback;
-
-                             NSMutableDictionary *threepidCreds = [NSMutableDictionary dictionaryWithDictionary:@{
-                                                                                                                  @"client_secret": clientSecret,
-                                                                                                                  @"sid": sid
-                                                                                                                  }];
-                             if (restClient.identityServer)
-                             {
-                                 NSURL *identServerURL = [NSURL URLWithString:restClient.identityServer];
-                                 threepidCreds[@"id_server"] = identServerURL.host;
-                             }
-
-                             strongSelf.parameters = @{
-                                                       @"auth": @{
-                                                               @"threepid_creds": threepidCreds,
-                                                               @"type": kMXLoginFlowTypeEmailIdentity
-                                                               },
-                                                       @"new_password": strongSelf.passWordTextField.text,
-                                                   
-                                                       };
-
-                             [strongSelf hideInputsContainer];
-
-                             strongSelf.messageLabel.text = [VectorL10n authResetPasswordEmailValidationMessage:strongSelf.emailTextField.text];
-
-                             strongSelf.messageLabel.hidden = NO;
-
-                             [strongSelf.nextStepButton addTarget:strongSelf
-                                                           action:@selector(didCheckEmail:)
-                                                 forControlEvents:UIControlEventTouchUpInside];
-
-                             strongSelf.nextStepButton.hidden = NO;
-                         }
-                     }
-                                               failure:^(NSError *error)
-                     {
-                        MXLogDebug(@"[ForgotPasswordInputsView] Failed to request email token");
-
-                         // Ignore connection cancellation error
-                         if (([error.domain isEqualToString:NSURLErrorDomain] && error.code == NSURLErrorCancelled))
-                         {
-                             return;
-                         }
-
-                         NSString *errorMessage;
-
-                         // Translate the potential MX error.
-                         MXError *mxError = [[MXError alloc] initWithNSError:error];
-                         if (mxError && [mxError.errcode isEqualToString:kMXErrCodeStringThreePIDNotFound])
-                             errorMessage = [VectorL10n authEmailNotFound];
-                         else if (mxError && [mxError.errcode isEqualToString:kMXErrCodeStringServerNotTrusted])
-                             errorMessage = [VectorL10n authUntrustedIdServer];
-                         else if (error.userInfo[@"error"])
-                             errorMessage = error.userInfo[@"error"];
-                         else
-                             errorMessage = error.localizedDescription;
-
-                         if (weakSelf)
-                         {
-                             typeof(self) self = weakSelf;
-
-                             if (self->inputsAlert)
-                             {
-                                 [self->inputsAlert dismissViewControllerAnimated:NO completion:nil];
-                             }
-
-                             self->inputsAlert = [UIAlertController alertControllerWithTitle:[VectorL10n error] message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
-
-                             [self->inputsAlert addAction:[UIAlertAction actionWithTitle:[VectorL10n ok]
-                                                                                   style:UIAlertActionStyleDefault
-                                                                                 handler:^(UIAlertAction * action) {
-
-                                                                                     if (weakSelf)
-                                                                                     {
-                                                                                         typeof(self) self = weakSelf;
-                                                                                         self->inputsAlert = nil;
-                                                                                         if (self.delegate && [self.delegate respondsToSelector:@selector(authInputsViewDidCancelOperation:)])
-                                                                                         {
-                                                                                             [self.delegate authInputsViewDidCancelOperation:self];
-                                                                                         }
-                                                                                     }
-
-                                                                                 }]];
-
-                             [self.delegate authInputsView:self presentAlertController:self->inputsAlert];
-                         }
-                     }];
+                    if (callback)
+                    {
+                        self.parameters = @{
+                            @"userName":self.userNameTextField.text,
+                            @"password":self.passWordTextField.text,
+                            @"verifyCode":self.emailCodeTextField.text
+                        };
+                        callback(self.parameters, nil);
+                    }
+              
                 } failure:^(NSError *error) {
                     callback(nil, error);
                 }];
@@ -389,7 +318,7 @@
                 __weak typeof(self) weakSelf = self;
                 [restClient emilCheckForEmail:self.emailTextField.text
                                       clientSecret:clientSecret
-                                  sendAttempt:1 username:self.userNames
+                                  sendAttempt:1 username:self.userNameTextField.text isForget:YES
                                            success:^(NSString *sid)
                  {
                      typeof(weakSelf) strongSelf = weakSelf;
@@ -470,7 +399,8 @@
     [self.passWordTextField resignFirstResponder];
     [self.emailTextField resignFirstResponder];
     [self.repeatPasswordTextField resignFirstResponder];
-    
+    [self.emailCodeTextField resignFirstResponder];
+    [self.userNameTextField resignFirstResponder];
     [super dismissKeyboard];
 }
 
@@ -505,14 +435,14 @@
     
     // Reset UI by hidding all items
     [self hideInputsContainer];
-    
     self.messageLabel.text = [VectorL10n authResetPasswordMessage];
     self.messageLabel.hidden = NO;
-    
     self.emailContainer.hidden = NO;
     self.passwordContainer.hidden = NO;
     self.repeatPasswordContainer.hidden = NO;
-    
+    self.nextStepButton.hidden = NO;
+    self.userNameContainer.hidden = NO;
+    self.EmailCodeContainer.hidden = NO;
     [self layoutIfNeeded];
 }
 
@@ -588,7 +518,9 @@
     self.passwordContainer.hidden = YES;
     self.emailContainer.hidden = YES;
     self.repeatPasswordContainer.hidden = YES;
-    
+    self.nextStepButton.hidden = YES;
+    self.userNameTextField.hidden = YES;
+    self.EmailCodeContainer.hidden = YES;
     // Hide other items
     self.messageLabel.hidden = YES;
 }

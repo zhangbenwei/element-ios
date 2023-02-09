@@ -271,7 +271,7 @@ final class BuildSettings: NSObject {
     
     static let homeScreenShowFavouritesTab: Bool = true
     static let homeScreenShowPeopleTab: Bool = true
-    static let homeScreenShowRoomsTab: Bool = true
+    static let homeScreenShowRoomsTab: Bool = false
 
     // MARK: - General Settings Screen
     

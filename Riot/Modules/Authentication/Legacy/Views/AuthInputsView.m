@@ -205,7 +205,8 @@
             if (authType == MXKAuthenticationTypeLogin)
             {
                 _isSingleSignOnRequired = NO;
-
+                self.invitationCodeField.hidden = YES;;
+                self.invitationCodeContainer.hidden = YES;
                 if ([self isFlowSupported:kMXLoginFlowTypePassword])
                 {
                     BOOL showPhoneTextField = BuildSettings.authScreenShowPhoneNumber;
@@ -228,7 +229,6 @@
                     self.messageLabel.hidden = !showPhoneTextField;
                     self.phoneContainer.hidden = !showPhoneTextField;
                     self.passwordContainer.hidden = NO;
-
                     self.messageLabelTopConstraint.constant = 59;
                     
                     CGFloat phoneContainerTopConstraintConstant = 0.0;
@@ -330,13 +330,20 @@
             else
             {
                 // Check validity of the non empty user name
-                NSString *user = self.userLoginTextField.text;
-                NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"^[a-z0-9.\\-_]+$" options:NSRegularExpressionCaseInsensitive error:nil];
+                if(self.userLoginTextField.text){
+                NSRegularExpression *passWordRegex = [NSRegularExpression regularExpressionWithPattern:@"^[a-z][a-zA-Z0-9]{4,15}$" options:NSRegularExpressionCaseInsensitive error:nil];
+                BOOL  isMatch = [passWordRegex firstMatchInString:self.userLoginTextField.text options:0 range:NSMakeRange(0, self.userLoginTextField.text.length)] == nil;
                 
-                if ([regex firstMatchInString:user options:0 range:NSMakeRange(0, user.length)] == nil)
-                {
-                    MXLogDebug(@"[AuthInputsView] Invalid user name");
-                    errorMsg = [VectorL10n authInvalidUserName];
+                if(isMatch){
+                    errorMsg = @"用户名必须字母开头，只能数字字母，不能包含特殊字符空格";
+                }
+               }else  if(self.passWordTextField.text){
+                    NSRegularExpression *passWordRegex = [NSRegularExpression regularExpressionWithPattern:@"^(?![0-9]+$)(?![a-zA-Z]+$)(?![A-Z0-9]+$)(?![a-z0-9]+$)[0-9A-Za-z]{8,20}$" options:NSRegularExpressionCaseInsensitive error:nil];
+                    BOOL  isMatch = [passWordRegex firstMatchInString:self.passWordTextField.text options:0 range:NSMakeRange(0, self.passWordTextField.text.length)] == nil;
+                    
+                    if(isMatch){
+                        errorMsg = @"密码要求8-20位，由数字、大小写字母组成";
+                    }
                 }
             }
         }
@@ -1236,6 +1243,7 @@
     }
     else
     {
+        
         if ([self isFlowSupported:kMXLoginFlowTypeEmailIdentity])
         {
             if (self.isThirdPartyIdentifierRequired)

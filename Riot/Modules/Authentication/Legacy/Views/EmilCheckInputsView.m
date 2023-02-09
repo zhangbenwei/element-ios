@@ -147,7 +147,8 @@
                 [restClient emilCheckForEmail:self.emailTextField.text
                                       clientSecret:clientSecret
                                   sendAttempt:1 username:self.userNames
-                                           success:^(NSString *sid)
+                                     isForget:NO
+                                      success:^(NSString *sid)
                  {
                      typeof(weakSelf) strongSelf = weakSelf;
                     

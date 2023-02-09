@@ -51,6 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: Life cycle
     
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+        
         return self.legacyAppDelegate.application(application, willFinishLaunchingWithOptions: launchOptions)
     }
     
@@ -58,7 +59,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Setup window
         let window = UIWindow(frame: UIScreen.main.bounds)
         self.window = window
-        
+        let HVStatusBarHeight = UIApplication.shared.statusBarFrame.height;
+        UserDefaults.standard.setValue(HVStatusBarHeight, forKey: "HVStatusBarHeight")
+        UserDefaults.standard.synchronize()
         // Create AppCoordinator
         self.rootRouter = RootRouter(window: window)
         

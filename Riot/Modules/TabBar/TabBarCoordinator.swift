@@ -285,6 +285,7 @@ final class TabBarCoordinator: NSObject, SplitViewMasterCoordinatorProtocol {
     
     private func createHomeViewController() -> HomeViewControllerWithBannerWrapperViewController {
         let homeViewController: AllChatsViewController = AllChatsViewController.instantiate()
+
         homeViewController.tabBarItem.tag = Int(TABBAR_HOME_INDEX)
         homeViewController.tabBarItem.image = homeViewController.tabBarItem.image
         homeViewController.accessibilityLabel = VectorL10n.titleHome
@@ -298,7 +299,7 @@ final class TabBarCoordinator: NSObject, SplitViewMasterCoordinatorProtocol {
         let favouritesViewController: FavouritesViewController = FavouritesViewController.instantiate()
         favouritesViewController.tabBarItem.tag = Int(TABBAR_FAVOURITES_INDEX)
         favouritesViewController.accessibilityLabel = VectorL10n.titleFavourites
-        favouritesViewController.userIndicatorStore = UserIndicatorStore(presenter: indicatorPresenter)
+       // favouritesViewController.userIndicatorStore = UserIndicatorStore(presenter: indicatorPresenter)
         return favouritesViewController
     }
     

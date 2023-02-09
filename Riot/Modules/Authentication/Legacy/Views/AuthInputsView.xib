@@ -280,7 +280,7 @@
                             <textInputTraits key="textInputTraits"/>
                         </textField>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2au-sg-Ghm" userLabel="Invitation code Separator">
-                            <rect key="frame" x="0.0" y="49" width="600" height="1"/>
+                            <rect key="frame" x="18" y="49" width="564" height="1"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="1" id="xTr-rs-AOQ"/>
@@ -289,12 +289,11 @@
                     </subviews>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="2au-sg-Ghm" secondAttribute="bottom" id="6Is-QW-aqL"/>
-                        <constraint firstItem="2au-sg-Ghm" firstAttribute="leading" secondItem="caL-cj-KZA" secondAttribute="leading" id="Zjd-AC-zsf"/>
+                        <constraint firstItem="2au-sg-Ghm" firstAttribute="centerX" secondItem="Zi3-1k-Kfh" secondAttribute="centerX" id="QyL-j7-q0K"/>
                         <constraint firstAttribute="height" constant="50" id="gmx-h0-f5Z"/>
                         <constraint firstAttribute="trailing" secondItem="Zi3-1k-Kfh" secondAttribute="trailing" id="mIm-uR-I77"/>
-                        <constraint firstItem="2au-sg-Ghm" firstAttribute="leading" secondItem="caL-cj-KZA" secondAttribute="leading" id="qkn-mY-Tw0"/>
+                        <constraint firstItem="2au-sg-Ghm" firstAttribute="leading" secondItem="Zi3-1k-Kfh" secondAttribute="leading" id="qkn-mY-Tw0"/>
                         <constraint firstItem="Zi3-1k-Kfh" firstAttribute="centerY" secondItem="caL-cj-KZA" secondAttribute="centerY" id="sHF-XO-Qrl"/>
-                        <constraint firstItem="Zi3-1k-Kfh" firstAttribute="centerX" secondItem="2au-sg-Ghm" secondAttribute="centerX" id="soI-6V-RXh"/>
                         <constraint firstItem="Zi3-1k-Kfh" firstAttribute="leading" secondItem="caL-cj-KZA" secondAttribute="leading" constant="18" id="wie-cp-cHT"/>
                     </constraints>
                 </view>

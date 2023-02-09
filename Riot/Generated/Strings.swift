@@ -55,7 +55,7 @@ public class VectorL10n: NSObject {
   public static var accountErrorEmailWrongTitle: String { 
     return VectorL10n.tr("Vector", "account_error_email_wrong_title") 
   }
-  /// Matrix session is not opened
+  /// Morse session is not opened
   public static var accountErrorMatrixSessionIsNotOpened: String { 
     return VectorL10n.tr("Vector", "account_error_matrix_session_is_not_opened") 
   }
@@ -295,7 +295,7 @@ public class VectorL10n: NSObject {
   public static var attachmentCancelUpload: String { 
     return VectorL10n.tr("Vector", "attachment_cancel_upload") 
   }
-  /// This file contains encryption keys exported from a Matrix client.\nDo you want to view the file content or import the keys it contains?
+  /// This file contains encryption keys exported from a Morse client.\nDo you want to view the file content or import the keys it contains?
   public static var attachmentE2eKeysFilePrompt: String { 
     return VectorL10n.tr("Vector", "attachment_e2e_keys_file_prompt") 
   }
@@ -387,7 +387,7 @@ public class VectorL10n: NSObject {
   public static var authEmailInUse: String { 
     return VectorL10n.tr("Vector", "auth_email_in_use") 
   }
-  /// No identity server is configured so you cannot add an email address in order to reset your Matrix account password in the future.
+  /// No identity server is configured so you cannot add an email address in order to reset your Morse account password in the future.
   public static var authEmailIsRequired: String { 
     return VectorL10n.tr("Vector", "auth_email_is_required") 
   }
@@ -403,15 +403,15 @@ public class VectorL10n: NSObject {
   public static var authEmailValidationMessage: String { 
     return VectorL10n.tr("Vector", "auth_email_validation_message") 
   }
-  /// Forgot Matrix account password?
+  /// Forgot Morse account password?
   public static var authForgotPassword: String { 
     return VectorL10n.tr("Vector", "auth_forgot_password") 
   }
-  /// No identity server is configured: add one to reset your Matrix account password.
+  /// No identity server is configured: add one to reset your Morse account password.
   public static var authForgotPasswordErrorNoConfiguredIdentityServer: String { 
     return VectorL10n.tr("Vector", "auth_forgot_password_error_no_configured_identity_server") 
   }
-  /// URL (e.g. https://matrix.org)
+  /// URL (e.g. https://Morse.org)
   public static var authHomeServerPlaceholder: String { 
     return VectorL10n.tr("Vector", "auth_home_server_placeholder") 
   }
@@ -499,7 +499,7 @@ public class VectorL10n: NSObject {
   public static var authPhoneInUse: String { 
     return VectorL10n.tr("Vector", "auth_phone_in_use") 
   }
-  /// No identity server is configured so you cannot add a phone number in order to reset your Matrix account password in the future.
+  /// No identity server is configured so you cannot add a phone number in order to reset your Morse account password in the future.
   public static var authPhoneIsRequired: String { 
     return VectorL10n.tr("Vector", "auth_phone_is_required") 
   }
@@ -515,7 +515,7 @@ public class VectorL10n: NSObject {
   public static var authRegister: String { 
     return VectorL10n.tr("Vector", "auth_register") 
   }
-  /// Confirm your new Matrix account password
+  /// Confirm your new Morse account password
   public static var authRepeatNewPasswordPlaceholder: String { 
     return VectorL10n.tr("Vector", "auth_repeat_new_password_placeholder") 
   }
@@ -527,11 +527,11 @@ public class VectorL10n: NSObject {
   public static func authResetPasswordEmailValidationMessage(_ p1: String) -> String {
     return VectorL10n.tr("Vector", "auth_reset_password_email_validation_message", p1)
   }
-  /// No identity server is configured: add one in server options to reset your Matrix account password.
+  /// No identity server is configured: add one in server options to reset your Morse account password.
   public static var authResetPasswordErrorIsRequired: String { 
     return VectorL10n.tr("Vector", "auth_reset_password_error_is_required") 
   }
-  /// Your email address does not appear to be associated with a Matrix ID on this homeserver.
+  /// Your email address does not appear to be associated with a Morse ID on this homeserver.
   public static var authResetPasswordErrorNotFound: String { 
     return VectorL10n.tr("Vector", "auth_reset_password_error_not_found") 
   }
@@ -539,7 +539,7 @@ public class VectorL10n: NSObject {
   public static var authResetPasswordErrorUnauthorized: String { 
     return VectorL10n.tr("Vector", "auth_reset_password_error_unauthorized") 
   }
-  /// To reset your Matrix account password, enter the email address linked to your account:
+  /// To reset your Morse account password, enter the email address linked to your account:
   public static var authResetPasswordMessage: String { 
     return VectorL10n.tr("Vector", "auth_reset_password_message") 
   }
@@ -555,7 +555,7 @@ public class VectorL10n: NSObject {
   public static var authResetPasswordNextStepButton: String { 
     return VectorL10n.tr("Vector", "auth_reset_password_next_step_button") 
   }
-  /// Your Matrix account password has been reset.\n\nYou have been logged out of all sessions and will no longer receive push notifications. To re-enable notifications, re-log in on each device.
+  /// Your Morse account password has been reset.\n\nYou have been logged out of all sessions and will no longer receive push notifications. To re-enable notifications, re-log in on each device.
   public static var authResetPasswordSuccessMessage: String { 
     return VectorL10n.tr("Vector", "auth_reset_password_success_message") 
   }
@@ -1267,11 +1267,11 @@ public class VectorL10n: NSObject {
   public static var contactLocalContacts: String { 
     return VectorL10n.tr("Vector", "contact_local_contacts") 
   }
-  /// Matrix Users
+  /// Morse Users
   public static var contactMxUsers: String { 
     return VectorL10n.tr("Vector", "contact_mx_users") 
   }
-  /// Matrix users only
+  /// Morse users only
   public static var contactsAddressBookMatrixUsersToggle: String { 
     return VectorL10n.tr("Vector", "contacts_address_book_matrix_users_toggle") 
   }
@@ -1339,7 +1339,7 @@ public class VectorL10n: NSObject {
   public static var createRoomEnableEncryption: String { 
     return VectorL10n.tr("Vector", "create_room_enable_encryption") 
   }
-  /// #testroom:matrix.org
+  /// #testroom:Morse.org
   public static var createRoomPlaceholderAddress: String { 
     return VectorL10n.tr("Vector", "create_room_placeholder_address") 
   }
@@ -1463,11 +1463,11 @@ public class VectorL10n: NSObject {
   public static var deactivateAccountInformationsPart4Emphasize: String { 
     return VectorL10n.tr("Vector", "deactivate_account_informations_part4_emphasize") 
   }
-  /// If you would like us to forget your messages, please tick the box below\n\nMessage visibility in Matrix is similar to email. Our forgetting your messages means that messages you have sent will not be shared with any new or unregistered users, but registered users who already have access to these messages will still have access to their copy.
+  /// If you would like us to forget your messages, please tick the box below\n\nMessage visibility in Morse is similar to email. Our forgetting your messages means that messages you have sent will not be shared with any new or unregistered users, but registered users who already have access to these messages will still have access to their copy.
   public static var deactivateAccountInformationsPart5: String { 
     return VectorL10n.tr("Vector", "deactivate_account_informations_part5") 
   }
-  /// To continue, please enter your Matrix account password
+  /// To continue, please enter your Morse account password
   public static var deactivateAccountPasswordAlertMessage: String { 
     return VectorL10n.tr("Vector", "deactivate_account_password_alert_message") 
   }
@@ -1879,7 +1879,7 @@ public class VectorL10n: NSObject {
   public static var deviceVerificationSelfVerifyStartWaiting: String { 
     return VectorL10n.tr("Vector", "device_verification_self_verify_start_waiting") 
   }
-  /// This works with %@ and other cross-signing capable Matrix clients.
+  /// This works with %@ and other cross-signing capable Morse clients.
   public static func deviceVerificationSelfVerifyWaitAdditionalInformation(_ p1: String) -> String {
     return VectorL10n.tr("Vector", "device_verification_self_verify_wait_additional_information", p1)
   }
@@ -1975,7 +1975,7 @@ public class VectorL10n: NSObject {
   public static var directorySearchingTitle: String { 
     return VectorL10n.tr("Vector", "directory_searching_title") 
   }
-  /// All native Matrix rooms
+  /// All native Morse rooms
   public static var directoryServerAllNativeRooms: String { 
     return VectorL10n.tr("Vector", "directory_server_all_native_rooms") 
   }
@@ -1987,7 +1987,7 @@ public class VectorL10n: NSObject {
   public static var directoryServerPickerTitle: String { 
     return VectorL10n.tr("Vector", "directory_server_picker_title") 
   }
-  /// matrix.org
+  /// Morse.org
   public static var directoryServerPlaceholder: String { 
     return VectorL10n.tr("Vector", "directory_server_placeholder") 
   }
@@ -2023,7 +2023,7 @@ public class VectorL10n: NSObject {
   public static var e2eExport: String { 
     return VectorL10n.tr("Vector", "e2e_export") 
   }
-  /// This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.\nThe exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure.
+  /// This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Morse client in the future, so that client will also be able to decrypt these messages.\nThe exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure.
   public static var e2eExportPrompt: String { 
     return VectorL10n.tr("Vector", "e2e_export_prompt") 
   }
@@ -2035,7 +2035,7 @@ public class VectorL10n: NSObject {
   public static var e2eImport: String { 
     return VectorL10n.tr("Vector", "e2e_import") 
   }
-  /// This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.\nThe export file is protected with a passphrase. You should enter the passphrase here, to decrypt the file.
+  /// This process allows you to import encryption keys that you had previously exported from another Morse client. You will then be able to decrypt any messages that the other client could decrypt.\nThe export file is protected with a passphrase. You should enter the passphrase here, to decrypt the file.
   public static var e2eImportPrompt: String { 
     return VectorL10n.tr("Vector", "e2e_import_prompt") 
   }
@@ -2447,7 +2447,7 @@ public class VectorL10n: NSObject {
   public static var groupParticipantsInviteAnotherUser: String { 
     return VectorL10n.tr("Vector", "group_participants_invite_another_user") 
   }
-  /// Malformed ID. Should be a Matrix ID like '@localpart:domain'
+  /// Malformed ID. Should be a Morse ID like '@localpart:domain'
   public static var groupParticipantsInviteMalformedId: String { 
     return VectorL10n.tr("Vector", "group_participants_invite_malformed_id") 
   }
@@ -2655,7 +2655,7 @@ public class VectorL10n: NSObject {
   public static var incomingVoiceCall: String { 
     return VectorL10n.tr("Vector", "incoming_voice_call") 
   }
-  /// I'd like to chat with you with matrix. Please, visit the website http://matrix.org to have more information.
+  /// I'd like to chat with you with Morse. Please, visit the website http://Morse.org to have more information.
   public static var invitationMessage: String { 
     return VectorL10n.tr("Vector", "invitation_message") 
   }
@@ -2675,7 +2675,7 @@ public class VectorL10n: NSObject {
   public static func inviteTo(_ p1: String) -> String {
     return VectorL10n.tr("Vector", "invite_to", p1)
   }
-  /// Invite matrix User
+  /// Invite Morse User
   public static var inviteUser: String { 
     return VectorL10n.tr("Vector", "invite_user") 
   }
@@ -2815,7 +2815,7 @@ public class VectorL10n: NSObject {
   public static var keyBackupSetupPassphraseConfirmPassphraseValid: String { 
     return VectorL10n.tr("Vector", "key_backup_setup_passphrase_confirm_passphrase_valid") 
   }
-  /// We'll store an encrypted copy of your keys on our server. Protect your backup with a phrase to keep it secure.\n\nFor maximum security, this should be different from your Matrix account password.
+  /// We'll store an encrypted copy of your keys on our server. Protect your backup with a phrase to keep it secure.\n\nFor maximum security, this should be different from your Morse account password.
   public static var keyBackupSetupPassphraseInfo: String { 
     return VectorL10n.tr("Vector", "key_backup_setup_passphrase_info") 
   }
@@ -3243,7 +3243,7 @@ public class VectorL10n: NSObject {
   public static var loading: String { 
     return VectorL10n.tr("Vector", "loading") 
   }
-  /// To discover contacts already using Matrix, %@ can send email addresses and phone numbers in your address book to your chosen Matrix identity server. Where supported, personal data is hashed before sending - please check your identity server's privacy policy for more details.
+  /// To discover contacts already using Morse, %@ can send email addresses and phone numbers in your address book to your chosen Morse identity server. Where supported, personal data is hashed before sending - please check your identity server's privacy policy for more details.
   public static func localContactsAccessDiscoveryWarning(_ p1: String) -> String {
     return VectorL10n.tr("Vector", "local_contacts_access_discovery_warning", p1)
   }
@@ -3455,7 +3455,7 @@ public class VectorL10n: NSObject {
   public static var loginDisplayNamePlaceholder: String { 
     return VectorL10n.tr("Vector", "login_display_name_placeholder") 
   }
-  /// Specify an email address lets other users find you on Matrix more easily, and will give you a way to reset your password in the future.
+  /// Specify an email address lets other users find you on Morse more easily, and will give you a way to reset your password in the future.
   public static var loginEmailInfo: String { 
     return VectorL10n.tr("Vector", "login_email_info") 
   }
@@ -3547,7 +3547,7 @@ public class VectorL10n: NSObject {
   public static var loginHomeServerTitle: String { 
     return VectorL10n.tr("Vector", "login_home_server_title") 
   }
-  /// Matrix provides identity servers to track which emails etc. belong to which Matrix IDs. Only https://matrix.org currently exists.
+  /// Morse provides identity servers to track which emails etc. belong to which Morse IDs. Only https://Morse.org currently exists.
   public static var loginIdentityServerInfo: String { 
     return VectorL10n.tr("Vector", "login_identity_server_info") 
   }
@@ -3579,7 +3579,7 @@ public class VectorL10n: NSObject {
   public static var loginPromptEmailToken: String { 
     return VectorL10n.tr("Vector", "login_prompt_email_token") 
   }
-  /// URL (e.g. https://matrix.org)
+  /// URL (e.g. https://Morse.org)
   public static var loginServerUrlPlaceholder: String { 
     return VectorL10n.tr("Vector", "login_server_url_placeholder") 
   }
@@ -3591,7 +3591,7 @@ public class VectorL10n: NSObject {
   public static var loginUseFallback: String { 
     return VectorL10n.tr("Vector", "login_use_fallback") 
   }
-  /// Matrix ID (e.g. @bob:matrix.org or bob)
+  /// Morse ID (e.g. @bob:Morse.org or bob)
   public static var loginUserIdPlaceholder: String { 
     return VectorL10n.tr("Vector", "login_user_id_placeholder") 
   }
@@ -3655,7 +3655,7 @@ public class VectorL10n: NSObject {
   public static var manageSessionTrusted: String { 
     return VectorL10n.tr("Vector", "manage_session_trusted") 
   }
-  /// Matrix
+  /// Morse
   public static var matrix: String { 
     return VectorL10n.tr("Vector", "matrix") 
   }
@@ -4527,7 +4527,7 @@ public class VectorL10n: NSObject {
   public static var onboardingSplashPage1Title: String { 
     return VectorL10n.tr("Vector", "onboarding_splash_page_1_title") 
   }
-  /// Choose where your conversations are kept, giving you control and independence. Connected via Matrix.
+  /// Choose where your conversations are kept, giving you control and independence. Connected via Morse.
   public static var onboardingSplashPage2Message: String { 
     return VectorL10n.tr("Vector", "onboarding_splash_page_2_message") 
   }
@@ -6259,7 +6259,7 @@ public class VectorL10n: NSObject {
   public static var roomParticipantsInviteAnotherUser: String { 
     return VectorL10n.tr("Vector", "room_participants_invite_another_user") 
   }
-  /// Malformed ID. Should be an email address or a Matrix ID like '@localpart:domain'
+  /// Malformed ID. Should be an email address or a Morse ID like '@localpart:domain'
   public static var roomParticipantsInviteMalformedId: String { 
     return VectorL10n.tr("Vector", "room_participants_invite_malformed_id") 
   }
@@ -6795,7 +6795,7 @@ public class VectorL10n: NSObject {
   public static var secretsRecoveryWithPassphraseTitle: String { 
     return VectorL10n.tr("Vector", "secrets_recovery_with_passphrase_title") 
   }
-  /// Enter your Matrix account password to confirm
+  /// Enter your Morse account password to confirm
   public static var secretsResetAuthenticationMessage: String { 
     return VectorL10n.tr("Vector", "secrets_reset_authentication_message") 
   }
@@ -6847,7 +6847,7 @@ public class VectorL10n: NSObject {
   public static var secretsSetupRecoveryKeyTitle: String { 
     return VectorL10n.tr("Vector", "secrets_setup_recovery_key_title") 
   }
-  /// Don't use your Matrix account password.
+  /// Don't use your Morse account password.
   public static var secretsSetupRecoveryPassphraseAdditionalInformation: String { 
     return VectorL10n.tr("Vector", "secrets_setup_recovery_passphrase_additional_information") 
   }
@@ -6955,7 +6955,7 @@ public class VectorL10n: NSObject {
   public static var securitySettingsBlacklistUnverifiedDevicesDescription: String { 
     return VectorL10n.tr("Vector", "security_settings_blacklist_unverified_devices_description") 
   }
-  /// Sorry. This action is not available on %@ iOS yet. Please use another Matrix client to set it up. %@ iOS will use it.
+  /// Sorry. This action is not available on %@ iOS yet. Please use another Morse client to set it up. %@ iOS will use it.
   public static func securitySettingsComingSoon(_ p1: String, _ p2: String) -> String {
     return VectorL10n.tr("Vector", "security_settings_coming_soon", p1, p2)
   }
@@ -7003,7 +7003,7 @@ public class VectorL10n: NSObject {
   public static var securitySettingsCryptoSessions: String { 
     return VectorL10n.tr("Vector", "security_settings_crypto_sessions") 
   }
-  /// If you don’t recognise a login, change your Matrix account password and reset Secure Backup.
+  /// If you don’t recognise a login, change your Morse account password and reset Secure Backup.
   public static var securitySettingsCryptoSessionsDescription2: String { 
     return VectorL10n.tr("Vector", "security_settings_crypto_sessions_description_2") 
   }
@@ -7055,7 +7055,7 @@ public class VectorL10n: NSObject {
   public static var securitySettingsTitle: String { 
     return VectorL10n.tr("Vector", "security_settings_title") 
   }
-  /// Confirm your identity by entering your Matrix account password
+  /// Confirm your identity by entering your Morse account password
   public static var securitySettingsUserPasswordDescription: String { 
     return VectorL10n.tr("Vector", "security_settings_user_password_description") 
   }
@@ -7159,7 +7159,7 @@ public class VectorL10n: NSObject {
   public static var settingsAdd3pidInvalidPasswordMessage: String { 
     return VectorL10n.tr("Vector", "settings_add_3pid_invalid_password_message") 
   }
-  /// To continue, please enter your Matrix account password
+  /// To continue, please enter your Morse account password
   public static var settingsAdd3pidPasswordMessage: String { 
     return VectorL10n.tr("Vector", "settings_add_3pid_password_message") 
   }
@@ -7427,7 +7427,7 @@ public class VectorL10n: NSObject {
   public static func settingsEnterValidationTokenFor(_ p1: String) -> String {
     return VectorL10n.tr("Vector", "settings_enter_validation_token_for", p1)
   }
-  /// Fail to update Matrix account password
+  /// Fail to update Morse account password
   public static var settingsFailToUpdatePassword: String { 
     return VectorL10n.tr("Vector", "settings_fail_to_update_password") 
   }
@@ -7727,7 +7727,7 @@ public class VectorL10n: NSObject {
   public static var settingsOther: String { 
     return VectorL10n.tr("Vector", "settings_other") 
   }
-  /// Your Matrix account password has been updated
+  /// Your Morse account password has been updated
   public static var settingsPasswordUpdated: String { 
     return VectorL10n.tr("Vector", "settings_password_updated") 
   }
@@ -8547,7 +8547,7 @@ public class VectorL10n: NSObject {
   public static var stop: String { 
     return VectorL10n.tr("Vector", "stop") 
   }
-  /// Element is a new type of messenger and collaboration app that:\n\n1. Puts you in control to preserve your privacy\n2. Lets you communicate with anyone in the Matrix network, and even beyond by integrating with apps such as Slack\n3. Protects you from advertising, datamining, backdoors and walled gardens\n4. Secures you through end-to-end encryption, with cross-signing to verify others\n\nElement is completely different from other messaging and collaboration apps because it is decentralised and open source.\n\nElement lets you self-host - or choose a host - so that you have privacy, ownership and control of your data and conversations. It gives you access to an open network; so you’re not just stuck speaking to other Element users only. And it is very secure.\n\nElement is able to do all this because it operates on Matrix - the standard for open, decentralised communication. \n\nElement puts you in control by letting you choose who hosts your conversations. From the Element app, you can choose to host in different ways:\n\n1. Get a free account on the matrix.org public server\n2. Self-host your account by running a server on your own hardware\n3. Sign up for an account on a custom server by simply subscribing to the Element Matrix Services hosting platform\n\nWhy choose Element?\n\nOWN YOUR DATA: You decide where to keep your data and messages. You own it and control it, not some MEGACORP that mines your data or gives access to third parties.\n\nOPEN MESSAGING AND COLLABORATION: You can chat with anyone else in the Matrix network, whether they’re using Element or another Matrix app, and even if they are using a different messaging system of the likes of Slack, IRC or XMPP.\n\nSUPER-SECURE: Real end-to-end encryption (only those in the conversation can decrypt messages), and cross-signing to verify the devices of conversation participants.\n\nCOMPLETE COMMUNICATION: Messaging, voice and video calls, file sharing, screen sharing and a whole bunch of integrations, bots and widgets. Build rooms, communities, stay in touch and get things done.\n\nEVERYWHERE YOU ARE: Stay in touch wherever you are with fully synchronised message history across all your devices and on the web at https://element.io/app.
+  /// Element is a new type of messenger and collaboration app that:\n\n1. Puts you in control to preserve your privacy\n2. Lets you communicate with anyone in the Morse network, and even beyond by integrating with apps such as Slack\n3. Protects you from advertising, datamining, backdoors and walled gardens\n4. Secures you through end-to-end encryption, with cross-signing to verify others\n\nElement is completely different from other messaging and collaboration apps because it is decentralised and open source.\n\nElement lets you self-host - or choose a host - so that you have privacy, ownership and control of your data and conversations. It gives you access to an open network; so you’re not just stuck speaking to other Element users only. And it is very secure.\n\nElement is able to do all this because it operates on Morse - the standard for open, decentralised communication. \n\nElement puts you in control by letting you choose who hosts your conversations. From the Element app, you can choose to host in different ways:\n\n1. Get a free account on the Morse.org public server\n2. Self-host your account by running a server on your own hardware\n3. Sign up for an account on a custom server by simply subscribing to the Element Morse Services hosting platform\n\nWhy choose Element?\n\nOWN YOUR DATA: You decide where to keep your data and messages. You own it and control it, not some MEGACORP that mines your data or gives access to third parties.\n\nOPEN MESSAGING AND COLLABORATION: You can chat with anyone else in the Morse network, whether they’re using Element or another Morse app, and even if they are using a different messaging system of the likes of Slack, IRC or XMPP.\n\nSUPER-SECURE: Real end-to-end encryption (only those in the conversation can decrypt messages), and cross-signing to verify the devices of conversation participants.\n\nCOMPLETE COMMUNICATION: Messaging, voice and video calls, file sharing, screen sharing and a whole bunch of integrations, bots and widgets. Build rooms, communities, stay in touch and get things done.\n\nEVERYWHERE YOU ARE: Stay in touch wherever you are with fully synchronised message history across all your devices and on the web at https://element.io/app.
   public static var storeFullDescription: String { 
     return VectorL10n.tr("Vector", "store_full_description") 
   }
@@ -8639,7 +8639,7 @@ public class VectorL10n: NSObject {
   public static var threadsNoticeDone: String { 
     return VectorL10n.tr("Vector", "threads_notice_done") 
   }
-  /// All threads created during the experimental period will now be <b>rendered as regular replies</b>.<br/><br/>This will be a one-off transition, as threads are now part of the Matrix specification.
+  /// All threads created during the experimental period will now be <b>rendered as regular replies</b>.<br/><br/>This will be a one-off transition, as threads are now part of the Morse specification.
   public static var threadsNoticeInformation: String { 
     return VectorL10n.tr("Vector", "threads_notice_information") 
   }
@@ -8919,7 +8919,7 @@ public class VectorL10n: NSObject {
   public static var userSessionOverviewSessionTitle: String { 
     return VectorL10n.tr("Vector", "user_session_overview_session_title") 
   }
-  /// This session doesn't support encryption, so it can't be verified.\n\nYou won't be able to participate in rooms where encryption is enabled when using this session.\n\nFor best security and privacy, it is recommended to use Matrix clients that support encryption.
+  /// This session doesn't support encryption, so it can't be verified.\n\nYou won't be able to participate in rooms where encryption is enabled when using this session.\n\nFor best security and privacy, it is recommended to use Morse clients that support encryption.
   public static var userSessionPermanentlyUnverifiedSessionDescription: String { 
     return VectorL10n.tr("Vector", "user_session_permanently_unverified_session_description") 
   }
