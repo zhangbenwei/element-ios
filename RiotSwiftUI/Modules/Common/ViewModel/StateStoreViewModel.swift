@@ -110,3 +110,40 @@ class StateStoreViewModel<State: BindableState, ViewAction> {
         // Default implementation, -no-op
     }
 }
+class MenuStateStoreViewModel<State: BindableState, ViewAction> {
+    typealias Context = ViewModelContext<State, ViewAction>
+
+    // MARK: - Properties
+
+    // MARK: Public
+    
+    /// For storing subscription references.
+    ///
+    /// Left as public for `ViewModel` implementations convenience.
+    var cancellables = Set<AnyCancellable>()
+
+    /// Constrained interface for passing to Views.
+    var context: Context
+    
+    var state: State {
+        get { context.viewState }
+        set { context.viewState = newValue }
+    }
+    
+    // MARK: Setup
+
+    init(initialViewState: State) {
+        context = Context(initialViewState: initialViewState)
+        context.viewActions.sink { [weak self] action in
+            guard let self = self else { return }
+            self.process(viewAction: action)
+        }
+        .store(in: &cancellables)
+    }
+
+    /// Override to handles incoming `ViewAction`s from the `ViewModel`.
+    /// - Parameter viewAction: The `ViewAction` to be processed in `ViewModel` implementation.
+    func process(viewAction: ViewAction) {
+        // Default implementation, -no-op
+    }
+}

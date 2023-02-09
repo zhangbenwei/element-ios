@@ -45,6 +45,7 @@ final class SpaceSelectorCoordinator: Coordinator, Presentable {
     private let parameters: SpaceSelectorCoordinatorParameters
     private let hostingViewController: UIViewController
     private var viewModel: SpaceSelectorViewModelProtocol
+    private var viewMenuModel: SpaceSelectorViewModelProtocol
     
     private var indicatorPresenter: UserIndicatorTypePresenterProtocol
     private var loadingIndicator: UserIndicator?
@@ -61,9 +62,11 @@ final class SpaceSelectorCoordinator: Coordinator, Presentable {
         self.parameters = parameters
         let service = SpaceSelectorService(session: parameters.session, parentSpaceId: parameters.parentSpaceId, showHomeSpace: parameters.showHomeSpace, selectedSpaceId: parameters.selectedSpaceId)
         let viewModel = SpaceSelectorViewModel.makeViewModel(service: service, showCancel: parameters.showCancel)
-        let view = SpaceSelector(viewModel: viewModel.context)
+        let viewMenuModel = SpaceSelectorMenuModel.makeViewModel(service: service, showCancel: parameters.showCancel)
+        let view = SpaceSelector(viewModel: viewModel.context,viewMenuModel: viewMenuModel.context)
             .environmentObject(AvatarViewModel(avatarService: AvatarService(mediaManager: parameters.session.mediaManager)))
         self.viewModel = viewModel
+        self.viewMenuModel = viewMenuModel
         let hostingViewController = VectorHostingController(rootView: view)
         hostingViewController.hidesBackTitleWhenPushed = true
         self.hostingViewController = hostingViewController
@@ -80,6 +83,22 @@ final class SpaceSelectorCoordinator: Coordinator, Presentable {
 
         MXLog.debug("[SpaceSelectorCoordinator] did start.")
         viewModel.completion = { [weak self] result in
+            guard let self = self else { return }
+            MXLog.debug("[SpaceSheetCoordinator] SpaceSelectorViewModel did complete with result: \(result).")
+            switch result {
+            case .cancel:
+                self.completion?(.cancel)
+            case .homeSelected:
+                self.completion?(.homeSelected)
+            case .spaceSelected(let item):
+                self.completion?(.spaceSelected(item))
+            case .spaceDisclosure(let item):
+                self.completion?(.spaceDisclosure(item))
+            case .createSpace:
+                self.completion?(.createSpace(self.parameters.parentSpaceId))
+            }
+        }
+        viewMenuModel.completion = { [weak self] result in
             guard let self = self else { return }
             MXLog.debug("[SpaceSheetCoordinator] SpaceSelectorViewModel did complete with result: \(result).")
             switch result {

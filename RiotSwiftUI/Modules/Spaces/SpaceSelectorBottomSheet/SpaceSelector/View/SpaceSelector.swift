@@ -26,7 +26,7 @@ struct SpaceSelector: View {
     // MARK: Public
     
     @ObservedObject var viewModel: SpaceSelectorViewModel.Context
-    
+    @ObservedObject var viewMenuModel: SpaceSelectorMenuModel.Context
     var body: some View {
         VStack {
             if !viewModel.viewState.items.isEmpty {
@@ -77,10 +77,62 @@ struct SpaceSelector: View {
             }
         }
     }
-    
+    private var itemPlaceListView: some View {
+        ScrollView {
+            LazyVStack {
+                ForEach(viewMenuModel.viewState.items) { item in
+                    SpaceSelectorListRow(avatar: item.avatar,
+                                         icon: item.icon,
+                                         displayName: item.displayName,
+                                         hasSubItems: item.hasSubItems,
+                                         isJoined: item.isJoined,
+                                         isSelected: item.id == viewModel.viewState.selectedSpaceId,
+                                         notificationCount: item.notificationCount,
+                                         highlightedNotificationCount: item.highlightedNotificationCount,
+                                         disclosureAction: {
+                                             viewModel.send(viewAction: .spaceDisclosure(item))
+                                         })
+                                         .onTapGesture {
+                                             viewModel.send(viewAction: .spaceSelected(item))
+                                         }
+                }
+            }
+        }
+        .frame(maxHeight: .infinity)
+        .navigationTitle(viewModel.viewState.navigationTitle)
+        .toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+                Button(VectorL10n.create) {
+                    viewModel.send(viewAction: .createSpace)
+                }
+            }
+            ToolbarItem(placement: .cancellationAction) {
+                if viewModel.viewState.showCancel {
+                    Button(VectorL10n.cancel) {
+                        viewModel.send(viewAction: .cancel)
+                    }
+                }
+            }
+        }
+    }
     private var emptyListPlaceholder: some View {
         VStack {
+            
             Spacer()
+            Text("Morse Dao")
+                .foregroundColor(theme.colors.primaryContent)
+                .font(theme.fonts.bodySB)
+                .multilineTextAlignment(.leading)
+                .accessibility(identifier: "MorseDaoTitle")
+                
+            Spacer().frame(height: 12)
+            Text("幸运转盘")
+                .foregroundColor(theme.colors.primaryContent)
+                .font(theme.fonts.bodySB)
+                .multilineTextAlignment(.leading)
+                .accessibility(identifier: "GoodLikeTitle")
+            Spacer()
+                .frame(height: 34)
             Text(VectorL10n.spaceSelectorEmptyViewTitle)
                 .foregroundColor(theme.colors.primaryContent)
                 .font(theme.fonts.title3SB)
