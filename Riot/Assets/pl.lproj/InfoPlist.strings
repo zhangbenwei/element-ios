@@ -5,5 +5,5 @@
 "NSContactsUsageDescription" = "Zostaną one udostępnione twojemu serwerowi tożsamości, aby ułatwić ci znalezienie kontaktów w sieci Morse.";
 "NSCalendarsUsageDescription" = "Zobacz swoje zaplanowane spotkania w aplikacji.";
 "NSFaceIDUsageDescription" = "Face ID wykorzystywane jest do odblokowywania aplikacji.";
-"NSLocationWhenInUseUsageDescription" = "Gdy udostępniasz innym swoją lokalizację, Element potrzebuje dostępu, aby pokazać im mapę.";
-"NSLocationAlwaysAndWhenInUseUsageDescription" = "Gdy udostępniasz innym swoją lokalizację, Element potrzebuje dostępu, aby pokazać im mapę.";
+"NSLocationWhenInUseUsageDescription" = "Gdy udostępniasz innym swoją lokalizację, Morse potrzebuje dostępu, aby pokazać im mapę.";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "Gdy udostępniasz innym swoją lokalizację, Morse potrzebuje dostępu, aby pokazać im mapę.";

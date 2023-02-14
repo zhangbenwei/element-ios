@@ -17,7 +17,7 @@
  */
 
 #import "MXKDeviceView.h"
-
+ 
 #import "NSBundle+MatrixKit.h"
 
 #import "MXKConstants.h"

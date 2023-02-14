@@ -121,7 +121,9 @@ NSString *const MXKAuthErrorDomain = @"MXKAuthErrorDomain";
 {
     
 }
-
+- (void)sendEmailCode:(NSString *) token {
+    
+}
 - (void)destroy
 {
     if (inputsAlert)
@@ -129,6 +131,12 @@ NSString *const MXKAuthErrorDomain = @"MXKAuthErrorDomain";
         [inputsAlert dismissViewControllerAnimated:NO completion:nil];
         inputsAlert = nil;
     }
+  
+}
+
+
+- (void)updateTimeCount{
+    
 }
 
 #pragma mark -

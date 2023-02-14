@@ -76,7 +76,7 @@
     self.userLoginTextField.placeholder = [VectorL10n authUserIdPlaceholder];
     self.repeatPasswordTextField.placeholder = [VectorL10n authRepeatPasswordPlaceholder];
     self.passWordTextField.placeholder = [VectorL10n authPasswordPlaceholder];
-
+    self.invitationCodeField.placeholder = [VectorL10n authInvitationCode];
     // Apply placeholder color
     [self customizeViewRendering];
 }
@@ -108,7 +108,7 @@
     self.repeatPasswordTextField.textColor = ThemeService.shared.theme.textPrimaryColor;
     self.userLoginTextField.textColor = ThemeService.shared.theme.textPrimaryColor;
     self.passWordTextField.textColor = ThemeService.shared.theme.textPrimaryColor;
-    
+    self.invitationCodeField.textColor = ThemeService.shared.theme.textPrimaryColor;
     self.emailTextField.textColor = ThemeService.shared.theme.textPrimaryColor;
     self.phoneTextField.textColor = ThemeService.shared.theme.textPrimaryColor;
     
@@ -125,7 +125,8 @@
     self.phoneSeparator.backgroundColor = ThemeService.shared.theme.lineBreakColor;
     self.passwordSeparator.backgroundColor = ThemeService.shared.theme.lineBreakColor;
     self.repeatPasswordSeparator.backgroundColor = ThemeService.shared.theme.lineBreakColor;
-
+    self.invitationCodeSeparator.backgroundColor = ThemeService.shared.theme.lineBreakColor;
+    self.invitationCodeContainer.backgroundColor = UIColor.clearColor;
     [self.ssoButton.layer setCornerRadius:5];
     self.ssoButton.clipsToBounds = YES;
     [self.ssoButton setTitle:[VectorL10n authLoginSingleSignOn] forState:UIControlStateNormal];
@@ -133,7 +134,11 @@
     self.ssoButton.backgroundColor = ThemeService.shared.theme.tintColor;
     
     self.recaptchaContainer.backgroundColor = ThemeService.shared.theme.backgroundColor;
-
+    [self.passwordSectryButton setTitle:@"" forState:UIControlStateNormal];
+    [self.passwordSectryButton setTitle:@"" forState:UIControlStateHighlighted];
+    
+    [self.repeatPasswordSectryButton setTitle:@"" forState:UIControlStateNormal];
+    [self.repeatPasswordSectryButton setTitle:@"" forState:UIControlStateHighlighted];
     if (self.userLoginTextField.placeholder)
     {
         self.userLoginTextField.attributedPlaceholder = [[NSAttributedString alloc]
@@ -167,6 +172,13 @@
     {
         self.emailTextField.attributedPlaceholder = [[NSAttributedString alloc]
                                                      initWithString:self.emailTextField.placeholder
+                                                     attributes:@{NSForegroundColorAttributeName: ThemeService.shared.theme.placeholderTextColor}];
+    }
+    
+    if (self.invitationCodeField.placeholder)
+    {
+        self.invitationCodeField.attributedPlaceholder = [[NSAttributedString alloc]
+                                                     initWithString:self.invitationCodeField.placeholder
                                                      attributes:@{NSForegroundColorAttributeName: ThemeService.shared.theme.placeholderTextColor}];
     }
 }
@@ -255,7 +267,6 @@
 
                     self.ssoButtonContainer.hidden = NO;
                     self.currentLastContainer = self.ssoButtonContainer;
-
                     _isSingleSignOnRequired = YES;
                 }
             }
@@ -335,7 +346,7 @@
                 BOOL  isMatch = [passWordRegex firstMatchInString:self.userLoginTextField.text options:0 range:NSMakeRange(0, self.userLoginTextField.text.length)] == nil;
                 
                 if(isMatch){
-                    errorMsg = @"用户名必须字母开头，只能数字字母，不能包含特殊字符空格";
+                    errorMsg = [VectorL10n authInvalidUserName];
                 }
                }else  if(self.passWordTextField.text){
                     NSRegularExpression *passWordRegex = [NSRegularExpression regularExpressionWithPattern:@"^(?![0-9]+$)(?![a-zA-Z]+$)(?![A-Z0-9]+$)(?![a-z0-9]+$)[0-9A-Za-z]{8,20}$" options:NSRegularExpressionCaseInsensitive error:nil];
@@ -468,7 +479,7 @@
                                                    @"medium": kMX3PIDMediumEmail,
                                                    @"address": user
                                                    },
-                                           @"password": self.passWordTextField.text,
+                                           @"password": self.passWordTextField.text ,
                                            // Patch: add the old login api parameters for an email address (medium and address),
                                            // to keep logging in against old HS.
                                            @"medium": kMX3PIDMediumEmail,
@@ -486,8 +497,6 @@
                                                    },
                                            @"password": self.passWordTextField.text,
                                            @"invitationCode": self.invitationCodeField.text,
-                                           // Patch: add the old login api parameters for a username (user),
-                                           // to keep logging in against old HS.
                                            @"user": user
                                            };
                         }
@@ -515,7 +524,7 @@
                                                    @"country": countryCode,
                                                    @"number": msisdn
                                                    },
-                                           @"password": self.passWordTextField.text,
+                                           @"password":self.passWordTextField.text,
                                        
                                            };
                         }
@@ -702,7 +711,7 @@
                                                         @"threepid_creds": threepidCreds,
                                                         @"type": kMXLoginFlowTypeEmailIdentity},
                                                 @"username": self.userLoginTextField.text,
-                                                @"password": self.passWordTextField.text,
+                                                @"password": [RSA encryptString:self.passWordTextField.text],
                                                 };
 
                                  [self hideInputsContainer];
@@ -780,7 +789,7 @@
                                                                  @"type": kMXLoginFlowTypeRecaptcha
                                                                  },
                                                          @"username": self.userLoginTextField.text,
-                                                         @"password": self.passWordTextField.text,
+                                                         @"password": [RSA encryptString:self.passWordTextField.text],
                                                          };
                             
                             callback(parameters, nil);
@@ -804,7 +813,7 @@
                                            @"type": kMXLoginFlowTypeDummy
                                            },
                                    @"username": self.userLoginTextField.text,
-                                   @"password": self.passWordTextField.text,
+                                   @"password": [RSA encryptString:self.passWordTextField.text],
                                    };
                 }
                 else if ([self isFlowSupported:kMXLoginFlowTypePassword] && ![self isFlowCompleted:kMXLoginFlowTypePassword])
@@ -814,7 +823,7 @@
                                    @"auth": @{
                                            @"session":currentSession.session,
                                            @"username": self.userLoginTextField.text,
-                                           @"password": self.passWordTextField.text,
+                                           @"password": [RSA encryptString:self.passWordTextField.text],
                                            @"type": kMXLoginFlowTypePassword
                                            }
                                    };
@@ -833,7 +842,7 @@
                                                              @"type": kMXLoginFlowTypeTerms
                                                              },
                                                      @"username": self.userLoginTextField.text,
-                                                     @"password": self.passWordTextField.text
+                                                     @"password": [RSA encryptString:self.passWordTextField.text],
                                                      };
                         callback(parameters, nil);
                     }];
@@ -1046,7 +1055,6 @@
     self.userLoginTextField.text = softLogoutCredentials.userId;
     self.userLoginContainer.hidden = YES;
     self.phoneContainer.hidden = YES;
-
     [self displaySoftLogoutMessage];
 }
 
@@ -1117,7 +1125,6 @@
     [self.emailTextField resignFirstResponder];
     [self.phoneTextField resignFirstResponder];
     [self.repeatPasswordTextField resignFirstResponder];
-    
     [super dismissKeyboard];
 }
 
@@ -1149,7 +1156,11 @@
     _currentLastContainer = currentLastContainer;
     
     CGRect frame = _currentLastContainer.frame;
-    self.viewHeightConstraint.constant = 51*4;
+    if(self->type == MXKAuthenticationTypeRegister){
+        self.viewHeightConstraint.constant = 50*4;
+    }else{
+        self.viewHeightConstraint.constant = CGRectGetMaxY(frame);
+    }
 }
 
 #pragma mark -
@@ -1756,7 +1767,7 @@
                                                                                              @"type": kMXLoginFlowTypeMSISDN
                                                                                              },
                                                                                      @"username": self.userLoginTextField.text,
-                                                                                     @"password": self.passWordTextField.text
+                                                                                     @"password": [RSA encryptString:self.passWordTextField.text],
                                                                                      };
                                                                       
                                                                       callback(parameters, nil);
@@ -1851,6 +1862,29 @@
     }
 
     return NO;
+}
+- (IBAction)passwordSectryAction:(UIButton *)sender {
+    NSString*textStr = self.passWordTextField.text;
+    self.passWordTextField.text=@"";
+    self.passWordTextField.secureTextEntry =! self.passWordTextField.isSecureTextEntry;
+    if(!self.passWordTextField.isSecureTextEntry){
+        [sender setImage:AssetImages.revealPasswordButton.image forState:UIControlStateNormal];
+    }else{
+        [sender setImage:AssetImages.icoMimabukejian.image forState:UIControlStateNormal];
+    }
+    self.passWordTextField.text =  textStr;
+}
+
+- (IBAction)repeatPasswordSectryAction:(UIButton *)sender {
+    NSString*textStr = self.repeatPasswordTextField.text;
+    self.repeatPasswordTextField.text=@"";
+    self.repeatPasswordTextField.secureTextEntry =! self.repeatPasswordTextField.isSecureTextEntry;
+    if(!self.repeatPasswordTextField.isSecureTextEntry){
+        [sender setImage:AssetImages.revealPasswordButton.image forState:UIControlStateNormal];
+    }else{
+        [sender setImage:AssetImages.icoMimabukejian.image forState:UIControlStateNormal];
+    }
+    self.repeatPasswordTextField.text =  textStr;
 }
 
 #pragma mark - Flow state

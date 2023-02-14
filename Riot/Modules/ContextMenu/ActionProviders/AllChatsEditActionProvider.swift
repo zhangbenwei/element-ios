@@ -75,6 +75,26 @@ class AllChatsEditActionProvider {
         ])
     }
     
+  
+//    var allChatMenu: UIAlertController {
+//        guard parentSpace != nil else {
+//            let  alertVC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+//            if rootSpaceCount > 0 {
+//                alertVC.addAction(self.createSpaceAlertAction)
+//            }
+//
+//            alertVC.addAction(self.createRoomAlertAction)
+//            alertVC.addAction(self.startChatAlertAction)
+//
+//            return alertVC
+//        }
+//        let  alertVC = UIAlertController(title: "", message: "", preferredStyle: .actionSheet)
+//        alertVC.addAction(self.createSpaceAlertAction)
+//        alertVC.addAction(self.createRoomAlertAction)
+//
+//        return  alertVC
+//    }
+    
     // MARK: - Public
     
     /// Indicates if the context menu should be updated accordingly to the given parameters.
@@ -101,6 +121,34 @@ class AllChatsEditActionProvider {
     ///     - parentSpace: The current parent space (`nil` for home space)
     ///     - completion: callback called once the power levels of the `parentSpace` have been fetched and the menu items have been computed accordingly.
     /// - Returns: If the `parentSpace` is `nil`, the context menu, the temporary context menu otherwise.
+ 
+//    func updateAlertMenu(with session: MXSession?, parentSpace: MXSpace?, completion: @escaping (UIAlertController) -> Void) -> UIAlertController {
+//        self.parentSpace = parentSpace
+//        self.rootSpaceCount = session?.spaceService.rootSpaces.count ?? 0
+//        isInviteAvailable = false
+//        isAddRoomAvailable = parentSpace == nil
+//
+//        guard let parentSpace = parentSpace, let spaceRoom = parentSpace.room, let session = session else {
+//            return self.allChatMenu
+//        }
+//
+//        spaceRoom.state { [weak self] roomState in
+//            guard let self = self else { return }
+//
+//            guard let powerLevels = roomState?.powerLevels, let userId = session.myUserId else {
+//                return
+//            }
+//            let userPowerLevel = powerLevels.powerLevelOfUser(withUserID: userId)
+//
+//            self.isInviteAvailable = userPowerLevel >= powerLevels.invite
+//            self.isAddRoomAvailable = userPowerLevel >= parentSpace.minimumPowerLevelForAddingRoom(with: powerLevels)
+//
+//            completion(self.allChatMenu)
+//        }
+//
+//        return self.allChatMenu
+//    }
+//
     func updateMenu(with session: MXSession?, parentSpace: MXSpace?, completion: @escaping (UIMenu) -> Void) -> UIMenu {
         self.parentSpace = parentSpace
         self.rootSpaceCount = session?.spaceService.rootSpaces.count ?? 0
@@ -127,7 +175,6 @@ class AllChatsEditActionProvider {
         
         return self.menu
     }
-    
     // MARK: - Private
     
     private var exploreRoomsAction: UIAction {
@@ -167,4 +214,41 @@ class AllChatsEditActionProvider {
             self.delegate?.allChatsEditActionProvider(self, didSelect: .createSpace)
         }
     }
+//    private var exploreRoomsAlertAction: UIAlertAction {
+//
+//        UIAlertAction(title: parentSpace == nil ? VectorL10n.spacesExploreRooms : VectorL10n.spacesExploreRoomsFormat(parentName),
+//                      style: .default)    { [weak self] action in
+//            guard let self = self else { return }
+//
+//            self.delegate?.allChatsEditActionProvider(self, didSelect: .exploreRooms)
+//        }
+//    }
+//
+//    private var createRoomAlertAction: UIAlertAction {
+//        UIAlertAction(title: parentSpace == nil ? VectorL10n.roomRecentsCreateEmptyRoom : VectorL10n.spacesAddRoom,
+//                      style: .default)  { [weak self] action in
+//            guard let self = self else { return }
+//
+//            self.delegate?.allChatsEditActionProvider(self, didSelect: .createRoom)
+//        }
+//    }
+//
+//    private var startChatAlertAction: UIAlertAction {
+//        UIAlertAction(title: VectorL10n.roomRecentsStartChatWith,
+//                      style: .default)    { [weak self] action in
+//            guard let self = self else { return }
+//            self.delegate?.allChatsEditActionProvider(self, didSelect: .startChat)
+//        }
+//    }
+//
+//    private var createSpaceAlertAction: UIAlertAction {
+//        UIAlertAction(title: parentSpace == nil ? VectorL10n.spacesCreateSpaceTitle : VectorL10n.spacesCreateSubspaceTitle,
+//                      style: .default)    { [weak self] action in
+//            guard let self = self else { return }
+//            self.delegate?.allChatsEditActionProvider(self, didSelect: .createSpace)
+//        }
+//    }
+ 
+  
+  
 }

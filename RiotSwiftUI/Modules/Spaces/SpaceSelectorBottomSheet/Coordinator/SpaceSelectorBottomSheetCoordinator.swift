@@ -128,6 +128,9 @@ final class SpaceSelectorBottomSheetCoordinator: NSObject, Coordinator, Presenta
                 self.trackSpaceSelection(with: nil)
                 self.completion?(.homeSelected)
             case .spaceSelected(let item):
+                if item.id == "Morse_Dao" {
+                    self.completion?(.spaceSelected(item))
+                }
                 if item.isJoined {
                     self.trackSpaceSelection(with: item.id)
                     self.completion?(.spaceSelected(item))

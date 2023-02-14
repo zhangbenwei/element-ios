@@ -32,6 +32,7 @@
 @property (weak, nonatomic) IBOutlet UIView *passwordContainer;
 @property (weak, nonatomic) IBOutlet UIView *repeatPasswordContainer;
 @property (weak, nonatomic) IBOutlet UIView *invitationCodeContainer;
+
 @property (weak, nonatomic) IBOutlet UIView *userLoginSeparator;
 @property (weak, nonatomic) IBOutlet UIView *emailSeparator;
 @property (weak, nonatomic) IBOutlet UIView *phoneSeparator;
@@ -55,6 +56,9 @@
 
 @property (weak, nonatomic) IBOutlet TermsView *ssoButtonContainer;
 @property (weak, nonatomic) IBOutlet UIButton *ssoButton;
+
+@property (weak, nonatomic) IBOutlet UIButton *passwordSectryButton;
+@property (weak, nonatomic) IBOutlet UIButton *repeatPasswordSectryButton;
 
 /**
  Tell whether some third-party identifiers may be added during the account registration.

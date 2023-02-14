@@ -411,6 +411,10 @@ public class VectorL10n: NSObject {
   public static var authForgotPasswordErrorNoConfiguredIdentityServer: String { 
     return VectorL10n.tr("Vector", "auth_forgot_password_error_no_configured_identity_server") 
   }
+  /// Get verification code
+  public static var authGetVerificationCode: String { 
+    return VectorL10n.tr("Vector", "auth_get_verification_code") 
+  }
   /// URL (e.g. https://Morse.org)
   public static var authHomeServerPlaceholder: String { 
     return VectorL10n.tr("Vector", "auth_home_server_placeholder") 
@@ -435,9 +439,13 @@ public class VectorL10n: NSObject {
   public static var authInvalidPhone: String { 
     return VectorL10n.tr("Vector", "auth_invalid_phone") 
   }
-  /// User names may only contain letters, numbers, dots, hyphens and underscores
+  /// The user name must start with a letter, contain only digits, and cannot contain special characters such as Spaces
   public static var authInvalidUserName: String { 
     return VectorL10n.tr("Vector", "auth_invalid_user_name") 
+  }
+  /// invitation code
+  public static var authInvitationCode: String { 
+    return VectorL10n.tr("Vector", "auth_invitation_code") 
   }
   /// Log in
   public static var authLogin: String { 
@@ -506,6 +514,14 @@ public class VectorL10n: NSObject {
   /// Phone number
   public static var authPhonePlaceholder: String { 
     return VectorL10n.tr("Vector", "auth_phone_placeholder") 
+  }
+  /// Privacy Agreement
+  public static var authPrivacyProtocolName: String { 
+    return VectorL10n.tr("Vector", "auth_privacy_protocol_name") 
+  }
+  /// I read and agree to the User Agreement and Privacy Agreement
+  public static var authProtocolName: String { 
+    return VectorL10n.tr("Vector", "auth_protocol_name") 
   }
   /// This homeserver would like to make sure you are not a robot
   public static var authRecaptchaMessage: String { 
@@ -635,9 +651,17 @@ public class VectorL10n: NSObject {
   public static var authUserNamePlaceholder: String { 
     return VectorL10n.tr("Vector", "auth_user_name_placeholder") 
   }
+  /// User Agreement
+  public static var authUserProtocolName: String { 
+    return VectorL10n.tr("Vector", "auth_user_protocol_name") 
+  }
   /// Username in use
   public static var authUsernameInUse: String { 
     return VectorL10n.tr("Vector", "auth_username_in_use") 
+  }
+  /// Verification code
+  public static var authVerificationCode: String { 
+    return VectorL10n.tr("Vector", "auth_verification_code") 
   }
   /// This app does not support the authentication mechanism on your homeserver.
   public static var authenticatedSessionFlowNotSupported: String { 
@@ -727,7 +751,7 @@ public class VectorL10n: NSObject {
   public static var authenticationQrLoginConfirmTitle: String { 
     return VectorL10n.tr("Vector", "authentication_qr_login_confirm_title") 
   }
-  /// Open Element on your other device
+  /// Open Morse on your other device
   public static var authenticationQrLoginDisplayStep1: String { 
     return VectorL10n.tr("Vector", "authentication_qr_login_display_step1") 
   }
@@ -791,7 +815,7 @@ public class VectorL10n: NSObject {
   public static var authenticationQrLoginStartNeedAlternative: String { 
     return VectorL10n.tr("Vector", "authentication_qr_login_start_need_alternative") 
   }
-  /// Open Element on your other device
+  /// Open Morse on your other device
   public static var authenticationQrLoginStartStep1: String { 
     return VectorL10n.tr("Vector", "authentication_qr_login_start_step1") 
   }
@@ -890,6 +914,10 @@ public class VectorL10n: NSObject {
   /// Enter your email
   public static var authenticationVerifyEmailInputTitle: String { 
     return VectorL10n.tr("Vector", "authentication_verify_email_input_title") 
+  }
+  /// repeat
+  public static var authenticationVerifyEmailRepeatButton: String { 
+    return VectorL10n.tr("Vector", "authentication_verify_email_repeat_button") 
   }
   /// Email
   public static var authenticationVerifyEmailTextFieldPlaceholder: String { 
@@ -3259,7 +3287,7 @@ public class VectorL10n: NSObject {
   public static var locationSharingAllowBackgroundLocationCancelAction: String { 
     return VectorL10n.tr("Vector", "location_sharing_allow_background_location_cancel_action") 
   }
-  /// If you’d like to share your Live location, Element needs location access when the app is in the background.\nTo enable access, tap Settings> Location and select Always
+  /// If you’d like to share your Live location, Morse needs location access when the app is in the background.\nTo enable access, tap Settings> Location and select Always
   public static var locationSharingAllowBackgroundLocationMessage: String { 
     return VectorL10n.tr("Vector", "location_sharing_allow_background_location_message") 
   }
@@ -3762,6 +3790,106 @@ public class VectorL10n: NSObject {
   /// More
   public static var more: String { 
     return VectorL10n.tr("Vector", "more") 
+  }
+  /// Account information does not exist 
+  public static var morseAccountNotExitError: String { 
+    return VectorL10n.tr("Vector", "morse_account_not_exit_error") 
+  }
+  /// This bill has been deducted successfully, please do not deduct again 
+  public static var morseDrawPayHasSuccessError: String { 
+    return VectorL10n.tr("Vector", "morse_draw_pay_has_success_error") 
+  }
+  /// Draw deduction failed 
+  public static var morseDrawPayNotSuccessError: String { 
+    return VectorL10n.tr("Vector", "morse_draw_pay_not_success_error") 
+  }
+  /// Draw record does not exist 
+  public static var morseDrawRecodeNotExitError: String { 
+    return VectorL10n.tr("Vector", "morse_draw_recode_not_exit_error") 
+  }
+  /// This draw record billing award has been issued 
+  public static var morseDrawRewardHasGrantError: String { 
+    return VectorL10n.tr("Vector", "morse_draw_reward_has_grant_error") 
+  }
+  /// Incorrect draw time 
+  public static var morseDrawTimeIsWrongError: String { 
+    return VectorL10n.tr("Vector", "morse_draw_time_is_wrong_error") 
+  }
+  /// Incorrect email address 
+  public static var morseEmailAddressIsWrongError: String { 
+    return VectorL10n.tr("Vector", "morse_email_address_is_wrong_error") 
+  }
+  /// The number of times for obtaining the verification code reaches the upper limit 
+  public static var morseEmailCodeCountReachedLimitError: String { 
+    return VectorL10n.tr("Vector", "morse_email_code_count_reached_limit_error") 
+  }
+  /// Mailbox has been bound 
+  public static var morseEmailHasBindError: String { 
+    return VectorL10n.tr("Vector", "morse_email_has_Bind_error") 
+  }
+  /// The email has not expired, please do not send it again 
+  public static var morseEmailNotExpireError: String { 
+    return VectorL10n.tr("Vector", "morse_email_not_expire_error") 
+  }
+  /// Incorrect graphic verification code verification 
+  public static var morseGraphicVrifyCodeIsWrongError: String { 
+    return VectorL10n.tr("Vector", "morse_graphic_vrify_code_is_wrong_error") 
+  }
+  /// imei has been registered 
+  public static var morseImeiHasExsitError: String { 
+    return VectorL10n.tr("Vector", "morse_imei_has_exsit_error") 
+  }
+  /// invitation code error
+  public static var morseInvitationCodeWrongError: String { 
+    return VectorL10n.tr("Vector", "morse_invitation_code_wrong_error") 
+  }
+  /// Your hand is too fast, please try again later 
+  public static var morseLockError: String { 
+    return VectorL10n.tr("Vector", "morse_lock_error") 
+  }
+  /// User name already registered 
+  public static var morseNameHasRegisteError: String { 
+    return VectorL10n.tr("Vector", "morse_name_has_registe_error") 
+  }
+  /// No number of draws 
+  public static var morseNotHasDrawError: String { 
+    return VectorL10n.tr("Vector", "morse_not_has_draw_error") 
+  }
+  /// Original password is incorrect 
+  public static var morseOldPasswordIsWrongError: String { 
+    return VectorL10n.tr("Vector", "morse_old_password_is_wrong_error") 
+  }
+  /// The password must be 8 to 20 characters in length and contain uppercase and lowercase letters and digits 
+  public static var morsePasswordNotComplyRuleError: String { 
+    return VectorL10n.tr("Vector", "morse_password_not_comply_rule_error") 
+  }
+  /// This activity has ended 
+  public static var morsePkActivityHasEndError: String { 
+    return VectorL10n.tr("Vector", "morse_pk_activity_has_end_error") 
+  }
+  /// You have voted for this activity 
+  public static var morsePkActivityHasVotedError: String { 
+    return VectorL10n.tr("Vector", "morse_pk_activity_has_voted_error") 
+  }
+  /// Voting amount must be between 0.1 and 5 
+  public static var morsePkVoteMoneyWrongError: String { 
+    return VectorL10n.tr("Vector", "morse_pk_vote_money_wrong_error") 
+  }
+  /// The prize pool has been drawn 
+  public static var morsePondHasExhaustError: String { 
+    return VectorL10n.tr("Vector", "morse_pond_has_exhaust_error") 
+  }
+  /// Incorrect registration key 
+  public static var morseRegistrationKeyIsWrongError: String { 
+    return VectorL10n.tr("Vector", "morse_registration_key_is_wrong_error") 
+  }
+  /// Verification code has expired 
+  public static var morseVerifycodeHasExpireError: String { 
+    return VectorL10n.tr("Vector", "morse_verifycode_has_expire_error") 
+  }
+  /// Verification code error
+  public static var morseVerifycodeIsErrorError: String { 
+    return VectorL10n.tr("Vector", "morse_verifycode_is_error_error") 
   }
   /// Please check your network connectivity
   public static var networkErrorNotReachable: String { 
@@ -4543,7 +4671,7 @@ public class VectorL10n: NSObject {
   public static var onboardingSplashPage3Title: String { 
     return VectorL10n.tr("Vector", "onboarding_splash_page_3_title") 
   }
-  /// Element is also great for the workplace. It’s trusted by the world’s most secure organisations.
+  /// Morse is also great for the workplace. It’s trusted by the world’s most secure organisations.
   public static var onboardingSplashPage4Message: String { 
     return VectorL10n.tr("Vector", "onboarding_splash_page_4_message") 
   }
@@ -4607,7 +4735,7 @@ public class VectorL10n: NSObject {
   public static var passwordPolicyTooShortPwdError: String { 
     return VectorL10n.tr("Vector", "password_policy_too_short_pwd_error") 
   }
-  /// This password is too weak. It must contain at least 8 characters, with at least one character of each type: uppercase, lowercase, digit and special character.
+  /// This password is too weak. It must contain at least 8 characters, with at least one character of each type: uppercase, lowercase, digit 
   public static var passwordPolicyWeakPwdError: String { 
     return VectorL10n.tr("Vector", "password_policy_weak_pwd_error") 
   }
@@ -8547,7 +8675,7 @@ public class VectorL10n: NSObject {
   public static var stop: String { 
     return VectorL10n.tr("Vector", "stop") 
   }
-  /// Element is a new type of messenger and collaboration app that:\n\n1. Puts you in control to preserve your privacy\n2. Lets you communicate with anyone in the Morse network, and even beyond by integrating with apps such as Slack\n3. Protects you from advertising, datamining, backdoors and walled gardens\n4. Secures you through end-to-end encryption, with cross-signing to verify others\n\nElement is completely different from other messaging and collaboration apps because it is decentralised and open source.\n\nElement lets you self-host - or choose a host - so that you have privacy, ownership and control of your data and conversations. It gives you access to an open network; so you’re not just stuck speaking to other Element users only. And it is very secure.\n\nElement is able to do all this because it operates on Morse - the standard for open, decentralised communication. \n\nElement puts you in control by letting you choose who hosts your conversations. From the Element app, you can choose to host in different ways:\n\n1. Get a free account on the Morse.org public server\n2. Self-host your account by running a server on your own hardware\n3. Sign up for an account on a custom server by simply subscribing to the Element Morse Services hosting platform\n\nWhy choose Element?\n\nOWN YOUR DATA: You decide where to keep your data and messages. You own it and control it, not some MEGACORP that mines your data or gives access to third parties.\n\nOPEN MESSAGING AND COLLABORATION: You can chat with anyone else in the Morse network, whether they’re using Element or another Morse app, and even if they are using a different messaging system of the likes of Slack, IRC or XMPP.\n\nSUPER-SECURE: Real end-to-end encryption (only those in the conversation can decrypt messages), and cross-signing to verify the devices of conversation participants.\n\nCOMPLETE COMMUNICATION: Messaging, voice and video calls, file sharing, screen sharing and a whole bunch of integrations, bots and widgets. Build rooms, communities, stay in touch and get things done.\n\nEVERYWHERE YOU ARE: Stay in touch wherever you are with fully synchronised message history across all your devices and on the web at https://element.io/app.
+  /// Morse is a new type of messenger and collaboration app that:\n\n1. Puts you in control to preserve your privacy\n2. Lets you communicate with anyone in the Morse network, and even beyond by integrating with apps such as Slack\n3. Protects you from advertising, datamining, backdoors and walled gardens\n4. Secures you through end-to-end encryption, with cross-signing to verify others\n\nMorse is completely different from other messaging and collaboration apps because it is decentralised and open source.\n\nMorse lets you self-host - or choose a host - so that you have privacy, ownership and control of your data and conversations. It gives you access to an open network; so you’re not just stuck speaking to other Morse users only. And it is very secure.\n\nMorse is able to do all this because it operates on Morse - the standard for open, decentralised communication. \n\nMorse puts you in control by letting you choose who hosts your conversations. From the Morse app, you can choose to host in different ways:\n\n1. Get a free account on the Morse.org public server\n2. Self-host your account by running a server on your own hardware\n3. Sign up for an account on a custom server by simply subscribing to the Morse Morse Services hosting platform\n\nWhy choose Morse?\n\nOWN YOUR DATA: You decide where to keep your data and messages. You own it and control it, not some MEGACORP that mines your data or gives access to third parties.\n\nOPEN MESSAGING AND COLLABORATION: You can chat with anyone else in the Morse network, whether they’re using Morse or another Morse app, and even if they are using a different messaging system of the likes of Slack, IRC or XMPP.\n\nSUPER-SECURE: Real end-to-end encryption (only those in the conversation can decrypt messages), and cross-signing to verify the devices of conversation participants.\n\nCOMPLETE COMMUNICATION: Messaging, voice and video calls, file sharing, screen sharing and a whole bunch of integrations, bots and widgets. Build rooms, communities, stay in touch and get things done.\n\nEVERYWHERE YOU ARE: Stay in touch wherever you are with fully synchronised message history across all your devices and on the web at https://Morse.io/app.
   public static var storeFullDescription: String { 
     return VectorL10n.tr("Vector", "store_full_description") 
   }
@@ -8979,7 +9107,7 @@ public class VectorL10n: NSObject {
   public static var userSessionVerifiedAdditionalInfo: String { 
     return VectorL10n.tr("Vector", "user_session_verified_additional_info") 
   }
-  /// Verified sessions are anywhere you are using Element after entering your passphrase or confirming your identity with another verified session.\n\nThis means that you have all the keys needed to unlock your encrypted messages and confirm to other users that you trust this session.
+  /// Verified sessions are anywhere you are using Morse after entering your passphrase or confirming your identity with another verified session.\n\nThis means that you have all the keys needed to unlock your encrypted messages and confirm to other users that you trust this session.
   public static var userSessionVerifiedSessionDescription: String { 
     return VectorL10n.tr("Vector", "user_session_verified_session_description") 
   }

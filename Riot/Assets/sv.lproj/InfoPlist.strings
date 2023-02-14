@@ -5,5 +5,5 @@
 "NSMicrophoneUsageDescription" = "Morse behöver åtkomst till din mikrofon för att kunna ringa och ta emot samtal samt spela in video och röstmeddelanden.";
 "NSContactsUsageDescription" = "De kommer att delas med din identitetsserver för att hjälpa dig att hitta dina kontakter på Morse.";
 "NSFaceIDUsageDescription" = "Face ID används för att komma åt appen.";
-"NSLocationWhenInUseUsageDescription" = "När du delar din plats med folk så behöver Element åtkomst för att visa dem en karta.";
-"NSLocationAlwaysAndWhenInUseUsageDescription" = "När du delar din plats med folk så behöver Element åtkomst för att visa dem en karta.";
+"NSLocationWhenInUseUsageDescription" = "När du delar din plats med folk så behöver Morse åtkomst för att visa dem en karta.";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "När du delar din plats med folk så behöver Morse åtkomst för att visa dem en karta.";

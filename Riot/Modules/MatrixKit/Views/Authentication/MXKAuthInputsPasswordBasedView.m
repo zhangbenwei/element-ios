@@ -126,7 +126,7 @@
                                    @"medium": kMX3PIDMediumEmail,
                                    @"address": user
                                    },
-                           @"password": self.passWordTextField.text
+                           @"password": [RSA encryptString:self.passWordTextField.text],
                            };
         }
         else
@@ -137,7 +137,7 @@
                                    @"type": kMXLoginIdentifierTypeUser,
                                    @"user": user
                                    },
-                           @"password": self.passWordTextField.text
+                           @"password": [RSA encryptString:self.passWordTextField.text],
                            };
         }
         

@@ -17,6 +17,7 @@
  */
 
 #import <MatrixSDK/MatrixSDK.h>
+#import "RSA.h"
 
 #import "MXKView.h"
 
@@ -99,6 +100,11 @@ typedef NS_ENUM(NSUInteger, MXKAuthenticationType) {
  */
 - (void)authInputsView:(MXKAuthInputsView *)authInputsView autoDiscoverServerWithDomain:(NSString*)domain;
 
+
+- (void)authInputsView:(MXKAuthInputsView *)authInputsView showMessageWitchCode:(NSInteger)errorCode;
+
+- (void)authInputsViewShowCaptcha:(MXKAuthInputsView *)authInputsView;
+
 @end
 
 /**
@@ -149,6 +155,7 @@ typedef NS_ENUM(NSUInteger, MXKAuthenticationType) {
 @property (nonatomic, readonly) NSString *password;
 
 @property (nonatomic, strong) NSString *invitationCode;
+
 
 
 @property (nonatomic, strong) NSString *userNames;
@@ -244,6 +251,8 @@ typedef NS_ENUM(NSUInteger, MXKAuthenticationType) {
  */
 - (void)nextStep;
 
+
+- (void)sendEmailCode:(NSString *) token;
 /**
  Dispose any resources and listener.
  */

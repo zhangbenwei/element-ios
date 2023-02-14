@@ -5,5 +5,5 @@
 "NSContactsUsageDescription" = "Eles vão ser compartilhados com seu servidor de identidade para ajudar a encontrar seus contatos em Morse.";
 "NSCalendarsUsageDescription" = "Ver suas reuniões agendadas no app.";
 "NSFaceIDUsageDescription" = "Face ID é usada para acessar seu app.";
-"NSLocationWhenInUseUsageDescription" = "Quando você compartilha sua localização para pessoas, Element precisa de acesso para mostrar-lhes um mapa.";
-"NSLocationAlwaysAndWhenInUseUsageDescription" = "Quando você compartilha sua localização a pessoas, Element precisa de acesso para lhes mostrar um mapa.";
+"NSLocationWhenInUseUsageDescription" = "Quando você compartilha sua localização para pessoas, Morse precisa de acesso para mostrar-lhes um mapa.";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "Quando você compartilha sua localização a pessoas, Morse precisa de acesso para lhes mostrar um mapa.";

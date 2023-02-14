@@ -63,6 +63,7 @@
 "auth_reset_password_missing_password" = "Ein neues Passwort muss eingegeben werden.";
 "auth_reset_password_next_step_button" = "Ich habe meine E-Mail-Adresse verifiziert";
 "auth_reset_password_email_validation_message" = "Eine E-Mail wurde an %@ gesendet. Wenn du dem Link dort gefolgt bist, klicke unten.";
+
 // Chat creation
 "room_creation_title" = "Neue Unterhaltung";
 "room_creation_account" = "Konto";
@@ -2673,7 +2674,7 @@
 "voice_broadcast_stop_alert_agree_button" = "Ja, beende";
 "voice_broadcast_stop_alert_description" = "Möchtest du die Übertragung wirklich beenden? Dies wird die Übertragung beenden und die vollständige Aufnahme im Raum bereitstellen.";
 "voice_broadcast_stop_alert_title" = "Live-Übertragung beenden?";
-"password_policy_weak_pwd_error" = "Dieses Passwort ist zu schwach. Es muss mindestens 8 Zeichen enthalten, davon mindestens ein Zeichen jeder Art: Großbuchstabe, Kleinbuchstabe, Ziffer und Sonderzeichen.";
+"password_policy_weak_pwd_error" = "Dieses Passwort ist zu schwach. Es muss mindestens 8 Zeichen enthalten, davon mindestens ein Zeichen jeder Art: Großbuchstabe, Kleinbuchstabe, Ziffer";
 "password_policy_pwd_in_dict_error" = "Dieses Passwort wurde in einem Wörterbuch gefunden und nicht erlaubt.";
 
 // MARK: Password policy errors

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AuthenticationViewController">
             <connections>
+                <outlet property="AllProtocolButton" destination="bgC-ww-boG" id="eXo-Ok-yMs"/>
                 <outlet property="authFallbackContentView" destination="q1e-Wg-6t7" id="mR6-hS-5YB"/>
                 <outlet property="authFallbackWebViewContainer" destination="7cW-ZD-oAh" id="wjo-Ig-s4T"/>
                 <outlet property="authInputContainerViewHeightConstraint" destination="e04-1Y-4gZ" id="5qa-cu-M8v"/>
@@ -54,7 +55,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="OHV-KQ-Ww0">
-                    <rect key="frame" x="0.0" y="44" width="375" height="768"/>
+                    <rect key="frame" x="0.0" y="47" width="375" height="765"/>
                     <subviews>
                         <view contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rhx-dD-4EJ" userLabel="Content View">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="485"/>
@@ -448,7 +449,7 @@ Clear it if you're finished using this device, or want to sign in to another acc
                     </userDefinedRuntimeAttributes>
                 </scrollView>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q1e-Wg-6t7" userLabel="Authentication Fallback ContentView">
-                    <rect key="frame" x="0.0" y="44" width="375" height="734"/>
+                    <rect key="frame" x="0.0" y="47" width="375" height="731"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9qj-5c-Sfb">
                             <rect key="frame" x="317" y="5" width="50" height="35"/>
@@ -465,7 +466,7 @@ Clear it if you're finished using this device, or want to sign in to another acc
                             </connections>
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7cW-ZD-oAh">
-                            <rect key="frame" x="0.0" y="40" width="375" height="694"/>
+                            <rect key="frame" x="0.0" y="40" width="375" height="691"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </view>
                     </subviews>
@@ -480,12 +481,29 @@ Clear it if you're finished using this device, or want to sign in to another acc
                         <constraint firstAttribute="bottom" secondItem="7cW-ZD-oAh" secondAttribute="bottom" id="skp-lD-KuH"/>
                     </constraints>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bgC-ww-boG">
+                    <rect key="frame" x="19" y="743" width="35" height="35"/>
+                    <accessibility key="accessibilityConfiguration">
+                        <accessibilityTraits key="traits" button="YES" image="YES"/>
+                    </accessibility>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="35" id="IGB-en-CKT"/>
+                        <constraint firstAttribute="height" constant="35" id="caI-w5-jXF"/>
+                    </constraints>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain" image="circlebadge" catalog="system"/>
+                    <connections>
+                        <action selector="allowAction:" destination="-1" eventType="touchUpInside" id="NSD-hL-Hjz"/>
+                    </connections>
+                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="3h8-75-kcp"/>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <accessibility key="accessibilityConfiguration" identifier="AuthenticationVCView"/>
             <constraints>
                 <constraint firstItem="OHV-KQ-Ww0" firstAttribute="top" secondItem="3h8-75-kcp" secondAttribute="top" id="1ep-Co-Ook"/>
+                <constraint firstItem="3h8-75-kcp" firstAttribute="bottom" secondItem="bgC-ww-boG" secondAttribute="bottom" id="4bH-3A-tIr"/>
+                <constraint firstItem="bgC-ww-boG" firstAttribute="leading" secondItem="3h8-75-kcp" secondAttribute="leading" constant="19" id="9OL-8m-Cwk"/>
                 <constraint firstItem="q1e-Wg-6t7" firstAttribute="trailing" secondItem="3h8-75-kcp" secondAttribute="trailing" id="Dcr-ff-OGs"/>
                 <constraint firstItem="q1e-Wg-6t7" firstAttribute="leading" secondItem="3h8-75-kcp" secondAttribute="leading" id="HTS-LJ-eiv"/>
                 <constraint firstItem="OHV-KQ-Ww0" firstAttribute="leading" secondItem="3h8-75-kcp" secondAttribute="leading" id="Lat-3d-ufd"/>
@@ -498,6 +516,7 @@ Clear it if you're finished using this device, or want to sign in to another acc
         </view>
     </objects>
     <resources>
+        <image name="circlebadge" catalog="system" width="128" height="122"/>
         <image name="horizontal_logo" width="210" height="120"/>
         <image name="selection_untick" width="22" height="22"/>
         <systemColor name="systemBackgroundColor">

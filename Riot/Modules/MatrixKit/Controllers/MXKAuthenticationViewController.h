@@ -285,6 +285,7 @@
  */
 - (void)showResourceLimitExceededError:(NSDictionary *)errorDict onAdminContactTapped:(void (^)(NSURL *adminContact))onAdminContactTapped;
 
+- (void)showAuthProtry ;
 /**
  Handle the successful authentication request.
  

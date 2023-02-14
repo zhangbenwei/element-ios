@@ -54,7 +54,7 @@
 "auth_home_server_placeholder" = "URL（例如 https://Morse.org）";
 "auth_identity_server_placeholder" = "URL（例如 https://vector.im）";
 "auth_invalid_login_param" = "使用者名稱或密碼錯誤";
-"auth_invalid_user_name" = "使用者名稱只能包含英數字、點 (.)、減號 (-) 、底線 (_)";
+"auth_invalid_user_name" = "用戶名必須字母開頭，只能數字字母，不能包含特殊字符空格";
 "auth_invalid_password" = "密碼太短（至少需要 6 個字元）";
 "auth_invalid_email" = "這不像是電子郵件位址";
 "auth_invalid_phone" = "這不像是電話號碼";
@@ -78,6 +78,14 @@
 "auth_msisdn_validation_title" = "等待驗證";
 "auth_msisdn_validation_message" = "簡訊驗證碼已經傳送，請在下方輸入驗證碼。";
 "auth_msisdn_validation_error" = "無法驗證電話號碼。";
+
+"auth_invitation_code" = "邀請碼";
+"auth_user_protocol_name" = "用戶協議";
+"auth_privacy_protocol_name" = "隱私協議";
+"auth_protocol_name" = "我已閱讀並同意 用戶協議 和 隱私協議";
+"auth_verification_code" = "驗證碼";
+"auth_get_verification_code"  = "获取驗證碼";
+
 "bug_report_progress_zipping" = "收集記錄";
 "bug_report_progress_uploading" = "上傳報告";
 "search_default_placeholder" = "搜尋";
@@ -619,7 +627,7 @@
 "skip" = "跳過";
 "close" = "關閉";
 "store_promotional_text" = "開放網絡上的隱私保護聊天和協作應用程序。 去中心化管理。 沒有數據挖掘，沒有後門，也沒有第三方存取。";
-"store_full_description" = "Element是一種新型的通訊和協作應用程式，它可以使你：\n\n1.掌控您的隱私\n2.可以與Morse網絡中的任何人進行通信，甚至可以與Slack等應用程式整合\n3.保護您免受廣告，數據挖掘，後門和封閉平台的侵害\n4.通過端到端加密和交互簽名來驗證他人，從而保護您的安全\n\nElement是去中心化的開源軟件，因此與其他通訊和協作應用程式完全不同。\n\nElement允許您自行架設（或選擇託管）伺服器，使您擁有隱私權，所有權以及對數據和會話的控制權。自行架設的伺服器可以使您訪問開放的網絡；因此，您不僅可以只與其他 Element 用戶聊天。而且非常安全。\n\nElement之所以能夠達至所有這些目標，是因為它在Morse（開放，去中心化通信的標準）上運行。\n\nElement通過讓您選擇託管對話的伺服器來控制您的訊息和資料。在Element應用程式中，您可以選擇以不同方式託管你的訊息：\n\n1.在Morse.org公共伺服器上獲得一個免費帳戶\n2.通過在自己的硬件上架設伺服器來託管帳戶\n3.訂閱Element Morse Services託管平台，即可在自定伺服器上註冊帳戶\n\n為什麼選擇Element？\n\n擁有您的數據：您可以決定將數據和訊息保留在何處。您擁有並控制它，而不是某些超大型企業一樣，會挖掘您的數據或把數據提供給第三方。\n\n開放的通訊和協作：您可以與Morse網絡中的任何人聊天，無論他們使用的是Element還是其他Morse應用程式，甚至他們使用的是Slack，IRC或XMPP之類的其他通訊系統。\n\n超級安全：真正的端到端加密（只有對話中的人才能解密消息），並進行交互簽名以驗證對話參與者的設備。\n\n完整的通信：文字通訊，語音和視像通話，文件共享，屏幕共享以及大量整合，機器人和小部件。建立房間、社群，保持聯繫並完成工作。\n\n無論您身在何處都可保持聯繫：無論您身在何處，都可以通過 https://element.io/app 在所有設備和網絡上完全同步訊息歷史記錄來保持聯繫。";
+"store_full_description" = "Morse是一種新型的通訊和協作應用程式，它可以使你：\n\n1.掌控您的隱私\n2.可以與Morse網絡中的任何人進行通信，甚至可以與Slack等應用程式整合\n3.保護您免受廣告，數據挖掘，後門和封閉平台的侵害\n4.通過端到端加密和交互簽名來驗證他人，從而保護您的安全\n\nMorse是去中心化的開源軟件，因此與其他通訊和協作應用程式完全不同。\n\nMorse允許您自行架設（或選擇託管）伺服器，使您擁有隱私權，所有權以及對數據和會話的控制權。自行架設的伺服器可以使您訪問開放的網絡；因此，您不僅可以只與其他 Morse 用戶聊天。而且非常安全。\n\nMorse之所以能夠達至所有這些目標，是因為它在Morse（開放，去中心化通信的標準）上運行。\n\nMorse通過讓您選擇託管對話的伺服器來控制您的訊息和資料。在Morse應用程式中，您可以選擇以不同方式託管你的訊息：\n\n1.在Morse.org公共伺服器上獲得一個免費帳戶\n2.通過在自己的硬件上架設伺服器來託管帳戶\n3.訂閱Morse Morse Services託管平台，即可在自定伺服器上註冊帳戶\n\n為什麼選擇Morse？\n\n擁有您的數據：您可以決定將數據和訊息保留在何處。您擁有並控制它，而不是某些超大型企業一樣，會挖掘您的數據或把數據提供給第三方。\n\n開放的通訊和協作：您可以與Morse網絡中的任何人聊天，無論他們使用的是Morse還是其他Morse應用程式，甚至他們使用的是Slack，IRC或XMPP之類的其他通訊系統。\n\n超級安全：真正的端到端加密（只有對話中的人才能解密消息），並進行交互簽名以驗證對話參與者的設備。\n\n完整的通信：文字通訊，語音和視像通話，文件共享，屏幕共享以及大量整合，機器人和小部件。建立房間、社群，保持聯繫並完成工作。\n\n無論您身在何處都可保持聯繫：無論您身在何處，都可以通過 https://Morse.io/app 在所有設備和網絡上完全同步訊息歷史記錄來保持聯繫。";
 // String for App Store
 "store_short_description" = "去中心化的安全通訊軟件";
 "settings_three_pids_management_information_part1" = "在此管理你可以用作登入或回復帳戶的電郵或電話號碼。你也可控制誰可以用這些資料找到你。 ";
@@ -1198,7 +1206,7 @@
 "authentication_registration_username_footer_available" = "其他人可以找到您 %@";
 "authentication_registration_username_footer" = "選定後就無法在之後變更修改";
 "authentication_registration_username" = "使用者帳號";
-
+"authentication_verify_email_repeat_button" = "重發";
 // MARK: Authentication
 "authentication_registration_title" = "建立您的帳號";
 "onboarding_celebration_button" = "開始吧";
@@ -1229,7 +1237,7 @@
 "onboarding_use_case_personal_messaging" = "朋友與家人";
 "onboarding_use_case_message" = "我們會協助您連線";
 "onboarding_use_case_title" = "您最常聊天的對象是誰？";
-"onboarding_splash_page_4_message" = "Element 也非常適合工作場域使用。它受到世界上最安全的組織所信任。";
+"onboarding_splash_page_4_message" = "Morse 也非常適合工作場域使用。它受到世界上最安全的組織所信任。";
 "onboarding_splash_page_4_title_no_pun" = "與您的團隊通訊。";
 "onboarding_splash_page_3_message" = "端到端加密與不需要電話號碼。無廣告或資料蒐集。";
 "onboarding_splash_page_1_message" = "為您提供與在家中面對面交談時相同的隱私等級、安全且獨立的通訊。";
@@ -1270,3 +1278,30 @@
 "directory_search_results_more_than" = ">%1$tu 個搜尋結果關於 %2$@";
 /* The placeholder %1$tu will be replaced with a number and %2$@ with the user's search terms. */
 "directory_search_results" = "%1$tu 個搜尋結果關於 %2$@";
+
+// MARK: insert new error
+"morse_imei_has_exsit_error" = "imei已經被註冊";
+"morse_invitation_code_wrong_error" = "邀請碼錯誤";
+"morse_email_has_Bind_error" = "郵箱已經被綁定";
+"morse_name_has_registe_error" = "用戶名已經被註冊";
+"morse_email_not_expire_error" = "郵件還未過期,請勿重復發送";
+"morse_verifycode_has_expire_error" = "驗證碼已過期";
+"morse_verifycode_is_error_error" = "驗證碼錯誤";
+"morse_old_password_is_wrong_error" = "原密碼不正確";
+"morse_account_not_exit_error" = "賬戶信息不存在";
+"morse_draw_recode_not_exit_error" = "抽獎記錄不存在";
+"morse_draw_pay_not_success_error" = "抽獎扣款未成功";
+"morse_draw_pay_has_success_error" = "該賬單已經扣款成功，請勿重復扣款";
+"morse_draw_reward_has_grant_error" = "該抽獎記錄賬單獎勵已經發放";
+"morse_not_has_draw_error" = "沒有抽獎次數";
+"morse_pond_has_exhaust_error" = "獎池已經抽完";
+"morse_draw_time_is_wrong_error" = "抽獎時間不正確";
+"morse_registration_key_is_wrong_error" = "註冊key不正確";
+"morse_email_code_count_reached_limit_error" = "獲取驗證碼次數達到上限";
+"morse_pk_vote_money_wrong_error" = "投票金額必須在0.1~5之間";
+"morse_pk_activity_has_voted_error" = "該活動您已投票";
+"morse_pk_activity_has_end_error" = "該活動已結束";
+"morse_lock_error" = "您手速太快，請稍後再試";
+"morse_password_not_comply_rule_error" = "密碼長度必須是是8~20位並且包含大小寫字母和數字";
+"morse_email_address_is_wrong_error" = "郵箱地址不正確";
+"morse_graphic_vrify_code_is_wrong_error" = "圖形驗證碼校驗不正確";

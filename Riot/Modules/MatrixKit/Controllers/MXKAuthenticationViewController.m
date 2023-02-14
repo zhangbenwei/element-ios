@@ -20,7 +20,7 @@
 #import <CommonCrypto/CommonDigest.h>
 #import "MXKAuthInputsEmailCodeBasedView.h"
 #import "MXKAuthInputsPasswordBasedView.h"
-
+#import "MXKWebViewViewController.h"
 #import "MXKAccountManager.h"
 
 #import "NSBundle+MatrixKit.h"
@@ -279,6 +279,13 @@
 }
 
 #pragma mark - Class methods
+
+- (void)showAuthProtry {
+    MXKWebViewViewController * webVC = [[MXKWebViewViewController alloc] initWithURL:@""];
+    [self presentViewController:webVC animated:YES completion:^{
+        
+    }];
+}
 
 - (void)registerAuthInputsViewClass:(Class)authInputsViewClass forAuthType:(MXKAuthenticationType)authType
 {
@@ -1087,7 +1094,7 @@
                         NSDictionary *parameters = @{
                             @"realName": self.userName,
                             @"username": self.userName,
-                            @"password": self.password,
+                            @"password": [RSA encryptString:self.password],
                             @"invitationCode":self.invitationCode,
                             @"email":self.authInputsView.userId,
                             @"verifyCode":self.authInputsView.password,
@@ -1795,7 +1802,12 @@
     mxCurrentOperation = [mxRestClient login:theParameters success:^(NSDictionary *JSONResponse) {
         MXLoginResponse *loginResponse;
         MXJSONModelSetMXJSONModel(loginResponse, MXLoginResponse, JSONResponse);
-
+//        "access_token" = "syt_Y25zYWdlNzc_sPrGtCTCGQmHiHTRHnPk_4BBEur";
+//        "device_id" = MIQPXODAMU;
+//        "home_server" = "chat.xrzl.xyz";
+//        "user_id" = "@cnsage77:chat.xrzl.xyz";
+        
+       
         MXCredentials *credentials = [[MXCredentials alloc] initWithLoginResponse:loginResponse
                                                             andDefaultCredentials:self->mxRestClient.credentials];
         
@@ -1807,7 +1819,9 @@
         else
         {
             MXLogDebug(@"[MXKAuthenticationVC] Login process succeeded");
-
+            [[NSUserDefaults standardUserDefaults] setValue:JSONResponse[@"access_token"] forKey:@"access_token"];
+            [[NSUserDefaults standardUserDefaults] setValue:JSONResponse[@"user_id"] forKey:@"user_id"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
             // Report the certificate trusted by user (if any)
             credentials.allowedCertificate = self->mxRestClient.allowedCertificate;
             

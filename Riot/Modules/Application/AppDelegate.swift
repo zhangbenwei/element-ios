@@ -16,7 +16,7 @@
 
 import UIKit
 import PushKit
-
+import HCaptcha
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     

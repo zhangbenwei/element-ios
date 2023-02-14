@@ -34,6 +34,11 @@
  The block called when the parameters are ready and the user confirms he has checked his email.
  */
 @property (nonatomic, copy) void (^didPrepareParametersCallback)(NSDictionary *parameters, NSError *error);
+
+@property (nonatomic, strong) CADisplayLink * emailCheckDisplayLink;
+
+@property (nonatomic, assign) int displayLinkTarge;
+
 @end
 
 @implementation EmilCheckInputsView
@@ -48,12 +53,12 @@
 {
     [super awakeFromNib];
     
-    [self.nextStepButton setTitle:@"发送验证码" forState:UIControlStateNormal];
-    [self.nextStepButton setTitle:@"发送验证码" forState:UIControlStateHighlighted];
+    [self.nextStepButton setTitle: [VectorL10n authGetVerificationCode] forState:UIControlStateNormal];
+    [self.nextStepButton setTitle:[VectorL10n authGetVerificationCode] forState:UIControlStateHighlighted];
     self.nextStepButton.enabled = YES;
     
     self.emailTextField.placeholder = [VectorL10n authEmailPlaceholder];
-    self.passWordTextField.placeholder = @"验证码";
+    self.passWordTextField.placeholder = [VectorL10n authVerificationCode];
 
     
     // Apply placeholder color
@@ -68,6 +73,11 @@
     
     self.parameters = nil;
     self.didPrepareParametersCallback = nil;
+    if(_emailCheckDisplayLink){
+        self.emailCheckDisplayLink.paused = YES;
+        [self.emailCheckDisplayLink invalidate];
+        _emailCheckDisplayLink = nil;
+    }
 }
 
 -(void)layoutSubviews
@@ -126,98 +136,132 @@
      
 }
 
-- (void)sendCodeAction:(UIButton *)sender {
+- (CADisplayLink *)emailCheckDisplayLink {
+    if(_emailCheckDisplayLink == nil){
+        self.displayLinkTarge  = 60*5.f;
+        _emailCheckDisplayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(updateTimeCount)];
+        _emailCheckDisplayLink.preferredFramesPerSecond = 1.f;
+        [_emailCheckDisplayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
+        _emailCheckDisplayLink.paused = YES;
+    }
+   return _emailCheckDisplayLink;
+}
+- (void)sendEmailCode:(NSString *)token{
+    MXRestClient *restClient;
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(authInputsViewThirdPartyIdValidationRestClient:)])
     {
-        // Retrieve the REST client from delegate
-        MXRestClient *restClient;
-        
-        if (self.delegate && [self.delegate respondsToSelector:@selector(authInputsViewThirdPartyIdValidationRestClient:)])
-        {
-            restClient = [self.delegate authInputsViewThirdPartyIdValidationRestClient:self];
-        }
-        
-        if (restClient)
-        {
-            [self checkIdentityServerRequirement:restClient success:^{
+        restClient = [self.delegate authInputsViewThirdPartyIdValidationRestClient:self];
+    }
+    
+    if (restClient)
+    {
+        [self checkIdentityServerRequirement:restClient success:^{
 
-                // Launch email validation
-                NSString *clientSecret = [MXTools generateSecret];
+            // Launch email validation
+            NSString *clientSecret = [MXTools generateSecret];
 
-                __weak typeof(self) weakSelf = self;
-                [restClient emilCheckForEmail:self.emailTextField.text
-                                      clientSecret:clientSecret
-                                  sendAttempt:1 username:self.userNames
-                                     isForget:NO
-                                      success:^(NSString *sid)
+            __weak typeof(self) weakSelf = self;
+            [restClient emilCheckForEmail:self.emailTextField.text
+                                  clientSecret:clientSecret
+                              sendAttempt:1 username:self.userNames
+                                 isForget:NO token:token
+                                  success:^(NSDictionary *response)
+             {
+                 typeof(weakSelf) strongSelf = weakSelf;
+                MXLogDebug(@"[EmilCheckInputsView] success %@",response);
+                if([response[@"code"] intValue] == 0){
+                    strongSelf.displayLinkTarge  = 60*5.f;
+                    strongSelf.emailCheckDisplayLink.paused = NO;
+                }else{
+                    if([strongSelf.delegate respondsToSelector:@selector(authInputsView:showMessageWitchCode:)]){
+                        [strongSelf.delegate authInputsView:strongSelf showMessageWitchCode:[response[@"code"] intValue] ];
+                    }
+                }
+             } failure:^(NSError *error) {
+                MXLogDebug(@"[ForgotPasswordInputsView] Failed to request email token");
+
+                 // Ignore connection cancellation error
+                 if (([error.domain isEqualToString:NSURLErrorDomain] && error.code == NSURLErrorCancelled))
                  {
-                     typeof(weakSelf) strongSelf = weakSelf;
-                    
-                 } failure:^(NSError *error) {
-                    MXLogDebug(@"[ForgotPasswordInputsView] Failed to request email token");
+                     return;
+                 }
 
-                     // Ignore connection cancellation error
-                     if (([error.domain isEqualToString:NSURLErrorDomain] && error.code == NSURLErrorCancelled))
+                 NSString *errorMessage;
+                 // Translate the potential MX error.
+                 MXError *mxError = [[MXError alloc] initWithNSError:error];
+                 if (mxError && [mxError.errcode isEqualToString:kMXErrCodeStringThreePIDNotFound])
+                     errorMessage = [VectorL10n authEmailNotFound];
+                 else if (mxError && [mxError.errcode isEqualToString:kMXErrCodeStringServerNotTrusted])
+                     errorMessage = [VectorL10n authUntrustedIdServer];
+                 else if (error.userInfo[@"error"])
+                     errorMessage = error.userInfo[@"error"];
+                 else
+                     errorMessage = error.localizedDescription;
+
+                 if (weakSelf)
+                 {
+                     typeof(self) self = weakSelf;
+
+                     if (self->inputsAlert)
                      {
-                         return;
+                         [self->inputsAlert dismissViewControllerAnimated:NO completion:nil];
                      }
 
-                     NSString *errorMessage;
+                     self->inputsAlert = [UIAlertController alertControllerWithTitle:[VectorL10n error] message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
 
-                     // Translate the potential MX error.
-                     MXError *mxError = [[MXError alloc] initWithNSError:error];
-                     if (mxError && [mxError.errcode isEqualToString:kMXErrCodeStringThreePIDNotFound])
-                         errorMessage = [VectorL10n authEmailNotFound];
-                     else if (mxError && [mxError.errcode isEqualToString:kMXErrCodeStringServerNotTrusted])
-                         errorMessage = [VectorL10n authUntrustedIdServer];
-                     else if (error.userInfo[@"error"])
-                         errorMessage = error.userInfo[@"error"];
-                     else
-                         errorMessage = error.localizedDescription;
+                     [self->inputsAlert addAction:[UIAlertAction actionWithTitle:[VectorL10n ok]
+                                                                           style:UIAlertActionStyleDefault
+                                                                         handler:^(UIAlertAction * action) {
 
-                     if (weakSelf)
-                     {
-                         typeof(self) self = weakSelf;
-
-                         if (self->inputsAlert)
-                         {
-                             [self->inputsAlert dismissViewControllerAnimated:NO completion:nil];
-                         }
-
-                         self->inputsAlert = [UIAlertController alertControllerWithTitle:[VectorL10n error] message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
-
-                         [self->inputsAlert addAction:[UIAlertAction actionWithTitle:[VectorL10n ok]
-                                                                               style:UIAlertActionStyleDefault
-                                                                             handler:^(UIAlertAction * action) {
-
-                                                                                 if (weakSelf)
+                                                                             if (weakSelf)
+                                                                             {
+                                                                                 typeof(self) self = weakSelf;
+                                                                                 self->inputsAlert = nil;
+                                                                                 if (self.delegate && [self.delegate respondsToSelector:@selector(authInputsViewDidCancelOperation:)])
                                                                                  {
-                                                                                     typeof(self) self = weakSelf;
-                                                                                     self->inputsAlert = nil;
-                                                                                     if (self.delegate && [self.delegate respondsToSelector:@selector(authInputsViewDidCancelOperation:)])
-                                                                                     {
-                                                                                         [self.delegate authInputsViewDidCancelOperation:self];
-                                                                                     }
+                                                                                     [self.delegate authInputsViewDidCancelOperation:self];
                                                                                  }
+                                                                             }
 
-                                                                             }]];
+                                                                         }]];
 
-                         [self.delegate authInputsView:self presentAlertController:self->inputsAlert];
-                     }
-                 }];
-            } failure:^(NSError *error) {
-                
-            }];
+                     [self.delegate authInputsView:self presentAlertController:self->inputsAlert];
+                 }
+             }];
+        } failure:^(NSError *error) {
+            
+        }];
 
-            // Async response
-            return;
-        }
-        else
-        {
-            MXLogDebug(@"[ForgotPasswordInputsView] Operation failed during the email identity stage");
-        }
+        // Async response
+        return;
+    }
+    else
+    {
+        MXLogDebug(@"[ForgotPasswordInputsView] Operation failed during the email identity stage");
     }
 }
 
+- (void)sendCodeAction:(UIButton *)sender {
+    [self dismissKeyboard];
+    if(self.delegate && [self.delegate respondsToSelector:@selector(authInputsViewShowCaptcha:)]){
+        [self.delegate authInputsViewShowCaptcha:self];
+    }
+}
+- (void)updateTimeCount {
+    NSLog(@"self.displayLinkTarge %d",self.displayLinkTarge);
+    self.displayLinkTarge --;
+    [self.nextStepButton setTitle:[NSString stringWithFormat:@"%d s后重发",self.displayLinkTarge] forState:UIControlStateNormal];
+    [self.nextStepButton setTitle:[NSString stringWithFormat:@"%d s 后重发",self.displayLinkTarge] forState:UIControlStateHighlighted];
+    self.nextStepButton.highlighted = NO;
+    self.nextStepButton.userInteractionEnabled = NO;
+    if(self.displayLinkTarge == 0){
+        self.emailCheckDisplayLink.paused = YES;
+        [self.nextStepButton setTitle: [VectorL10n authGetVerificationCode] forState:UIControlStateNormal];
+        [self.nextStepButton setTitle:[VectorL10n authGetVerificationCode] forState:UIControlStateHighlighted];
+        self.nextStepButton.userInteractionEnabled = YES;
+    }
+}
 #pragma mark -
 
 - (BOOL)setAuthSession:(MXAuthenticationSession *)authSession withAuthType:(MXKAuthenticationType)authType;

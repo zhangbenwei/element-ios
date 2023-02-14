@@ -7,5 +7,5 @@
 "NSPhotoLibraryUsageDescription" = "Povoľte prístup k fotografiám a nahrávajte fotografie a videá z vašej knižnice.";
 // Permissions usage explanations
 "NSCameraUsageDescription" = "Fotoaparát sa používa na uskutočňovanie videohovorov alebo na snímanie a odosielanie fotografií a videí.";
-"NSLocationWhenInUseUsageDescription" = "Keď zdieľate svoju polohu s ľuďmi, Element potrebuje prístup, aby im mohol zobraziť mapu.";
-"NSLocationAlwaysAndWhenInUseUsageDescription" = "Keď zdieľate svoju polohu s ľuďmi, Element potrebuje prístup, aby im mohol zobraziť mapu.";
+"NSLocationWhenInUseUsageDescription" = "Keď zdieľate svoju polohu s ľuďmi, Morse potrebuje prístup, aby im mohol zobraziť mapu.";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "Keď zdieľate svoju polohu s ľuďmi, Morse potrebuje prístup, aby im mohol zobraziť mapu.";

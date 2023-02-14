@@ -15,7 +15,6 @@
 //
 
 import Foundation
-
 /// Build authentication parameters depending on login type
 final class AuthenticationParametersBuilder {
     

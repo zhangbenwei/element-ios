@@ -48,7 +48,7 @@
 "auth_repeat_password_placeholder" = "重复密码";
 "auth_repeat_new_password_placeholder" = "确认您的新Morse账户密码";
 "auth_invalid_login_param" = "用户名和/或密码无效";
-"auth_invalid_user_name" = "用户名只能包含字母、数字、短横（-）与下划线（_）";
+"auth_invalid_user_name" = "用户名必须字母开头，只能数字字母，不能包含特殊字符空格";
 "auth_invalid_password" = "密码太短（至少 6 个字符）";
 "auth_invalid_email" = "这不像是一个有效的邮箱地址";
 "auth_invalid_phone" = "这不像是一个有效的手机号码";
@@ -78,6 +78,13 @@
 "auth_reset_password_error_not_found" = "您的邮箱地址可能没有与此主服务器上的 Morse ID 绑定。";
 "auth_reset_password_success_message" = "您的Morse账户密码已重置。\n\n您的所有会话都会被登出并且不会收到推送通知。要想重新收到通知，请在每个设备上重新登录。";
 "auth_add_email_and_phone_warning" = "在 API 出现之前，还不支持使用邮箱地址或手机号码直接注册。只有手机号码会和此账户绑定。您可以在设置中添加邮箱地址。";
+
+"auth_invitation_code" = "邀请码";
+"auth_user_protocol_name" = "用户协议";
+"auth_privacy_protocol_name" = "隐私协议";
+"auth_protocol_name" = "我已阅读并同意 用户协议 和 隐私协议";
+"auth_verification_code" = "验证码";
+"auth_get_verification_code"  = "获取验证码";
 // Chat creation
 "room_creation_title" = "新的聊天";
 "room_creation_account" = "账户";
@@ -522,7 +529,7 @@
 "room_resource_usage_limit_reached_message_contact_3" = " 以提高限制。";
 // String for App Store
 "store_short_description" = "安全、去中心化的聊天及 VoIP 应用";
-"store_full_description" = "Element 是一种新型的通讯与协作应用：\n\n1. 使您可以掌控您的隐私\n2. 使您与 Morse 网络中的任何人交流，甚至可以通过集成功能与如 Slack 之类的其他应用通讯\n3. 保护您免受广告，大数据挖掘和封闭服务的侵害\n4. 通过端到端加密保证安全，通过交叉签名验证其他人\n\nElement 与其他通讯与协作应用完全不同，因为它是去中心化且开源的。\n\nElement 允许您自托管——或者选择托管商——因此，您能拥有数据和会话的隐私权，所有权和控制权。它允许您访问开放网络；因此，您可以与 Element 用户以外的人交流。并且它非常安全。\n\nElement 之所以可以做到这些，是因为它在 Morse 上运行——开放，去中心化通讯的标准。\n\n通过让您选择由谁来托管您的会话，Element 让您掌控一切。在 Element 应用中，您可以选择不同的托管方式：\n\n1. 在由 Morse 开发者托管的 Morse.org 公共服务器上获取免费账户，或从志愿者托管的上千个公共服务器中选择\n2. 在您自己的硬件上运行服务器，自托管您的会话\n3. 通过订阅 Element Morse Services 托管平台，简单地在自定义服务器上注册账户\n\n为什么选择 Element？\n\n掌控您的数据：您来决定存放您的数据和消息的位置。拥有并控制它的是您，而不是挖掘您的数据或与第三方分享的巨型企业。\n\n开放通讯与协作：您可以与 Morse 网络中的任何人聊天，不论他们使用 Element 还是其他 Morse 应用，甚至/即使他们在使用不同的通讯系统，例如 Slack、IRC 或 XMPP。\n\n超级安全：支持真正的端到端加密（仅有会话中的人可以解密消息），还有能够验证会话参与方的设备的交叉签名。\n\n完善的通讯方式：消息，语音和视频通话，文件共享，屏幕共享和大量集成功能，机器人和挂件。建立房间与社区，保持联系并完成工作。\n\n随时随地：消息历史可在您的全部设备和 https://app.element.io 网页端之间完全同步，无论您在哪里，都可以保持联系。";
+"store_full_description" = "Morse 是一种新型的通讯与协作应用：\n\n1. 使您可以掌控您的隐私\n2. 使您与 Morse 网络中的任何人交流，甚至可以通过集成功能与如 Slack 之类的其他应用通讯\n3. 保护您免受广告，大数据挖掘和封闭服务的侵害\n4. 通过端到端加密保证安全，通过交叉签名验证其他人\n\nMorse 与其他通讯与协作应用完全不同，因为它是去中心化且开源的。\n\nMorse 允许您自托管——或者选择托管商——因此，您能拥有数据和会话的隐私权，所有权和控制权。它允许您访问开放网络；因此，您可以与 Morse 用户以外的人交流。并且它非常安全。\n\nMorse 之所以可以做到这些，是因为它在 Morse 上运行——开放，去中心化通讯的标准。\n\n通过让您选择由谁来托管您的会话，Morse 让您掌控一切。在 Morse 应用中，您可以选择不同的托管方式：\n\n1. 在由 Morse 开发者托管的 Morse.org 公共服务器上获取免费账户，或从志愿者托管的上千个公共服务器中选择\n2. 在您自己的硬件上运行服务器，自托管您的会话\n3. 通过订阅 Morse Morse Services 托管平台，简单地在自定义服务器上注册账户\n\n为什么选择 Morse？\n\n掌控您的数据：您来决定存放您的数据和消息的位置。拥有并控制它的是您，而不是挖掘您的数据或与第三方分享的巨型企业。\n\n开放通讯与协作：您可以与 Morse 网络中的任何人聊天，不论他们使用 Morse 还是其他 Morse 应用，甚至/即使他们在使用不同的通讯系统，例如 Slack、IRC 或 XMPP。\n\n超级安全：支持真正的端到端加密（仅有会话中的人可以解密消息），还有能够验证会话参与方的设备的交叉签名。\n\n完善的通讯方式：消息，语音和视频通话，文件共享，屏幕共享和大量集成功能，机器人和挂件。建立房间与社区，保持联系并完成工作。\n\n随时随地：消息历史可在您的全部设备和 https://app.Morse.io 网页端之间完全同步，无论您在哪里，都可以保持联系。";
 "auth_accept_policies" = "请查看并接受此主页服务器的服务条款：";
 "room_replacement_information" = "这个房间已被替换，不再有效。";
 "settings_flair" = "在允许的地方显示个性徽章";
@@ -2099,7 +2106,7 @@
 "onboarding_use_case_community_messaging" = "社群";
 "onboarding_use_case_work_messaging" = "团队";
 "onboarding_use_case_title" = "你会和谁聊得最多？";
-"onboarding_splash_page_4_message" = "Element也很适合工作场所。受世界最安全的组织的信任。";
+"onboarding_splash_page_4_message" = "Morse也很适合工作场所。受世界最安全的组织的信任。";
 "onboarding_splash_page_3_message" = "端到端加密且不要求电话号码。无广告或数据挖掘。";
 "onboarding_splash_page_2_message" = "选择在哪里保存你的对话，给你控制和独立。通过Morse连接。";
 
@@ -2215,6 +2222,7 @@
 "authentication_forgot_password_input_message" = "%@将给你发一条验证链接";
 "authentication_forgot_password_input_title" = "输入你的电子邮件";
 "authentication_verify_email_waiting_button" = "重发电子邮件";
+"authentication_verify_email_repeat_button" = "重发";
 "ignore_user" = "忽略用户";
 "authentication_qr_login_start_need_alternative" = "需要替代方法？";
 "authentication_qr_login_start_step4" = "选择“在此设备显示QR码”";
@@ -2223,7 +2231,7 @@
 "authentication_qr_login_display_title" = "关联设备";
 "authentication_qr_login_start_step3" = "选择“关联设备”";
 "authentication_qr_login_start_step2" = "前往设置->安全与隐私";
-"authentication_qr_login_start_step1" = "打开你的其他设备上的Element";
+"authentication_qr_login_start_step1" = "打开你的其他设备上的Morse";
 "authentication_qr_login_start_subtitle" = "用此设备的相机扫描显示在你的其他设备上的QR码：";
 "authentication_qr_login_start_title" = "扫描QR码";
 "authentication_choose_password_signout_all_devices" = "登出全部设备";
@@ -2252,7 +2260,7 @@
 "room_participants_leave_processing" = "离开";
 "search_filter_placeholder" = "过滤";
 "password_policy_pwd_in_dict_error" = "此密码已在字典中找到，不允许使用。";
-"password_policy_weak_pwd_error" = "此密码太弱了。它必须包含至少8个字符，每种类型至少有一个字符: 大写、小写、数字和特殊字符。";
+"password_policy_weak_pwd_error" = "此密码太弱了。它必须包含至少8个字符，每种类型至少有一个字符: 大写、小写、数字";
 
 // MARK: Password policy errors
 "password_policy_too_short_pwd_error" = "密码过短";
@@ -2270,8 +2278,35 @@
 "authentication_qr_login_scan_subtitle" = "将二维码放置在下面的方框中";
 "authentication_qr_login_scan_title" = "扫描二维码";
 "authentication_qr_login_display_step2" = "选择“以二维码登入”";
-"authentication_qr_login_display_step1" = "在您的其它设备中打开Element";
+"authentication_qr_login_display_step1" = "在您的其它设备中打开Morse";
 "onboarding_splash_page_4_title_no_pun" = "为您的团队发送消息。";
 "user_session_learn_more" = "了解更多";
 "manage_session_name_info_link" = "了解更多";
 "threads_beta_information_link" = "了解更多";
+// MARK: insert new error
+
+"morse_imei_has_exsit_error" = "imei已经被注册";
+"morse_invitation_code_wrong_error" = "邀请码错误";
+"morse_email_has_Bind_error" = "邮箱已经被绑定";
+"morse_name_has_registe_error" = "用户名已经被注册";
+"morse_email_not_expire_error" = "邮件还未过期,请勿重复发送";
+"morse_verifycode_has_expire_error" = "验证码已过期";
+"morse_verifycode_is_error_error" = "验证码错误";
+"morse_old_password_is_wrong_error" = "原密码不正确";
+"morse_account_not_exit_error" = "账户信息不存在";
+"morse_draw_recode_not_exit_error" = "抽奖记录不存在";
+"morse_draw_pay_not_success_error" = "抽奖扣款未成功";
+"morse_draw_pay_has_success_error" = "该账单已经扣款成功，请勿重复扣款";
+"morse_draw_reward_has_grant_error" = "该抽奖记录账单奖励已经发放";
+"morse_not_has_draw_error" = "没有抽奖次数";
+"morse_pond_has_exhaust_error" = "奖池已经抽完";
+"morse_draw_time_is_wrong_error" = "抽奖时间不正确";
+"morse_registration_key_is_wrong_error" = "注册key不正确";
+"morse_email_code_count_reached_limit_error" = "获取验证码次数达到上限";
+"morse_pk_vote_money_wrong_error" = "投票金额必须在0.1~5之间";
+"morse_pk_activity_has_voted_error" = "该活动您已投票";
+"morse_pk_activity_has_end_error" = "该活动已结束";
+"morse_lock_error" = "您手速太快，请稍后再试";
+"morse_password_not_comply_rule_error" = "密码长度必须是是8~20位并且包含大小写字母和数字";
+"morse_email_address_is_wrong_error" = "邮箱地址不正确";
+"morse_graphic_vrify_code_is_wrong_error" = "图形验证码校验不正确";

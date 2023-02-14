@@ -50,6 +50,10 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>HCaptchaDomain</key>
+	<string>https://chat.xrzl.xyz</string>
+	<key>HCaptchaKey</key>
+	<string>1bb5a04b-e385-4978-9a05-fee8e56fce42</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<true/>
 	<key>ITSEncryptionExportComplianceCode</key>

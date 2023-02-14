@@ -5,5 +5,5 @@
 "NSContactsUsageDescription" = "Вони будуть передані вашому серверу ідентифікації, щоб допомогти знайти ваші контакти на Morse.";
 "NSCalendarsUsageDescription" = "Переглядайте свої заплановані зустрічі в додатку.";
 "NSFaceIDUsageDescription" = "Face ID використовується для доступу до вашого додатку.";
-"NSLocationWhenInUseUsageDescription" = "Коли ви надсилаєте комусь дані про своє місцеперебування, Element потребує дозволу, щоб показати їм карту.";
-"NSLocationAlwaysAndWhenInUseUsageDescription" = "Коли ви надсилаєте комусь дані про своє місцеперебування, Element потребує дозволу, щоб показати їм карту.";
+"NSLocationWhenInUseUsageDescription" = "Коли ви надсилаєте комусь дані про своє місцеперебування, Morse потребує дозволу, щоб показати їм карту.";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "Коли ви надсилаєте комусь дані про своє місцеперебування, Morse потребує дозволу, щоб показати їм карту.";

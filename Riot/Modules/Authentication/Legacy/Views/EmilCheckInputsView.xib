@@ -58,12 +58,12 @@
                     <rect key="frame" x="0.0" y="84" width="600" height="50"/>
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="emil code" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XXU-wM-aUC">
-                            <rect key="frame" x="18" y="18" width="564" height="21"/>
+                            <rect key="frame" x="18" y="3" width="564" height="44"/>
                             <accessibility key="accessibilityConfiguration" identifier="ForgotPasswordInputViewPasswordTextField">
                                 <bool key="isElement" value="YES"/>
                             </accessibility>
                             <constraints>
-                                <constraint firstAttribute="height" constant="21" id="IIF-hH-vGu"/>
+                                <constraint firstAttribute="height" constant="44" id="IIF-hH-vGu"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="next" textContentType="new-password"/>
@@ -82,7 +82,7 @@
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     <accessibility key="accessibilityConfiguration" identifier="ForgotPasswordInputViewPasswordContainer"/>
                     <constraints>
-                        <constraint firstItem="XXU-wM-aUC" firstAttribute="top" secondItem="zml-68-vvN" secondAttribute="top" constant="18" id="1Fi-vL-sGB"/>
+                        <constraint firstItem="XXU-wM-aUC" firstAttribute="centerY" secondItem="zml-68-vvN" secondAttribute="centerY" id="1Fi-vL-sGB"/>
                         <constraint firstAttribute="trailing" secondItem="Foq-EP-f3O" secondAttribute="trailing" constant="10" id="H8N-uq-pnt"/>
                         <constraint firstItem="XXU-wM-aUC" firstAttribute="leading" secondItem="zml-68-vvN" secondAttribute="leading" constant="18" id="IKi-2B-7Sl"/>
                         <constraint firstAttribute="bottom" secondItem="Foq-EP-f3O" secondAttribute="bottom" id="RBo-nI-jMG"/>
@@ -91,14 +91,15 @@
                         <constraint firstItem="Foq-EP-f3O" firstAttribute="leading" secondItem="zml-68-vvN" secondAttribute="leading" constant="10" id="onI-5v-1rp"/>
                     </constraints>
                 </view>
-                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WUk-s6-Ikg">
-                    <rect key="frame" x="475" y="96" width="135" height="30"/>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WUk-s6-Ikg">
+                    <rect key="frame" x="443" y="96" width="147" height="30"/>
                     <color key="backgroundColor" red="0.028153735480000001" green="0.82494870580000002" blue="0.051896891280000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <accessibility key="accessibilityConfiguration" identifier="ForgotPasswordInputViewNextStepButton"/>
                     <constraints>
+                        <constraint firstAttribute="width" constant="147" id="3Yr-JG-oii"/>
                         <constraint firstAttribute="height" constant="30" id="ZSM-JD-YKG"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <inset key="contentEdgeInsets" minX="30" minY="0.0" maxX="30" maxY="0.0"/>
                     <state key="normal" title="Next Step">
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -114,7 +115,7 @@
                 <constraint firstAttribute="height" constant="134" id="5Ax-Ny-006"/>
                 <constraint firstAttribute="trailing" secondItem="59h-0P-fhu" secondAttribute="trailing" id="C5u-mI-VOG"/>
                 <constraint firstItem="tRG-OP-ut7" firstAttribute="leading" secondItem="pO8-VA-gOZ" secondAttribute="leading" constant="8" id="Ib4-Yd-WSJ"/>
-                <constraint firstItem="WUk-s6-Ikg" firstAttribute="trailing" secondItem="pO8-VA-gOZ" secondAttribute="trailing" constant="10" id="W44-dZ-N3H"/>
+                <constraint firstItem="WUk-s6-Ikg" firstAttribute="trailing" secondItem="pO8-VA-gOZ" secondAttribute="trailing" constant="-10" id="W44-dZ-N3H"/>
                 <constraint firstItem="59h-0P-fhu" firstAttribute="top" secondItem="tRG-OP-ut7" secondAttribute="bottom" constant="8" id="cHi-TS-UyE"/>
                 <constraint firstItem="zml-68-vvN" firstAttribute="leading" secondItem="pO8-VA-gOZ" secondAttribute="leading" id="gXO-0T-QRc"/>
                 <constraint firstItem="WUk-s6-Ikg" firstAttribute="top" secondItem="59h-0P-fhu" secondAttribute="bottom" constant="12" id="joY-8V-D91"/>

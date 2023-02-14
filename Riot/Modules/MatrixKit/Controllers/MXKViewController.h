@@ -18,7 +18,7 @@
 #import "MXKActivityHandlingViewController.h"
 
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width 
-#define kScreenHeight [UIScreen mainScreen].bounds.size.Height
+#define kScreenHeight [UIScreen mainScreen].bounds.size.height
 #define IPHONE_6P_kScreenWidth 414.0f // iPhone6P屏幕的宽
 #define RealWidth (kScreenWidth < kScreenHeight ? kScreenWidth : kScreenHeight)
 #define kRPViewRatio (RealWidth/IPHONE_6P_kScreenWidth)  // 缩放比例

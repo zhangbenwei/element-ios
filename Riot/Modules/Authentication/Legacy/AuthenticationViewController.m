@@ -24,8 +24,9 @@
 #import "ForgotPasswordInputsView.h"
 #import "EmilCheckInputsView.h"
 #import "AuthFallBackViewController.h"
-
+#import "YYKit.h"
 #import "GeneratedInterface-Swift.h"
+#import <HCaptcha/HCaptcha-Swift.h>
 
 static const CGFloat kAuthInputContainerViewMinHeightConstraintConstant = 150.0;
 
@@ -69,8 +70,11 @@ static const CGFloat kAuthInputContainerViewMinHeightConstraintConstant = 150.0;
 
 @property (weak, nonatomic) IBOutlet UIView *socialLoginContainerView;
 @property (nonatomic, weak) SocialLoginListView *socialLoginListView;
-
+@property (weak, nonatomic) IBOutlet UIButton *AllProtocolButton;
+  
 @property (nonatomic, strong) SSOAuthenticationPresenter *ssoAuthenticationPresenter;
+
+@property (nonatomic, strong) YYLabel *protocolLabel;
 
 // Current SSO flow containing Identity Providers. Used for `socialLoginListView`
 @property (nonatomic, strong) MXLoginSSOFlow *currentLoginSSOFlow;
@@ -86,6 +90,8 @@ static const CGFloat kAuthInputContainerViewMinHeightConstraintConstant = 150.0;
 
 @property (nonatomic, strong) MXKErrorAlertPresentation *errorPresenter;
 
+@property (strong, nonatomic) HCaptcha *hCaptcha;
+@property (weak, nonatomic) WKWebView *webView;
 @end
 
 @implementation AuthenticationViewController
@@ -205,6 +211,36 @@ static const CGFloat kAuthInputContainerViewMinHeightConstraintConstant = 150.0;
     [self updateUniversalLink];
     
     _keyboardAvoider = [[KeyboardAvoider alloc] initWithScrollViewContainerView:self.view scrollView:self.authenticationScrollView];
+    [self.AllProtocolButton setTitle:@"" forState:UIControlStateNormal];
+    [self.AllProtocolButton setTitle:@"" forState:UIControlStateHighlighted];
+    [self.view addSubview:self.protocolLabel];
+    
+    self.protocolLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    NSLayoutConstraint * lay1 = [self.protocolLabel.leadingAnchor constraintEqualToAnchor:self.AllProtocolButton.trailingAnchor constant:10] ;
+    NSLayoutConstraint * lay2 = [self.protocolLabel.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:19]  ;
+    NSLayoutConstraint * lay3 = [self.protocolLabel.centerYAnchor constraintEqualToAnchor:self.AllProtocolButton.centerYAnchor constant:0]  ;
+    
+    [NSLayoutConstraint activateConstraints:@[lay1,lay2,lay3]];
+    
+//
+    NSError *error;
+    self.hCaptcha = [[HCaptcha alloc] initWithApiKey:@"1bb5a04b-e385-4978-9a05-fee8e56fce42"
+                                             baseURL:[NSURL URLWithString:@"https://chat.xrzl.xyz"]
+                                               error:&error];
+    if(!error){
+        [self.hCaptcha configureWebView:^(WKWebView * _Nonnull webView) {
+            webView.frame = CGRectMake(19, 88, kScreenWidth - 38, kScreenHeight - 88 - 49);
+            self.webView = webView;
+            self.webView.backgroundColor = ThemeService.shared.theme.backgroundColor;
+        }];
+        [self.hCaptcha onEvent:^(enum HCaptchaEvent event, id _Nullable _) {
+            NSLog(@"%ld",(long)event);
+        }];
+    }else{
+        NSLog(@"hCaptcha error %@",error);
+    }
+    
 }
 
 - (void)userInterfaceThemeDidChange
@@ -336,7 +372,9 @@ static const CGFloat kAuthInputContainerViewMinHeightConstraintConstant = 150.0;
 - (void)viewDidDisappear:(BOOL)animated
 {
     [_keyboardAvoider stopAvoiding];
-    
+    if(_webView){
+        [self.webView removeFromSuperview];
+    }
     [super viewDidDisappear:animated];
 }
 
@@ -367,7 +405,7 @@ static const CGFloat kAuthInputContainerViewMinHeightConstraintConstant = 150.0;
     }
     
     [self.authenticationActivityIndicator removeObserver:self forKeyPath:@"hidden"];
-
+    [self.webView removeFromSuperview];
     autoDiscovery = nil;
     _keyboardAvoider = nil;
 }
@@ -391,11 +429,12 @@ static const CGFloat kAuthInputContainerViewMinHeightConstraintConstant = 150.0;
     {
         [self.submitButton setTitle:[VectorL10n authLogin] forState:UIControlStateNormal];
         [self.submitButton setTitle:[VectorL10n authLogin] forState:UIControlStateHighlighted];
+      
     }
     else if (authType == MXKAuthenticationTypeRegister)
     {
-        [self.submitButton setTitle:[VectorL10n authRegister] forState:UIControlStateNormal];
-        [self.submitButton setTitle:[VectorL10n authRegister] forState:UIControlStateHighlighted];
+        [self.submitButton setTitle:[VectorL10n next] forState:UIControlStateNormal];
+        [self.submitButton setTitle:[VectorL10n next] forState:UIControlStateHighlighted];
     }
     else if (authType == MXKAuthenticationTypeForgotPassword)
     {
@@ -406,8 +445,8 @@ static const CGFloat kAuthInputContainerViewMinHeightConstraintConstant = 150.0;
         }
         else
         {
-            [self.submitButton setTitle:[VectorL10n authSendResetEmail] forState:UIControlStateNormal];
-            [self.submitButton setTitle:[VectorL10n authSendResetEmail] forState:UIControlStateHighlighted];
+            [self.submitButton setTitle:[VectorL10n authenticationChoosePasswordSubmitButton] forState:UIControlStateNormal];
+            [self.submitButton setTitle:[VectorL10n authenticationChoosePasswordSubmitButton] forState:UIControlStateHighlighted];
         }
     }
     else if (authType == MXKAuthenticationTypeEmilCheck)
@@ -419,8 +458,8 @@ static const CGFloat kAuthInputContainerViewMinHeightConstraintConstant = 150.0;
         }
         else
         {
-            [self.submitButton setTitle:[VectorL10n authSendResetEmail] forState:UIControlStateNormal];
-            [self.submitButton setTitle:[VectorL10n authSendResetEmail] forState:UIControlStateHighlighted];
+            [self.submitButton setTitle:[VectorL10n authRegister] forState:UIControlStateNormal];
+            [self.submitButton setTitle:[VectorL10n authRegister] forState:UIControlStateHighlighted];
         }
     }
     [self updateAuthInputViewVisibility];
@@ -1122,7 +1161,7 @@ static const CGFloat kAuthInputContainerViewMinHeightConstraintConstant = 150.0;
         [self.submitButton setTitle:[VectorL10n authRegister] forState:UIControlStateNormal];
         [self.submitButton setTitle:[VectorL10n authRegister] forState:UIControlStateHighlighted];
         
-        self.navigationItem.leftBarButtonItem = nil;
+//        self.navigationItem.leftBarButtonItem = nil;
     }
     else
     {
@@ -1388,6 +1427,80 @@ static const CGFloat kAuthInputContainerViewMinHeightConstraintConstant = 150.0;
 - (void)authInputsView:(MXKAuthInputsView *)authInputsView autoDiscoverServerWithDomain:(NSString *)domain
 {
     [self tryServerDiscoveryOnDomain:domain];
+}
+
+- (void)authInputsView:(MXKAuthInputsView *)authInputsView showMessageWitchCode:(NSInteger)errorCode {
+    
+    NSString * title = @"";
+    switch (errorCode) {
+        case 20000:
+            title = [VectorL10n morseImeiHasExsitError];
+            break;
+        case 20001:
+            title = [VectorL10n morseInvitationCodeWrongError];
+            break;
+        case 20002:
+            title = [VectorL10n morseEmailHasBindError];
+            break;
+        case 20003:
+            title = [VectorL10n morseNameHasRegisteError];
+            break;
+        case 20004:
+            title = [VectorL10n morseEmailNotExpireError];
+            break;
+        case 20005:
+            title = [VectorL10n morseVerifycodeHasExpireError];
+            break;
+        case 20006:
+            title = [VectorL10n morseVerifycodeIsErrorError];
+            break;
+        case 20007:
+            title = [VectorL10n morseOldPasswordIsWrongError];
+            break;
+     
+        case 20016:
+            title = [VectorL10n morseRegistrationKeyIsWrongError];
+            break;
+        case 20017:
+            title = [VectorL10n morseEmailCodeCountReachedLimitError];
+            break;
+      
+             
+            break;
+        case 20023:
+            title = [VectorL10n morsePasswordNotComplyRuleError];
+            break;
+        case 20024:
+            title = [VectorL10n morseEmailAddressIsWrongError];
+            break;
+        case 20025:
+            title = [VectorL10n morseGraphicVrifyCodeIsWrongError];
+            break;
+       
+            
+        default:
+            break;
+    }
+    UIAlertController * alert = [UIAlertController alertControllerWithTitle:[VectorL10n error] message:title preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction * cancel = [UIAlertAction actionWithTitle:[VectorL10n ok] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    [alert addAction:cancel];
+    [self presentViewController:alert animated:YES completion:^{
+        
+    }];
+}
+
+- (void)authInputsViewShowCaptcha:(MXKAuthInputsView *)authInputsView {
+    self.webView.hidden = NO;
+    [self.hCaptcha validateOn:self.view resetOnError:NO completion:^(HCaptchaResult *result) {
+        NSError *error = nil;
+        NSString *token = [result dematerializeAndReturnError: &error];
+        if(!error){
+            [authInputsView sendEmailCode:token];
+        }
+        [self.webView removeFromSuperview];
+    }];
 }
 
 #pragma mark - Server discovery
@@ -1682,5 +1795,33 @@ static const CGFloat kAuthInputContainerViewMinHeightConstraintConstant = 150.0;
     [self dismissSSOAuthenticationPresenter];
     [self loginWithToken:token];
 }
+#pragma mark --- lazy load
+- (YYLabel *)protocolLabel {
+    if(_protocolLabel == nil){
+        _protocolLabel = [YYLabel new];
+        _protocolLabel.numberOfLines = 0;
+       NSString *  text = [VectorL10n authProtocolName];
+        
+        NSMutableAttributedString * attribute = [[NSMutableAttributedString alloc] initWithString:text];
+        
+        attribute.font = [UIFont systemFontOfSize:14];
+        attribute.color = ThemeService.shared.theme.placeholderTextColor;
+        [attribute setTextHighlightRange:[text rangeOfString:[VectorL10n authUserProtocolName]] color:ThemeService.shared.theme.tintColor backgroundColor:UIColor.clearColor userInfo:@{} tapAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
+            [self showAuthProtry];
+        } longPressAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
+            
+        }];
+        [attribute setTextHighlightRange:[text rangeOfString:[VectorL10n authPrivacyProtocolName]] color:ThemeService.shared.theme.tintColor backgroundColor:UIColor.clearColor userInfo:@{} tapAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
+            [self showAuthProtry];
+        } longPressAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
+            
+        }];
+        _protocolLabel.attributedText = attribute;
+    }
+    return _protocolLabel;
+}
 
+- (IBAction)allowAction:(UIButton *)sender {
+    
+}
 @end

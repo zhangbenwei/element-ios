@@ -15,11 +15,11 @@
  */
 
 #import "FavouritesViewController.h"
-
+#import <WebKit/WebKit.h>
 #import "RecentsDataSource.h"
 #import "GeneratedInterface-Swift.h"
 
-@interface FavouritesViewController () <MasterTabBarItemDisplayProtocol,UIWebViewDelegate,WKScriptMessageHandler>
+@interface FavouritesViewController () <MasterTabBarItemDisplayProtocol,WKUIDelegate,WKScriptMessageHandler,WKNavigationDelegate>
 {    
     RecentsDataSource *recentsDataSource;
 }
@@ -58,7 +58,7 @@
     } else {
         // Fallback on earlier versions
     }
-    
+    [self.webView.configuration.userContentController addScriptMessageHandler:self name:@"setStorage"];
     [self.webView.configuration.userContentController addScriptMessageHandler:self name:@"getStorage"];
     [self.webView.configuration.userContentController addScriptMessageHandler:self name:@"scanCode"];
     [self.webView.configuration.userContentController addScriptMessageHandler:self name:@"getLang"];
@@ -95,9 +95,49 @@
 {
     [super destroy];
 }
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
+    
+    decisionHandler(WKNavigationActionPolicyAllow);
+    
+      NSLog(@"%s", __FUNCTION__);
+}
+
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler {
+    decisionHandler(WKNavigationResponsePolicyAllow);
+    NSLog(@"%s", __FUNCTION__);
+}
+
+- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(null_unspecified WKNavigation *)navigation {
+    NSLog(@"%s", __FUNCTION__);
+}
+
+- (void)webView:(WKWebView *)webView didReceiveServerRedirectForProvisionalNavigation:(null_unspecified WKNavigation *)navigation {
+    NSLog(@"%s", __FUNCTION__);
+}
+
+- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error {
+    NSLog(@"%s", __FUNCTION__);
+}
+
+- (void)webView:(WKWebView *)webView didCommitNavigation:(null_unspecified WKNavigation *)navigation {
+    NSLog(@"%s", __FUNCTION__);
+}
+
+- (void)webView:(WKWebView*)webView didFinishNavigation:(WKNavigation*)navigation{
+   // appToken  USER_ID
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+     NSString * str = [NSString stringWithFormat:@"setStorage('%@','%@')",[defaults valueForKey:@"access_token"],[defaults valueForKey:@"user_id"]];
+      [self.webView evaluateJavaScript:str completionHandler:^(id _Nullable obj, NSError * _Nullable error) {
+          NSLog(@"setStorage %@ %@",obj,error);
+      }];
+}
+- (void)webView:(WKWebView *)webView didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *__nullable credential))completionHandler {
+    NSLog(@"%s", __FUNCTION__);
+  completionHandler(NSURLSessionAuthChallengePerformDefaultHandling, nil);
+}
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
     
-     NSLog(@"%@",message.name);
+     NSLog(@"userContentController %@",message.name);
     if ([message.name isEqualToString:@"requestData"]) {
        //     [self requestData];//ios 通过调用 js方法的方式 ，要把数据传给js，
     }
@@ -119,8 +159,8 @@
 
 #pragma mark -
 
-//- (void)displayList:(MXKRecentsDataSource *)listDataSource
-//{
+- (void)displayList:(MXKRecentsDataSource *)listDataSource
+{
 //    [super displayList:listDataSource];
 //
 //    // Keep a ref on the recents data source
@@ -128,82 +168,33 @@
 //    {
 //        recentsDataSource = (RecentsDataSource*)listDataSource;
 //    }
-//}
+}
 
 #pragma mark - Override RecentsViewController
 
-//- (void)refreshCurrentSelectedCell:(BOOL)forceVisible
-//{
-//    // Check whether the recents data source is correctly configured.
-//    if (recentsDataSource.recentsDataSourceMode != RecentsDataSourceModeFavourites)
-//    {
-//        return;
-//    }
-//
-//    [super refreshCurrentSelectedCell:forceVisible];
-//}
+- (void)refreshCurrentSelectedCell:(BOOL)forceVisible
+{
+    // Check whether the recents data source is correctly configured.
+    if (recentsDataSource.recentsDataSourceMode != RecentsDataSourceModeFavourites)
+    {
+        return;
+    }
+
+   // [super refreshCurrentSelectedCell:forceVisible];
+}
 //
 //#pragma mark -
 //
-//- (void)scrollToNextRoomWithMissedNotifications
-//{
-//    // Check whether the recents data source is correctly configured.
-//    if (recentsDataSource.recentsDataSourceMode == RecentsDataSourceModeFavourites)
-//    {
-//        [self scrollToTheTopTheNextRoomWithMissedNotificationsInSection:[recentsDataSource.sections sectionIndexForSectionType:RecentsDataSourceSectionTypeFavorites]];
-//    }
-//}
-//
-//#pragma mark - UITableView delegate
-//
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-//{
-//    // Hide the unique header
-//    return 0.0f;
-//}
-//
-//- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    if ([super respondsToSelector:@selector(tableView:willDisplayCell:forRowAtIndexPath:)])
-//    {
-//        [super tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath];
-//    }
-//
-//    [self.tableViewPaginationThrottler throttle:^{
-//        NSInteger section = indexPath.section;
-//        if (tableView.numberOfSections <= section)
-//        {
-//            return;
-//        }
-//
-//        NSInteger numberOfRowsInSection = [tableView numberOfRowsInSection:section];
-//        if (indexPath.row == numberOfRowsInSection - 1)
-//        {
-//            [self->recentsDataSource paginateInSection:section];
-//        }
-//    }];
-//}
+- (void)scrollToNextRoomWithMissedNotifications
+{
+    // Check whether the recents data source is correctly configured.
+    if (recentsDataSource.recentsDataSourceMode == RecentsDataSourceModeFavourites)
+    {
+       // [self scrollToTheTopTheNextRoomWithMissedNotificationsInSection:[recentsDataSource.sections sectionIndexForSectionType:RecentsDataSourceSectionTypeFavorites]];
+    }
+}
 
 #pragma mark - Empty view management
-
-//- (void)updateEmptyView
-//{
-//    [self.emptyView fillWith:[self emptyViewArtwork]
-//                       title:[VectorL10n favouritesEmptyViewTitle]
-//             informationText:[VectorL10n favouritesEmptyViewInformation]];
-//}
-//
-//- (UIImage*)emptyViewArtwork
-//{
-//    if (ThemeService.shared.isCurrentThemeDark)
-//    {
-//        return AssetImages.favouritesEmptyScreenArtworkDark.image;
-//    }
-//    else
-//    {
-//        return AssetImages.favouritesEmptyScreenArtwork.image;
-//    }
-//}
 
 #pragma mark - MasterTabBarItemDisplayProtocol
 
@@ -216,7 +207,12 @@
         _webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, Height_NavBar,kScreenWidth, self.view.frame.size.height - Height_NavBar-Height_TabBar)];
         _webView.scrollView.showsVerticalScrollIndicator= NO;
         _webView.scrollView.showsHorizontalScrollIndicator = NO;
+        // 与webview UI交互代理
+        _webView.UIDelegate = self;
+        _webView.navigationDelegate = self;
     }
     return _webView;
 }
+
+ 
 @end

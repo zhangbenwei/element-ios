@@ -37,6 +37,11 @@
  The block called when the parameters are ready and the user confirms he has checked his email.
  */
 @property (nonatomic, copy) void (^didPrepareParametersCallback)(NSDictionary *parameters, NSError *error);
+@property (nonatomic, strong) CADisplayLink * emailCheckDisplayLink;
+
+@property (nonatomic, assign) int displayLinkTarge;
+@property (weak, nonatomic) IBOutlet UIButton *passwordSectryButton;
+@property (weak, nonatomic) IBOutlet UIButton *repeatPasswordSectyButton;
 
 @end
 
@@ -52,15 +57,15 @@
 {
     [super awakeFromNib];
     
-    [self.nextStepButton setTitle:@"验证码" forState:UIControlStateNormal];
-    [self.nextStepButton setTitle:@"验证码" forState:UIControlStateHighlighted];
+    [self.nextStepButton setTitle:[VectorL10n authGetVerificationCode] forState:UIControlStateNormal];
+    [self.nextStepButton setTitle:[VectorL10n authGetVerificationCode] forState:UIControlStateHighlighted];
 
     self.emailTextField.placeholder = [VectorL10n authEmailPlaceholder];
     self.passWordTextField.placeholder = [VectorL10n authNewPasswordPlaceholder];
     self.repeatPasswordTextField.placeholder = [VectorL10n authRepeatNewPasswordPlaceholder];
     
-    self.emailCodeTextField.placeholder =  [VectorL10n submitCode]; ;
-    self.userNameTextField.placeholder = @"用户名"; ;
+    self.emailCodeTextField.placeholder =  [VectorL10n submitCode];
+    self.userNameTextField.placeholder =[VectorL10n authUserNamePlaceholder];
     [self customizeViewRendering];
 }
 
@@ -72,6 +77,11 @@
     
     self.parameters = nil;
     self.didPrepareParametersCallback = nil;
+    if(_emailCheckDisplayLink){
+        self.emailCheckDisplayLink.paused = YES;
+        [self.emailCheckDisplayLink invalidate];
+        _emailCheckDisplayLink = nil;
+    }
 }
 
 -(void)layoutSubviews
@@ -153,8 +163,21 @@
     }
     
     [self.nextStepButton  addTarget:self action:@selector(sendCodeAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.passwordSectryButton setTitle:@"" forState:UIControlStateNormal];
+    [self.passwordSectryButton setTitle:@"" forState:UIControlStateHighlighted];
+    [self.repeatPasswordSectyButton setTitle:@"" forState:UIControlStateNormal];
+    [self.repeatPasswordSectyButton setTitle:@"" forState:UIControlStateHighlighted];
 }
-
+- (CADisplayLink *)emailCheckDisplayLink {
+    if(_emailCheckDisplayLink == nil){
+        self.displayLinkTarge  = 60*5.f;
+        _emailCheckDisplayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(updateTimeCount)];
+        _emailCheckDisplayLink.preferredFramesPerSecond = 1.f;
+        [_emailCheckDisplayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
+        _emailCheckDisplayLink.paused = YES;
+    }
+   return _emailCheckDisplayLink;
+}
 #pragma mark -
 
 - (BOOL)setAuthSession:(MXAuthenticationSession *)authSession withAuthType:(MXKAuthenticationType)authType;
@@ -208,7 +231,7 @@
         BOOL  isMatch = [passWordRegex firstMatchInString:self.userNameTextField.text options:0 range:NSMakeRange(0, self.userNameTextField.text.length)] == nil;
         
         if(isMatch){
-            errorMsg = @"用户名必须字母开头，只能数字字母，不能包含特殊字符空格";
+            errorMsg = [VectorL10n authInvalidUserName];
         }
        }else  if(self.passWordTextField.text){
             NSRegularExpression *passWordRegex = [NSRegularExpression regularExpressionWithPattern:@"^(?![0-9]+$)(?![a-zA-Z]+$)(?![A-Z0-9]+$)(?![a-z0-9]+$)[0-9A-Za-z]{8,20}$" options:NSRegularExpressionCaseInsensitive error:nil];
@@ -276,7 +299,7 @@
                     {
                         self.parameters = @{
                             @"userName":self.userNameTextField.text,
-                            @"password":self.passWordTextField.text,
+                            @"password":[RSA encryptString:self.passWordTextField.text],
                             @"verifyCode":self.emailCodeTextField.text
                         };
                         callback(self.parameters, nil);
@@ -300,7 +323,7 @@
 }
 - (void)sendCodeAction:(UIButton *)sender {
     {
-        // Retrieve the REST client from delegate
+        
         MXRestClient *restClient;
         
         if (self.delegate && [self.delegate respondsToSelector:@selector(authInputsViewThirdPartyIdValidationRestClient:)])
@@ -318,11 +341,18 @@
                 __weak typeof(self) weakSelf = self;
                 [restClient emilCheckForEmail:self.emailTextField.text
                                       clientSecret:clientSecret
-                                  sendAttempt:1 username:self.userNameTextField.text isForget:YES
-                                           success:^(NSString *sid)
+                                  sendAttempt:1 username:self.userNameTextField.text isForget:YES token:@"" success:^(NSDictionary *response)
                  {
+                    MXLogDebug(@"[EmilCheckInputsView] success %@",response);
                      typeof(weakSelf) strongSelf = weakSelf;
-                    
+                    if([response[@"code"] intValue] == 0){
+                        strongSelf.displayLinkTarge  = 60*5.f;
+                        strongSelf.emailCheckDisplayLink.paused = NO;
+                    }else{
+                        if([strongSelf.delegate respondsToSelector:@selector(authInputsView:showMessageWitchCode:)]){
+                            [strongSelf.delegate authInputsView:strongSelf showMessageWitchCode:[response[@"code"] intValue] ];
+                        }
+                    }
                  } failure:^(NSError *error) {
                     MXLogDebug(@"[ForgotPasswordInputsView] Failed to request email token");
 
@@ -386,6 +416,21 @@
         {
             MXLogDebug(@"[ForgotPasswordInputsView] Operation failed during the email identity stage");
         }
+    }
+}
+
+- (void)updateTimeCount {
+    NSLog(@"self.displayLinkTarge %d",self.displayLinkTarge);
+    self.displayLinkTarge --;
+    [self.nextStepButton setTitle:[NSString stringWithFormat:@"%d s后重发",self.displayLinkTarge] forState:UIControlStateNormal];
+    [self.nextStepButton setTitle:[NSString stringWithFormat:@"%d s 后重发",self.displayLinkTarge] forState:UIControlStateHighlighted];
+    self.nextStepButton.highlighted = NO;
+    self.nextStepButton.userInteractionEnabled = NO;
+    if(self.displayLinkTarge == 0){
+        self.emailCheckDisplayLink.paused = YES;
+        [self.nextStepButton setTitle: [VectorL10n authGetVerificationCode] forState:UIControlStateNormal];
+        [self.nextStepButton setTitle:[VectorL10n authGetVerificationCode] forState:UIControlStateHighlighted];
+        self.nextStepButton.userInteractionEnabled = YES;
     }
 }
 - (BOOL)areAllRequiredFieldsSet
@@ -471,6 +516,30 @@
 
 #pragma mark - actions
 
+- (IBAction)passwordSectryAction:(UIButton *)sender {
+    
+    NSString*textStr = self.passWordTextField.text;
+    self.passWordTextField.text=@"";
+    self.passWordTextField.secureTextEntry =! self.passWordTextField.isSecureTextEntry;
+    if(!self.passWordTextField.isSecureTextEntry){
+        [sender setImage:AssetImages.revealPasswordButton.image forState:UIControlStateNormal];
+    }else{
+        [sender setImage:AssetImages.icoMimabukejian.image forState:UIControlStateNormal];
+    }
+    self.passWordTextField.text =  textStr;
+}
+- (IBAction)repeatpasswordSectryAction:(UIButton *)sender {
+    NSString*textStr = self.repeatPasswordTextField.text;
+    self.repeatPasswordTextField.text=@"";
+    self.repeatPasswordTextField.secureTextEntry =! self.repeatPasswordTextField.isSecureTextEntry;
+    if(!self.repeatPasswordTextField.isSecureTextEntry){
+        [sender setImage:AssetImages.revealPasswordButton.image forState:UIControlStateNormal];
+    }else{
+        [sender setImage:AssetImages.icoMimabukejian.image forState:UIControlStateNormal];
+    }
+    self.repeatPasswordTextField.text =  textStr;
+}
+
 - (void)didCheckEmail:(id)sender
 {
     if (sender == self.nextStepButton)
@@ -519,7 +588,7 @@
     self.emailContainer.hidden = YES;
     self.repeatPasswordContainer.hidden = YES;
     self.nextStepButton.hidden = YES;
-    self.userNameTextField.hidden = YES;
+    self.userNameContainer.hidden = YES;
     self.EmailCodeContainer.hidden = YES;
     // Hide other items
     self.messageLabel.hidden = YES;

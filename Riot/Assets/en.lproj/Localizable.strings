@@ -185,3 +185,4 @@
 /** Key verification **/
 
 "KEY_VERIFICATION_REQUEST_FROM_USER" = "%@ wants to verify";
+"authentication_verify_email_repeat_button" = "重發";

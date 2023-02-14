@@ -2642,7 +2642,7 @@
 "voice_broadcast_buffering" = "Buffering…";
 "user_session_permanently_unverified_session_description" = "Esta sessão não suporta encriptação, então ela não pode ser verificada.\n\nVocê não vai ser capaz de participar em salas onde encriptação é habilitada quando usando esta sessão.\n\nPara a melhor segurança e privacidade, é recomendado usar clientes Matrix que suportam encriptação.";
 "password_policy_pwd_in_dict_error" = "Esta senha tem sido encontrada em um dicionário, e não é permitida.";
-"password_policy_weak_pwd_error" = "Esta senha é fraca demais. Ela deve conter ao menos 8 caracteres, com ao menos um caractere de cada tipo: caractere maiúsculo, minúsculo, dígito, e especial.";
+"password_policy_weak_pwd_error" = "Esta senha é fraca demais. Ela deve conter ao menos 8 caracteres, com ao menos um caractere de cada tipo: caractere maiúsculo, minúsculo, dígito.";
 
 // MARK: Password policy errors
 "password_policy_too_short_pwd_error" = "Senha curta demais";

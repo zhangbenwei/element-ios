@@ -60,7 +60,28 @@ class AllChatsViewController: HomeViewController {
     private let tableViewPaginationThrottler = MXThrottler(minimumDelay: 0.1)
     
     private let reviewSessionAlertSnoozeController = ReviewSessionAlertSnoozeController()
+   
+    @IBAction private func AllChatsSpaceAction (_ sender: Any) {
+       showSpaceSelectorAction()
+    }
     
+//    @IBAction private func AllChatEditAction (_ sender: Any) {
+//         let currentSpace = self.dataSource?.currentSpace
+//         let alerrtmenu = editActionProvider.updateAlertMenu(with: mainSession, parentSpace: currentSpace) { [weak self] menu in}
+////        view.bringSubviewToFront(maskBlakView)
+////        maskBlakView.alpha = 1
+////        maskBlakView.addSubview(alerrtmenu)
+////        alerrtmenu.backgroundColor = .white
+////        alerrtmenu.layer.cornerRadius = 19;
+////        alerrtmenu.layer.masksToBounds = true
+////        alerrtmenu.translatesAutoresizingMaskIntoConstraints = false
+////        alerrtmenu.trailingAnchor.constraint(equalTo: AllChatsEditButton.centerXAnchor, constant: 0).isActive = true
+////        alerrtmenu.bottomAnchor.constraint(equalTo: AllChatsEditButton.topAnchor, constant: 0).isActive = true
+////        alerrtmenu.heightAnchor.constraint(equalToConstant: CGFloat(alerrtmenu.subviews.count * 49)).isActive = true
+////        alerrtmenu.widthAnchor.constraint(equalToConstant: 120).isActive = true
+//
+//        self.present(alerrtmenu, animated: true)
+//    }
     private var bannerView: UIView? {
         didSet {
             bannerView?.translatesAutoresizingMaskIntoConstraints = false
@@ -74,12 +95,16 @@ class AllChatsViewController: HomeViewController {
         ThemeService.shared().theme
     }
 
+    @IBOutlet private var AllChatsEditButton: UIButton!
+     
+    @IBOutlet private var AllChatSpaceButton: UIButton!
+    
     @IBOutlet private var toolbar: UIToolbar!
     private var isToolbarHidden: Bool = false {
         didSet {
             if isViewLoaded {
-                toolbar.transform = isToolbarHidden ? CGAffineTransform(translationX: 0, y: 2 * toolbarHeight) : .identity
-                self.view.layoutIfNeeded()
+//                toolbar.transform = isToolbarHidden ? CGAffineTransform(translationX: 0, y: 2 * toolbarHeight) : .identity
+//                self.view.layoutIfNeeded()
             }
         }
     }
@@ -124,12 +149,10 @@ class AllChatsViewController: HomeViewController {
         recentsTableView.register(RecentEmptySpaceSectionTableViewCell.nib, forCellReuseIdentifier: RecentEmptySpaceSectionTableViewCell.reuseIdentifier)
         recentsTableView.register(RecentsInvitesTableViewCell.nib, forCellReuseIdentifier: RecentsInvitesTableViewCell.reuseIdentifier)
         recentsTableView.contentInsetAdjustmentBehavior = .automatic
-        
-        toolbarHeight = toolbar.frame.height
-        emptyViewBottomAnchor = toolbar.topAnchor
-
+  
+        emptyViewBottomAnchor = recentsTableView.bottomAnchor
         updateUI()
-        
+ 
         navigationItem.largeTitleDisplayMode = .automatic
         navigationController?.navigationBar.prefersLargeTitles = true
 
@@ -139,12 +162,14 @@ class AllChatsViewController: HomeViewController {
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.setupEditOptions), name: AllChatsLayoutSettingsManager.didUpdateSettings, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateBadgeButton), name: MXSpaceNotificationCounter.didUpdateNotificationCount, object: nil)
+ 
     }
-    
+     
+  
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.toolbar.tintColor = theme.colors.accent
+//        self.toolbar.tintColor = theme.colors.accent
         if self.navigationItem.searchController == nil {
             self.navigationItem.searchController = searchController
         }
@@ -286,7 +311,7 @@ class AllChatsViewController: HomeViewController {
     
     // MARK: - Actions
     
-    @objc private func showSpaceSelectorAction(sender: AnyObject) {
+    @objc private func showSpaceSelectorAction() {
         Analytics.shared.viewRoomTrigger = .roomList
         let currentSpaceId = self.dataSource.currentSpace?.spaceId ?? SpaceSelectorConstants.homeSpaceId
         let spaceSelectorBridgePresenter = SpaceSelectorBottomSheetCoordinatorBridgePresenter(session: self.mainSession, selectedSpaceId: currentSpaceId, showHomeSpace: true)
@@ -424,6 +449,10 @@ class AllChatsViewController: HomeViewController {
         self.emptyView?.fill(with: emptyViewArtwork,
                              title: title,
                              informationText: informationText)
+        
+        if emptyView != nil {
+            view!.insertSubview(self.emptyView, belowSubview: AllChatSpaceButton)
+        }
     }
     
     private var emptyViewArtwork: UIImage {
@@ -438,6 +467,9 @@ class AllChatsViewController: HomeViewController {
         let shouldShowEmptyView = super.shouldShowEmptyView() && !AllChatsLayoutSettingsManager.shared.hasAnActiveFilter
         
         if shouldShowEmptyView {
+            if emptyView != nil {
+                view!.insertSubview(self.emptyView, belowSubview: AllChatSpaceButton)
+            }
             self.navigationItem.searchController = nil
             navigationItem.largeTitleDisplayMode = .never
         } else {
@@ -462,7 +494,7 @@ class AllChatsViewController: HomeViewController {
     }
     
     private func update(with theme: Theme) {
-        self.navigationController?.toolbar?.tintColor = theme.colors.accent
+//        self.navigationController?.toolbar?.tintColor = theme.colors.accent
     }
     
     // MARK: - Private
@@ -492,23 +524,29 @@ class AllChatsViewController: HomeViewController {
     private func updateUI() {
         let currentSpace = self.dataSource?.currentSpace
         self.title = currentSpace?.summary?.displayname ?? VectorL10n.allChatsTitle
-        
+        AllChatsEditButton.setTitle("", for: .normal)
+        AllChatsEditButton.setTitle("", for: .highlighted)
+        AllChatSpaceButton.setTitle("", for: .normal)
+        AllChatSpaceButton.setTitle("", for: .highlighted)
+        AllChatSpaceButton.layer.cornerRadius = 10
+        AllChatSpaceButton.layer.masksToBounds  = true
+        AllChatsEditButton.layer.cornerRadius = 10
+        AllChatsEditButton.layer.masksToBounds  = true
+        AllChatsEditButton.showsMenuAsPrimaryAction = true
         setupEditOptions()
-        updateToolbar(with: editActionProvider.updateMenu(with: mainSession, parentSpace: currentSpace, completion: { [weak self] menu in
-            self?.updateToolbar(with: menu)
-        }))
         updateEmptyView()
         updateBadgeButton()
+        view.bringSubviewToFront(AllChatSpaceButton)
+        view.bringSubviewToFront(AllChatsEditButton)
     }
     
     private func updateRightNavigationItem(with menu: UIMenu) {
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"), menu: menu)
+        self.AllChatsEditButton.menu = menu
     }
     
     private lazy var spacesButton: BadgedBarButtonItem = {
         let innerButton = UIButton(type: .system)
         innerButton.accessibilityLabel = VectorL10n.spaceSelectorTitle
-        innerButton.addTarget(self, action: #selector(self.showSpaceSelectorAction(sender:)), for: .touchUpInside)
         innerButton.setImage(Asset.Images.allChatsSpacesIcon.image, for: .normal)
         return BadgedBarButtonItem(withBaseButton: innerButton, theme: theme)
     }()
@@ -544,11 +582,11 @@ class AllChatsViewController: HomeViewController {
         self.isToolbarHidden = false
         self.update(with: theme)
         
-        self.toolbar.items = [
-            spacesButton,
-            UIBarButtonItem.flexibleSpace(),
-            UIBarButtonItem(image: Asset.Images.allChatsEditIcon.image, menu: menu)
-        ]
+//        self.toolbar.items = [
+//            spacesButton,
+//            UIBarButtonItem.flexibleSpace(),
+//            UIBarButtonItem(image: Asset.Images.allChatsEditIcon.image, menu: menu)
+//        ]
     }
     
     private func showCreateSpace(parentSpaceId: String?) {
