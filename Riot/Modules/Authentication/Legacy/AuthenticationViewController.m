@@ -1476,7 +1476,9 @@ static const CGFloat kAuthInputContainerViewMinHeightConstraintConstant = 150.0;
         case 20025:
             title = [VectorL10n morseGraphicVrifyCodeIsWrongError];
             break;
-       
+        case 20026:
+            title = [VectorL10n morseGraphicVrifyCodeIsWrongError];
+            break;
             
         default:
             break;

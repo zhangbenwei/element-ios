@@ -1305,3 +1305,4 @@
 "morse_password_not_comply_rule_error" = "密碼長度必須是是8~20位並且包含大小寫字母和數字";
 "morse_email_address_is_wrong_error" = "郵箱地址不正確";
 "morse_graphic_vrify_code_is_wrong_error" = "圖形驗證碼校驗不正確";
+"morse_email_is_black_error" = "邮箱在黑名单中";

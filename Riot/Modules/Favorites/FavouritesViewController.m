@@ -44,7 +44,7 @@
   //  self.enableDragging = YES;
     
   //  self.screenTracker = [[AnalyticsScreenTracker alloc] initWithScreen:AnalyticsScreenFavourites];
-    self.tableViewPaginationThrottler = [[MXThrottler alloc] initWithMinimumDelay:0.1];
+ //   self.tableViewPaginationThrottler = [[MXThrottler alloc] initWithMinimumDelay:0.1];
 }
 
 - (void)viewDidLoad
@@ -58,19 +58,13 @@
     } else {
         // Fallback on earlier versions
     }
-    [self.webView.configuration.userContentController addScriptMessageHandler:self name:@"setStorage"];
-    [self.webView.configuration.userContentController addScriptMessageHandler:self name:@"getStorage"];
-    [self.webView.configuration.userContentController addScriptMessageHandler:self name:@"scanCode"];
-    [self.webView.configuration.userContentController addScriptMessageHandler:self name:@"getLang"];
-    [self.webView.configuration.userContentController addScriptMessageHandler:self name:@"checkEnvironment"];
-    [self.webView.configuration.userContentController addScriptMessageHandler:self name:@"getStorge"];
-    [self.webView.configuration.userContentController addScriptMessageHandler:self name:@"payMorse"];
     [self.view addSubview:self.webView];
   
-    NSString *hFivePath = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html" inDirectory:@"h5"];
-
+ 
+    
+  
+    NSString *hFivePath = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html" inDirectory:@"h5 2"];
     NSURL *url = [NSURL fileURLWithPath:hFivePath];
-
     [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
     
 }
@@ -125,11 +119,11 @@
 
 - (void)webView:(WKWebView*)webView didFinishNavigation:(WKNavigation*)navigation{
    // appToken  USER_ID
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-     NSString * str = [NSString stringWithFormat:@"setStorage('%@','%@')",[defaults valueForKey:@"access_token"],[defaults valueForKey:@"user_id"]];
-      [self.webView evaluateJavaScript:str completionHandler:^(id _Nullable obj, NSError * _Nullable error) {
-          NSLog(@"setStorage %@ %@",obj,error);
-      }];
+//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//     NSString * str = [NSString stringWithFormat:@"setStorage('%@','%@')",[defaults valueForKey:@"access_token"],[defaults valueForKey:@"user_id"]];
+//      [self.webView evaluateJavaScript:str completionHandler:^(id _Nullable obj, NSError * _Nullable error) {
+//          NSLog(@"setStorage %@ %@",obj,error);
+//      }];
 }
 - (void)webView:(WKWebView *)webView didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *__nullable credential))completionHandler {
     NSLog(@"%s", __FUNCTION__);
@@ -138,10 +132,10 @@
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
     
      NSLog(@"userContentController %@",message.name);
-    if ([message.name isEqualToString:@"requestData"]) {
+    if ([message.name isEqualToString:@"setStorage"]) {
        //     [self requestData];//ios 通过调用 js方法的方式 ，要把数据传给js，
     }
-    if ([message.name isEqualToString:@"WatchVideoWithVideoInfo"]) {
+    if ([message.name isEqualToString:@"getStorage"]) {
         if ([message.body isKindOfClass:[NSString class]]) {
  
           
@@ -204,7 +198,15 @@
 }
 - (WKWebView *)webView {
     if (_webView == nil) {
-        _webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, Height_NavBar,kScreenWidth, self.view.frame.size.height - Height_NavBar-Height_TabBar)];
+        WKUserContentController *userContentController = [WKUserContentController  new];
+        [userContentController addScriptMessageHandler:self name:@"setStorge"];
+        [userContentController addScriptMessageHandler:self name:@"getStorge"];
+        [userContentController addScriptMessageHandler:self name:@"scanCode"];
+        [userContentController addScriptMessageHandler:self name:@"getLang"];
+        [userContentController addScriptMessageHandler:self name:@"checkEnvironment"];
+        WKWebViewConfiguration * config = [[WKWebViewConfiguration alloc] init];
+        config.userContentController = userContentController;
+        _webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, Height_NavBar,kScreenWidth, self.view.frame.size.height - Height_NavBar-Height_TabBar) configuration:config];
         _webView.scrollView.showsVerticalScrollIndicator= NO;
         _webView.scrollView.showsHorizontalScrollIndicator = NO;
         // 与webview UI交互代理

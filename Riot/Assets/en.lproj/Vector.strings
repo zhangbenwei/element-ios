@@ -3176,3 +3176,4 @@ To enable access, tap Settings> Location and select Always";
 "morse_password_not_comply_rule_error" = "The password must be 8 to 20 characters in length and contain uppercase and lowercase letters and digits ";
 "morse_email_address_is_wrong_error" = "Incorrect email address ";
 "morse_graphic_vrify_code_is_wrong_error" = "Incorrect graphic verification code verification ";
+"morse_email_is_black_error" = "The mailbox is in the blacklist";

@@ -3827,6 +3827,10 @@ public class VectorL10n: NSObject {
   public static var morseEmailHasBindError: String { 
     return VectorL10n.tr("Vector", "morse_email_has_Bind_error") 
   }
+  /// The mailbox is in the blacklist
+  public static var morseEmailIsBlackError: String { 
+    return VectorL10n.tr("Vector", "morse_email_is_black_error") 
+  }
   /// The email has not expired, please do not send it again 
   public static var morseEmailNotExpireError: String { 
     return VectorL10n.tr("Vector", "morse_email_not_expire_error") 
