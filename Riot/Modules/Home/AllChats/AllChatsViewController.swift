@@ -64,24 +64,7 @@ class AllChatsViewController: HomeViewController {
     @IBAction private func AllChatsSpaceAction (_ sender: Any) {
        showSpaceSelectorAction()
     }
-    
-//    @IBAction private func AllChatEditAction (_ sender: Any) {
-//         let currentSpace = self.dataSource?.currentSpace
-//         let alerrtmenu = editActionProvider.updateAlertMenu(with: mainSession, parentSpace: currentSpace) { [weak self] menu in}
-////        view.bringSubviewToFront(maskBlakView)
-////        maskBlakView.alpha = 1
-////        maskBlakView.addSubview(alerrtmenu)
-////        alerrtmenu.backgroundColor = .white
-////        alerrtmenu.layer.cornerRadius = 19;
-////        alerrtmenu.layer.masksToBounds = true
-////        alerrtmenu.translatesAutoresizingMaskIntoConstraints = false
-////        alerrtmenu.trailingAnchor.constraint(equalTo: AllChatsEditButton.centerXAnchor, constant: 0).isActive = true
-////        alerrtmenu.bottomAnchor.constraint(equalTo: AllChatsEditButton.topAnchor, constant: 0).isActive = true
-////        alerrtmenu.heightAnchor.constraint(equalToConstant: CGFloat(alerrtmenu.subviews.count * 49)).isActive = true
-////        alerrtmenu.widthAnchor.constraint(equalToConstant: 120).isActive = true
-//
-//        self.present(alerrtmenu, animated: true)
-//    }
+     
     private var bannerView: UIView? {
         didSet {
             bannerView?.translatesAutoresizingMaskIntoConstraints = false
@@ -103,8 +86,7 @@ class AllChatsViewController: HomeViewController {
     private var isToolbarHidden: Bool = false {
         didSet {
             if isViewLoaded {
-//                toolbar.transform = isToolbarHidden ? CGAffineTransform(translationX: 0, y: 2 * toolbarHeight) : .identity
-//                self.view.layoutIfNeeded()
+                 self.view.layoutIfNeeded()
             }
         }
     }
@@ -168,8 +150,7 @@ class AllChatsViewController: HomeViewController {
   
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-//        self.toolbar.tintColor = theme.colors.accent
+         
         if self.navigationItem.searchController == nil {
             self.navigationItem.searchController = searchController
         }
@@ -578,15 +559,8 @@ class AllChatsViewController: HomeViewController {
         guard isViewLoaded else {
             return
         }
-        
         self.isToolbarHidden = false
         self.update(with: theme)
-        
-//        self.toolbar.items = [
-//            spacesButton,
-//            UIBarButtonItem.flexibleSpace(),
-//            UIBarButtonItem(image: Asset.Images.allChatsEditIcon.image, menu: menu)
-//        ]
     }
     
     private func showCreateSpace(parentSpaceId: String?) {
@@ -1093,9 +1067,9 @@ extension AllChatsViewController: SplitViewMasterViewControllerProtocol {
             resetReviewSessionsFlags()
         }
         
-        AppDelegate.theDelegate().restoreInitialDisplay {
-            self.presentOnboardingFlow()
-        }
+//        AppDelegate.theDelegate().restoreInitialDisplay {
+//            self.presentOnboardingFlow()
+//        }
     }
 
     private func resetReviewSessionsFlags() {

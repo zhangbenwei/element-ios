@@ -34,7 +34,6 @@ final class ChangePasswordCoordinator: Coordinator, Presentable {
         .containUppercaseLetter,
         .containLowercaseLetter,
         .containNumber,
-        .containSymbol
     ])
     
     private var indicatorPresenter: UserIndicatorTypePresenterProtocol

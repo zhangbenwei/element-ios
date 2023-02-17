@@ -24,11 +24,11 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="orV-HH-88x">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
+                    <rect key="frame" x="0.0" y="48" width="414" height="814"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FcU-oE-jUC" userLabel="all_chats_spaces_icon">
-                    <rect key="frame" x="335" y="753" width="60" height="60"/>
+                    <rect key="frame" x="335" y="783" width="60" height="60"/>
                     <color key="backgroundColor" systemColor="systemGreenColor"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="60" id="CcP-57-XHK"/>
@@ -41,7 +41,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M8M-bT-s4D" userLabel="all_chats_edit_icon">
-                    <rect key="frame" x="335" y="663" width="60" height="60"/>
+                    <rect key="frame" x="335" y="693" width="60" height="60"/>
                     <color key="backgroundColor" systemColor="systemGreenColor"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="60" id="M4L-qI-RMa"/>
@@ -67,8 +67,8 @@
                 <constraint firstItem="FcU-oE-jUC" firstAttribute="top" secondItem="M8M-bT-s4D" secondAttribute="bottom" constant="30" id="Gda-9t-jYJ"/>
                 <constraint firstItem="orV-HH-88x" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="dTn-zC-Axs"/>
                 <constraint firstItem="FcU-oE-jUC" firstAttribute="leading" secondItem="M8M-bT-s4D" secondAttribute="leading" id="wCA-e3-88f"/>
-                <constraint firstItem="orV-HH-88x" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="xMc-15-1wS"/>
-                <constraint firstItem="4qf-KS-Fc9" firstAttribute="bottom" secondItem="FcU-oE-jUC" secondAttribute="bottom" constant="49" id="y1r-lv-SGL"/>
+                <constraint firstItem="orV-HH-88x" firstAttribute="top" secondItem="4qf-KS-Fc9" secondAttribute="top" id="xMc-15-1wS"/>
+                <constraint firstItem="4qf-KS-Fc9" firstAttribute="bottom" secondItem="FcU-oE-jUC" secondAttribute="bottom" constant="19" id="y1r-lv-SGL"/>
                 <constraint firstItem="4qf-KS-Fc9" firstAttribute="bottom" secondItem="orV-HH-88x" secondAttribute="bottom" id="zCp-Ju-dvr"/>
             </constraints>
             <point key="canvasLocation" x="139.13043478260872" y="136.60714285714286"/>

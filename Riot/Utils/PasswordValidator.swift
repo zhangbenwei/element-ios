@@ -34,8 +34,7 @@ enum PasswordValidatorRule: CustomStringConvertible, Hashable {
     case maxLength(_ value: Int)
     case containLowercaseLetter
     case containUppercaseLetter
-    case containNumber
-    case containSymbol
+    case containNumber 
 
     var description: String {
         switch self {
@@ -49,8 +48,6 @@ enum PasswordValidatorRule: CustomStringConvertible, Hashable {
             return VectorL10n.passwordValidationErrorContainUppercaseLetter
         case .containNumber:
             return VectorL10n.passwordValidationErrorContainNumber
-        case .containSymbol:
-            return VectorL10n.passwordValidationErrorContainSymbol
         }
     }
 
@@ -70,9 +67,7 @@ enum PasswordValidatorRule: CustomStringConvertible, Hashable {
             return password.range(of: "[A-Z]", options: .regularExpression) != nil
         case .containNumber:
             return password.range(of: "[0-9]", options: .regularExpression) != nil
-        case .containSymbol:
-            return password.range(of: "[!\"#$%&'()*+,-.:;<=>?@\\_`{|}~\\[\\]]",
-                                  options: .regularExpression) != nil
+        
         }
     }
 }

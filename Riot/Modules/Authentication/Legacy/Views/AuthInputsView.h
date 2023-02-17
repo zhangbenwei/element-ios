@@ -26,12 +26,16 @@
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UITextField *phoneTextField;
 @property (weak, nonatomic) IBOutlet UITextField *invitationCodeField;
+@property (weak, nonatomic) IBOutlet UITextField *emailCodeTextField;
+
 @property (weak, nonatomic) IBOutlet UIView *userLoginContainer;
 @property (weak, nonatomic) IBOutlet UIView *emailContainer;
 @property (weak, nonatomic) IBOutlet UIView *phoneContainer;
 @property (weak, nonatomic) IBOutlet UIView *passwordContainer;
 @property (weak, nonatomic) IBOutlet UIView *repeatPasswordContainer;
 @property (weak, nonatomic) IBOutlet UIView *invitationCodeContainer;
+@property (weak, nonatomic) IBOutlet UIView *emailCodeContainer;
+@property (weak, nonatomic) IBOutlet UIButton *emailCodeSendButton;
 
 @property (weak, nonatomic) IBOutlet UIView *userLoginSeparator;
 @property (weak, nonatomic) IBOutlet UIView *emailSeparator;

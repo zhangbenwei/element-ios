@@ -73,6 +73,10 @@
     
     self.parameters = nil;
     self.didPrepareParametersCallback = nil;
+    
+}
+
+- (void)destroyTimer {
     if(_emailCheckDisplayLink){
         self.emailCheckDisplayLink.paused = YES;
         [self.emailCheckDisplayLink invalidate];
@@ -148,14 +152,18 @@
 }
 - (void)sendEmailCode:(NSString *)token{
     MXRestClient *restClient;
-    
+    __weak typeof(self) weakSelf = self;
     if (self.delegate && [self.delegate respondsToSelector:@selector(authInputsViewThirdPartyIdValidationRestClient:)])
     {
         restClient = [self.delegate authInputsViewThirdPartyIdValidationRestClient:self];
     }
-    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(authInputsViewShowCaptcha:startAnimating:)])
+    {
+     [self.delegate authInputsViewShowCaptcha:self startAnimating:YES];
+    }
     if (restClient)
     {
+//        [self sto]
         [self checkIdentityServerRequirement:restClient success:^{
 
             // Launch email validation
@@ -169,6 +177,10 @@
                                   success:^(NSDictionary *response)
              {
                  typeof(weakSelf) strongSelf = weakSelf;
+                if (strongSelf.delegate && [strongSelf.delegate respondsToSelector:@selector(authInputsViewShowCaptcha:startAnimating:)])
+                {
+                 [strongSelf.delegate authInputsViewShowCaptcha:strongSelf startAnimating:NO];
+                }
                 MXLogDebug(@"[EmilCheckInputsView] success %@",response);
                 if([response[@"code"] intValue] == 0){
                     strongSelf.displayLinkTarge  = 60*5.f;
@@ -180,8 +192,10 @@
                 }
              } failure:^(NSError *error) {
                 MXLogDebug(@"[ForgotPasswordInputsView] Failed to request email token");
-
-                 // Ignore connection cancellation error
+                 if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(authInputsViewShowCaptcha:startAnimating:)])
+                 {
+                  [weakSelf.delegate authInputsViewShowCaptcha:weakSelf startAnimating:NO];
+                 }
                  if (([error.domain isEqualToString:NSURLErrorDomain] && error.code == NSURLErrorCancelled))
                  {
                      return;
@@ -230,7 +244,10 @@
                  }
              }];
         } failure:^(NSError *error) {
-            
+            if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(authInputsViewShowCaptcha:startAnimating:)])
+            {
+             [weakSelf.delegate authInputsViewShowCaptcha:weakSelf startAnimating:NO];
+            }
         }];
 
         // Async response

@@ -220,7 +220,7 @@ static const CGFloat kAuthInputContainerViewMinHeightConstraintConstant = 150.0;
     NSLayoutConstraint * lay1 = [self.protocolLabel.leadingAnchor constraintEqualToAnchor:self.AllProtocolButton.trailingAnchor constant:10] ;
     NSLayoutConstraint * lay2 = [self.protocolLabel.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:19]  ;
     NSLayoutConstraint * lay3 = [self.protocolLabel.centerYAnchor constraintEqualToAnchor:self.AllProtocolButton.centerYAnchor constant:0]  ;
-    
+    [self startActivityIndicator];
     [NSLayoutConstraint activateConstraints:@[lay1,lay2,lay3]];
     
 //
@@ -1464,8 +1464,7 @@ static const CGFloat kAuthInputContainerViewMinHeightConstraintConstant = 150.0;
         case 20017:
             title = [VectorL10n morseEmailCodeCountReachedLimitError];
             break;
-      
-             
+       
             break;
         case 20023:
             title = [VectorL10n morsePasswordNotComplyRuleError];
@@ -1477,7 +1476,7 @@ static const CGFloat kAuthInputContainerViewMinHeightConstraintConstant = 150.0;
             title = [VectorL10n morseGraphicVrifyCodeIsWrongError];
             break;
         case 20026:
-            title = [VectorL10n morseGraphicVrifyCodeIsWrongError];
+            title = [VectorL10n morseEmailIsBlackError];
             break;
             
         default:
@@ -1504,7 +1503,9 @@ static const CGFloat kAuthInputContainerViewMinHeightConstraintConstant = 150.0;
         [self.webView removeFromSuperview];
     }];
 }
-
+- (void)authInputsViewShowCaptcha:(MXKAuthInputsView *)authInputsView startAnimating:(BOOL)startAnimating{
+     startAnimating? [self.authenticationActivityIndicator startAnimating]:[self.authenticationActivityIndicator stopAnimating];
+}
 #pragma mark - Server discovery
 
 - (void)tryServerDiscoveryOnDomain:(NSString *)domain

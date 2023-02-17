@@ -105,6 +105,7 @@ typedef NS_ENUM(NSUInteger, MXKAuthenticationType) {
 
 - (void)authInputsViewShowCaptcha:(MXKAuthInputsView *)authInputsView;
 
+- (void)authInputsViewShowCaptcha:(MXKAuthInputsView *)authInputsView startAnimating:(BOOL)startAnimating;
 @end
 
 /**
@@ -257,5 +258,5 @@ typedef NS_ENUM(NSUInteger, MXKAuthenticationType) {
  Dispose any resources and listener.
  */
 - (void)destroy;
-
+- (void)destroyTimer;
 @end

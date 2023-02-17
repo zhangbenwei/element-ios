@@ -77,13 +77,15 @@
     
     self.parameters = nil;
     self.didPrepareParametersCallback = nil;
+}
+
+- (void)destroyTimer {
     if(_emailCheckDisplayLink){
         self.emailCheckDisplayLink.paused = YES;
         [self.emailCheckDisplayLink invalidate];
         _emailCheckDisplayLink = nil;
     }
 }
-
 -(void)layoutSubviews
 {
     [super layoutSubviews];
@@ -325,7 +327,10 @@
     {
         
         MXRestClient *restClient;
-        
+        if (self.delegate && [self.delegate respondsToSelector:@selector(authInputsViewShowCaptcha:startAnimating::)])
+        {
+         [self.delegate authInputsViewShowCaptcha:self startAnimating:YES];
+        }
         if (self.delegate && [self.delegate respondsToSelector:@selector(authInputsViewThirdPartyIdValidationRestClient:)])
         {
             restClient = [self.delegate authInputsViewThirdPartyIdValidationRestClient:self];
@@ -339,12 +344,17 @@
                 NSString *clientSecret = [MXTools generateSecret];
 
                 __weak typeof(self) weakSelf = self;
+                
                 [restClient emilCheckForEmail:self.emailTextField.text
                                       clientSecret:clientSecret
                                   sendAttempt:1 username:self.userNameTextField.text isForget:YES token:@"" success:^(NSDictionary *response)
                  {
                     MXLogDebug(@"[EmilCheckInputsView] success %@",response);
                      typeof(weakSelf) strongSelf = weakSelf;
+                    if (strongSelf.delegate && [strongSelf.delegate respondsToSelector:@selector(authInputsViewShowCaptcha:startAnimating:)])
+                    {
+                     [strongSelf.delegate authInputsViewShowCaptcha:strongSelf startAnimating:NO];
+                    }
                     if([response[@"code"] intValue] == 0){
                         strongSelf.displayLinkTarge  = 60*5.f;
                         strongSelf.emailCheckDisplayLink.paused = NO;
@@ -355,7 +365,10 @@
                     }
                  } failure:^(NSError *error) {
                     MXLogDebug(@"[ForgotPasswordInputsView] Failed to request email token");
-
+                     if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(authInputsViewShowCaptcha:startAnimating:)])
+                     {
+                      [weakSelf.delegate authInputsViewShowCaptcha:weakSelf startAnimating:NO];
+                     }
                      // Ignore connection cancellation error
                      if (([error.domain isEqualToString:NSURLErrorDomain] && error.code == NSURLErrorCancelled))
                      {
@@ -406,7 +419,10 @@
                      }
                  }];
             } failure:^(NSError *error) {
-                
+                if (self.delegate && [self.delegate respondsToSelector:@selector(authInputsViewShowCaptcha:startAnimating:)])
+                {
+                 [self.delegate authInputsViewShowCaptcha:self startAnimating:NO];
+                }
             }];
 
             // Async response

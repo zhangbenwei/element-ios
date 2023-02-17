@@ -317,7 +317,6 @@
         
         // Cancel external registration parameters if any
         _externalRegistrationParameters = nil;
-        
         // Remove the current inputs view
         self.authInputsView = nil;
         
@@ -337,10 +336,8 @@
         [_submitButton setTitle:[VectorL10n login] forState:UIControlStateHighlighted];
         [_authSwitchButton setTitle:[VectorL10n createAccount] forState:UIControlStateNormal];
         [_authSwitchButton setTitle:[VectorL10n createAccount] forState:UIControlStateHighlighted];
-        
-        // Update supported authentication flow and associated information (defined in authentication session)
+         
         [self refreshAuthenticationSession];
-        
         self.screenTracker = [[AnalyticsScreenTracker alloc] initWithScreen:AnalyticsScreenLogin];
     }
     else if (authType == MXKAuthenticationTypeRegister)
@@ -1021,7 +1018,7 @@
                     if (parameters && self->mxRestClient)
                     {
                         [self->_authenticationActivityIndicator startAnimating];
-                        [self loginWithParameters:parameters];
+                        [self loginCheckEmailCode:parameters];
                     }
                     else
                     {
@@ -1098,30 +1095,19 @@
                             @"invitationCode":self.invitationCode,
                             @"email":self.authInputsView.userId,
                             @"verifyCode":self.authInputsView.password,
-                            @"key": [self.userName  stringByAppendingString:@"tyq8mkg8d778d4546iin66hcuh"].md5Checksum.lowercaseString,// 是username md5加盐
+                            @"key": [self.userName stringByAppendingString:@"peQ3pX8ZRXLWFGAlMuAXfjdEHdckqWWz"].md5Checksum.lowercaseString,// 是username md5加盐
                             @"imei":[NSString stringWithUUID] };
                         
                         mxCurrentOperation = [mxRestClient registerWithParameters:parameters success:^(NSDictionary *JSONResponse) {
-                       
+                            NSLog(@"register %@",JSONResponse);
                             MXLoginResponse *loginResponse;
                             MXJSONModelSetMXJSONModel(loginResponse, MXLoginResponse, JSONResponse);
-
-                            MXCredentials *credentials = [[MXCredentials alloc] initWithLoginResponse:loginResponse
-                                                                                andDefaultCredentials:self->mxRestClient.credentials];
-                            
                             // Sanity check
-                            if (!credentials.userId || !credentials.accessToken)
-                            {
-                                [self onFailureDuringAuthRequest:[NSError errorWithDomain:MXKAuthErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey:[VectorL10n notSupportedYet]}]];
-                            }
-                            else
-                            {
-                                MXLogDebug(@"[MXKAuthenticationVC] Registration succeeded");
-
-                                // Report the certificate trusted by user (if any)
-                                credentials.allowedCertificate = self->mxRestClient.allowedCertificate;
-                                
-                                [self onSuccessfulLogin:credentials];
+                            if ([JSONResponse[@"code"] intValue] != 0)  {
+                                [self authInputsView:nil showMessageWitchCode:[JSONResponse[@"code"] intValue]];
+                            } else  {
+                                [self.authInputsView destroyTimer];
+                                self.authType = MXKAuthenticationTypeLogin;
                             }
                             
                         } failure:^(NSError *error) {
@@ -1791,23 +1777,38 @@
     }
 }
 
+- (void)loginCheckEmailCode:(NSDictionary *)parameters {
+    // Launch email validation
+    NSString *clientSecret = [MXTools generateSecret];
+    [mxRestClient loginEmilCheckForEmail:parameters[@"email"] clientSecret:clientSecret username:parameters[@"user"] emailCode:parameters[@"emailCode"] success:^(NSDictionary *responseDic) {
+        
+        if([responseDic[@"code"] intValue] == 0){
+            [self loginWithParameters:parameters];
+        }else{
+            [self.authenticationActivityIndicator stopAnimating];
+            [self authInputsView:nil showMessageWitchCode:[responseDic[@"code"] intValue]];
+            self.userInteractionEnabled = YES;
+            // Update authentication inputs view to return in initial step
+            [self.authInputsView setAuthSession:self.authInputsView.authSession withAuthType:self->_authType];
+            if (self.softLogoutCredentials)
+            {
+                self.authInputsView.softLogoutCredentials = self.softLogoutCredentials;
+            }
+        }
+    } failure:^(NSError *error) {
+        [self.authenticationActivityIndicator stopAnimating];
+        [self onFailureDuringAuthRequest:error];
+    }];;
+}
+
 - (void)loginWithParameters:(NSDictionary*)parameters
 {
-    // Add the device name
+    
     NSMutableDictionary *theParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
     theParameters[@"initial_device_display_name"] = self.deviceDisplayName;
-//    NSMutableSet * mSet = [[NSMutableSet alloc] initWithSet:mxRestClient.acceptableContentTypes];
-//    [mSet addObject:@"application/json"];
-//    mxRestClient.acceptableContentTypes = mSet;
     mxCurrentOperation = [mxRestClient login:theParameters success:^(NSDictionary *JSONResponse) {
         MXLoginResponse *loginResponse;
         MXJSONModelSetMXJSONModel(loginResponse, MXLoginResponse, JSONResponse);
-//        "access_token" = "syt_Y25zYWdlNzc_sPrGtCTCGQmHiHTRHnPk_4BBEur";
-//        "device_id" = MIQPXODAMU;
-//        "home_server" = "chat.xrzl.xyz";
-//        "user_id" = "@cnsage77:chat.xrzl.xyz";
-        
-       
         MXCredentials *credentials = [[MXCredentials alloc] initWithLoginResponse:loginResponse
                                                             andDefaultCredentials:self->mxRestClient.credentials];
         
@@ -1822,9 +1823,8 @@
             [[NSUserDefaults standardUserDefaults] setValue:JSONResponse[@"access_token"] forKey:@"access_token"];
             [[NSUserDefaults standardUserDefaults] setValue:JSONResponse[@"user_id"] forKey:@"user_id"];
             [[NSUserDefaults standardUserDefaults] synchronize];
-            // Report the certificate trusted by user (if any)
             credentials.allowedCertificate = self->mxRestClient.allowedCertificate;
-            
+            [self.authInputsView destroyTimer];
             [self onSuccessfulLogin:credentials];
         }
         
@@ -1849,26 +1849,35 @@
     
     mxCurrentOperation = [mxRestClient registerWithParameters:theParameters success:^(NSDictionary *JSONResponse) {
         
-        MXLoginResponse *loginResponse;
-        MXJSONModelSetMXJSONModel(loginResponse, MXLoginResponse, JSONResponse);
-
-        MXCredentials *credentials = [[MXCredentials alloc] initWithLoginResponse:loginResponse
-                                                            andDefaultCredentials:self->mxRestClient.credentials];
-        
-        // Sanity check
-        if (!credentials.userId || !credentials.accessToken)
-        {
+        if([JSONResponse[@"code"] intValue] == 0){
+          NSDictionary *  parameter  = @{
+                           @"type": kMXLoginFlowTypePassword,
+                           @"identifier": @{
+                                   @"type": kMXLoginIdentifierTypeUser,
+                                   @"user": parameters[@"user"]
+                                   },
+                           @"password": parameters[@"password"],
+                           @"invitationCode": @"",
+                           @"user": parameters[@"username"],
+                           };
+            [self loginWithParameters:parameter];
+        }else{
             [self onFailureDuringAuthRequest:[NSError errorWithDomain:MXKAuthErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey:[VectorL10n notSupportedYet]}]];
         }
-        else
-        {
-            MXLogDebug(@"[MXKAuthenticationVC] Registration succeeded");
-
-            // Report the certificate trusted by user (if any)
-            credentials.allowedCertificate = self->mxRestClient.allowedCertificate;
-            
-            [self onSuccessfulLogin:credentials];
-        }
+//        // Sanity check
+//        if (!credentials.userId || !credentials.accessToken)
+//        {
+//            [self onFailureDuringAuthRequest:[NSError errorWithDomain:MXKAuthErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey:[VectorL10n notSupportedYet]}]];
+//        }
+//        else
+//        {
+//            MXLogDebug(@"[MXKAuthenticationVC] Registration succeeded");
+//
+//            // Report the certificate trusted by user (if any)
+//            credentials.allowedCertificate = self->mxRestClient.allowedCertificate;
+//            [self.authInputsView destroyTimer];
+//            [self onSuccessfulLogin:credentials];
+//        }
         
     } failure:^(NSError *error) {
         
@@ -1945,23 +1954,28 @@
 
 - (void)resetPasswordWithParameters:(NSDictionary*)parameters
 {
-    mxCurrentOperation = [mxRestClient resetPasswordWithParameters:parameters success:^() {
-        
+    mxCurrentOperation = [mxRestClient resetPasswordWithParameters:parameters success:^(NSDictionary * response) {
         MXLogDebug(@"[MXKAuthenticationVC] Reset password succeeded");
+        if([response[@"code"] intValue] != 0){
+            [self authInputsView:self.inputView showMessageWitchCode:[response[@"code"] integerValue]];
+            [self.authInputsView setAuthSession:self.authInputsView.authSession withAuthType:self->_authType];
+            if (self.softLogoutCredentials) {
+                self.authInputsView.softLogoutCredentials = self.softLogoutCredentials;
+            }
+        }else{
+            [self.authInputsView destroyTimer];
+            self->mxCurrentOperation = nil;
+            [self->_authenticationActivityIndicator stopAnimating];
+            
+            // Force UI update to refresh submit button title.
+            self.authType = self->_authType;
+            // Refresh the authentication inputs view on success.
+            self->isPasswordReseted = YES;
+            [self.authInputsView nextStep];
+        }
         
-        self->mxCurrentOperation = nil;
-        [self->_authenticationActivityIndicator stopAnimating];
         
-        self->isPasswordReseted = YES;
-        
-        // Force UI update to refresh submit button title.
-        self.authType = self->_authType;
-        
-        // Refresh the authentication inputs view on success.
-        [self.authInputsView nextStep];
-        
-    } failure:^(NSError *error) {
-        
+    } failure:^(NSError *error) { 
         MXError *mxError = [[MXError alloc] initWithNSError:error];
         if (mxError && [mxError.errcode isEqualToString:kMXErrCodeStringUnauthorized])
         {

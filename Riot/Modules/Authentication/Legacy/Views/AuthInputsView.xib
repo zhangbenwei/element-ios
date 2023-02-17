@@ -297,6 +297,43 @@
                         <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="AuthInputsViewRecaptchaWebView"/>
                     </userDefinedRuntimeAttributes>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OuJ-2s-s16">
+                    <rect key="frame" x="0.0" y="50" width="600" height="50"/>
+                    <subviews>
+                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="s84-F7-bjW">
+                            <rect key="frame" x="10" y="3" width="180" height="44"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="180" id="OW3-Pe-XZW"/>
+                                <constraint firstAttribute="height" constant="44" id="l4O-Po-nh1"/>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="mDx-om-poJ"/>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="160" id="xsd-SS-rKW"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cz5-kL-414">
+                            <rect key="frame" x="253" y="3" width="160" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="ZLm-qc-gl2"/>
+                                <constraint firstAttribute="width" constant="160" id="qfz-Bb-XDU"/>
+                            </constraints>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                            <connections>
+                                <action selector="sendEmailCodeAction:" destination="x74-04-ezp" eventType="touchUpInside" id="Jdf-6v-g9W"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="cz5-kL-414" firstAttribute="centerY" secondItem="s84-F7-bjW" secondAttribute="centerY" id="YzW-ik-Sd1"/>
+                        <constraint firstItem="s84-F7-bjW" firstAttribute="leading" secondItem="OuJ-2s-s16" secondAttribute="leading" constant="10" id="jp6-yg-ZWE"/>
+                        <constraint firstItem="s84-F7-bjW" firstAttribute="centerY" secondItem="OuJ-2s-s16" secondAttribute="centerY" id="n8D-oG-SjC"/>
+                        <constraint firstItem="cz5-kL-414" firstAttribute="leading" secondItem="s84-F7-bjW" secondAttribute="trailing" constant="63" id="nro-8z-zdd"/>
+                        <constraint firstAttribute="height" constant="50" id="xuD-0r-X05"/>
+                    </constraints>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="caL-cj-KZA" userLabel="Invitation code Container">
                     <rect key="frame" x="0.0" y="150" width="600" height="50"/>
                     <subviews>
@@ -341,6 +378,7 @@
             <constraints>
                 <constraint firstItem="UfH-jv-6w4" firstAttribute="top" secondItem="x74-04-ezp" secondAttribute="top" constant="50" id="1LY-GW-rgL"/>
                 <constraint firstItem="ckH-mV-Yds" firstAttribute="leading" secondItem="x74-04-ezp" secondAttribute="leading" id="1SM-3z-RE3"/>
+                <constraint firstItem="OuJ-2s-s16" firstAttribute="top" secondItem="bXz-VI-5FS" secondAttribute="bottom" id="1b3-EJ-ZeD"/>
                 <constraint firstItem="rb1-L5-udI" firstAttribute="top" secondItem="UfH-jv-6w4" secondAttribute="bottom" id="5EX-kO-NYI"/>
                 <constraint firstItem="rb1-L5-udI" firstAttribute="top" secondItem="UfH-jv-6w4" secondAttribute="bottom" id="75U-tx-PsQ"/>
                 <constraint firstItem="UfH-jv-6w4" firstAttribute="leading" secondItem="x74-04-ezp" secondAttribute="leading" id="7Bk-GF-MZ0"/>
@@ -358,10 +396,12 @@
                 <constraint firstItem="caL-cj-KZA" firstAttribute="top" secondItem="rb1-L5-udI" secondAttribute="bottom" id="KNo-ez-FFN"/>
                 <constraint firstItem="xOW-lo-QGC" firstAttribute="leading" secondItem="x74-04-ezp" secondAttribute="leading" id="NOu-LR-RvE"/>
                 <constraint firstAttribute="trailing" secondItem="bXz-VI-5FS" secondAttribute="trailing" id="NiV-pJ-PfV"/>
+                <constraint firstAttribute="trailing" secondItem="OuJ-2s-s16" secondAttribute="trailing" id="OCh-rU-5Ad"/>
                 <constraint firstItem="ckH-mV-Yds" firstAttribute="centerY" secondItem="x74-04-ezp" secondAttribute="centerY" priority="100" id="PNx-SK-FZY"/>
                 <constraint firstItem="caL-cj-KZA" firstAttribute="leading" secondItem="UfH-jv-6w4" secondAttribute="leading" id="RKo-EG-zsr"/>
                 <constraint firstAttribute="trailing" secondItem="xOW-lo-QGC" secondAttribute="trailing" id="SNm-WQ-Piu"/>
                 <constraint firstItem="xOW-lo-QGC" firstAttribute="top" secondItem="x74-04-ezp" secondAttribute="top" id="WmX-gO-hPJ"/>
+                <constraint firstItem="OuJ-2s-s16" firstAttribute="leading" secondItem="x74-04-ezp" secondAttribute="leading" id="XZ8-9w-qBE"/>
                 <constraint firstItem="Sz8-Gm-Piu" firstAttribute="width" secondItem="x74-04-ezp" secondAttribute="width" id="ZWc-mu-VrY"/>
                 <constraint firstItem="68j-f9-JG4" firstAttribute="leading" secondItem="x74-04-ezp" secondAttribute="leading" constant="10" id="aYh-VJ-bss"/>
                 <constraint firstItem="bXz-VI-5FS" firstAttribute="top" secondItem="x74-04-ezp" secondAttribute="top" id="enV-j0-cgR"/>
@@ -381,6 +421,9 @@
             <connections>
                 <outlet property="callingCodeLabel" destination="CLw-uO-q5T" id="LKV-MS-PHF"/>
                 <outlet property="countryCodeButton" destination="5r3-Tj-ARd" id="0yL-uP-g54"/>
+                <outlet property="emailCodeContainer" destination="OuJ-2s-s16" id="uYW-RO-ryk"/>
+                <outlet property="emailCodeSendButton" destination="cz5-kL-414" id="PlE-jM-45c"/>
+                <outlet property="emailCodeTextField" destination="s84-F7-bjW" id="mQT-df-fGY"/>
                 <outlet property="emailContainer" destination="bXz-VI-5FS" id="4J7-D0-Dmf"/>
                 <outlet property="emailContainerTopConstraint" destination="enV-j0-cgR" id="zY3-YX-7Bg"/>
                 <outlet property="emailSeparator" destination="YQ4-Kj-XPh" id="iub-NG-iJR"/>
@@ -428,6 +471,9 @@
         </systemColor>
         <systemColor name="separatorColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>

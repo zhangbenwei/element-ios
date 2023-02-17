@@ -133,7 +133,9 @@ NSString *const MXKAuthErrorDomain = @"MXKAuthErrorDomain";
     }
   
 }
-
+- (void)destroyTimer {
+    
+}
 
 - (void)updateTimeCount{
     

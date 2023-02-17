@@ -95,19 +95,17 @@ final class BuildSettings: NSObject {
     /// Whether to allow the app to use a right to left layout or force left to right for all languages
     static let disableRightToLeftLayout = true
     
-    
-    // MARK: - Server configuration
-#if DEBUG
-    // Default servers proposed on the authentication screen
     static let serverConfigDefaultHomeserverUrlString = "https://chat.xrzl.xyz"
     static let serverConfigDefaultIdentityServerUrlString = "https://chat.xrzl.xyz"
-    #else
-    static let serverConfigDefaultHomeserverUrlString = "https://morse.cf"
-    static let serverConfigDefaultIdentityServerUrlString = "https://morse.cf"
-    #endif
+    // MARK: - Server configuration
+//    #if DEBUG
+//    static let serverConfigDefaultHomeserverUrlString = "https://chat.xrzl.xyz"
+//    static let serverConfigDefaultIdentityServerUrlString = "https://chat.xrzl.xyz"
+//    #else
+//    static let serverConfigDefaultHomeserverUrlString = "https://morse.cf"
+//    static let serverConfigDefaultIdentityServerUrlString = "https://morse.cf"
+//    #endif
     static let serverConfigSygnalAPIUrlString = "https://matrix.org/_matrix/push/v1/notify"
-    
-    
     // MARK: - Legal URLs
     
     // Note: Set empty strings to hide the related entry in application settings

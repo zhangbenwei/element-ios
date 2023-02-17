@@ -53,7 +53,8 @@
  The current view container displayed at last position.
  */
 @property (nonatomic) UIView *currentLastContainer;
-
+@property (nonatomic, strong) CADisplayLink * emailCheckDisplayLink;
+@property (nonatomic, assign) int displayLinkTarge;
 @end
 
 @implementation AuthInputsView
@@ -73,11 +74,14 @@
     _isThirdPartyIdentifierPending = NO;
     _isSingleSignOnRequired = NO;
     
-    self.userLoginTextField.placeholder = [VectorL10n authUserIdPlaceholder];
+    self.userLoginTextField.placeholder = [VectorL10n authUserNamePlaceholder];
     self.repeatPasswordTextField.placeholder = [VectorL10n authRepeatPasswordPlaceholder];
     self.passWordTextField.placeholder = [VectorL10n authPasswordPlaceholder];
     self.invitationCodeField.placeholder = [VectorL10n authInvitationCode];
-    // Apply placeholder color
+    self.emailCodeTextField.placeholder = [VectorL10n authVerificationCode];
+    self.emailTextField.placeholder = [VectorL10n accountLinkEmail];
+    [self.emailCodeSendButton setTitle:[VectorL10n authGetVerificationCode] forState:UIControlStateNormal];
+    [self.emailCodeSendButton setTitle:[VectorL10n authGetVerificationCode] forState:UIControlStateHighlighted];
     [self customizeViewRendering];
 }
 
@@ -87,8 +91,15 @@
     
     submittedEmail = nil;
     submittedMSISDN = nil;
+    
 }
-
+- (void)destroyTimer {
+    if(_emailCheckDisplayLink){
+        self.emailCheckDisplayLink.paused = YES;
+        [self.emailCheckDisplayLink invalidate];
+        _emailCheckDisplayLink = nil;
+    }
+}
 -(void)layoutSubviews
 {
     [super layoutSubviews];
@@ -111,7 +122,7 @@
     self.invitationCodeField.textColor = ThemeService.shared.theme.textPrimaryColor;
     self.emailTextField.textColor = ThemeService.shared.theme.textPrimaryColor;
     self.phoneTextField.textColor = ThemeService.shared.theme.textPrimaryColor;
-    
+    self.emailCodeTextField.textColor = ThemeService.shared.theme.textPrimaryColor;
     self.isoCountryCodeLabel.textColor = ThemeService.shared.theme.textPrimaryColor;
     self.callingCodeLabel.textColor = ThemeService.shared.theme.textPrimaryColor;
     
@@ -127,6 +138,7 @@
     self.repeatPasswordSeparator.backgroundColor = ThemeService.shared.theme.lineBreakColor;
     self.invitationCodeSeparator.backgroundColor = ThemeService.shared.theme.lineBreakColor;
     self.invitationCodeContainer.backgroundColor = UIColor.clearColor;
+    self.emailCodeContainer.backgroundColor = UIColor.clearColor;
     [self.ssoButton.layer setCornerRadius:5];
     self.ssoButton.clipsToBounds = YES;
     [self.ssoButton setTitle:[VectorL10n authLoginSingleSignOn] forState:UIControlStateNormal];
@@ -181,6 +193,13 @@
                                                      initWithString:self.invitationCodeField.placeholder
                                                      attributes:@{NSForegroundColorAttributeName: ThemeService.shared.theme.placeholderTextColor}];
     }
+    
+    if (self.emailCodeTextField.placeholder)
+    {
+        self.emailCodeTextField.attributedPlaceholder = [[NSAttributedString alloc]
+                                                     initWithString:self.emailCodeTextField.placeholder
+                                                     attributes:@{NSForegroundColorAttributeName: ThemeService.shared.theme.placeholderTextColor}];
+    }
 }
 
 #pragma mark -
@@ -226,7 +245,7 @@
                     self.passWordTextField.returnKeyType = UIReturnKeyDone;
                     self.phoneTextField.returnKeyType = UIReturnKeyNext;
 
-                    self.userLoginTextField.placeholder = [VectorL10n authUserIdPlaceholder];
+                    self.userLoginTextField.placeholder = [VectorL10n authUserNamePlaceholder];
                     self.messageLabel.text = [VectorL10n or];
                     self.phoneTextField.placeholder = [VectorL10n authPhonePlaceholder];
 
@@ -242,7 +261,9 @@
                     self.phoneContainer.hidden = !showPhoneTextField;
                     self.passwordContainer.hidden = NO;
                     self.messageLabelTopConstraint.constant = 59;
-                    
+                    self.emailContainer.hidden = NO;
+                    self.emailContainerTopConstraint.constant = 50*2;
+                    self.emailCodeContainer.hidden = NO;
                     CGFloat phoneContainerTopConstraintConstant = 0.0;
                     CGFloat passwordContainerTopConstraintConstant = 0.0;
                     
@@ -259,7 +280,7 @@
                     self.phoneContainerTopConstraint.constant = phoneContainerTopConstraintConstant;
                     self.passwordContainerTopConstraint.constant = passwordContainerTopConstraintConstant;
 
-                    self.currentLastContainer = self.passwordContainer;
+                    self.currentLastContainer = self.emailCodeContainer;
                 }
                 else if ([self isFlowSupported:kMXLoginFlowTypeCAS]
                          || [self isFlowSupported:kMXLoginFlowTypeSSO])
@@ -307,6 +328,14 @@
             {
                 MXLogDebug(@"[AuthInputsView] Invalid user/password");
                 errorMsg = [VectorL10n authInvalidLoginParam];
+            }else {
+                 if( self.emailCodeTextField.text.length != 5){
+                    errorMsg = @"验证不正确";
+                }else if (![MXTools isEmailAddress:self.emailTextField.text] )
+                {
+                    MXLogDebug(@"[AuthInputsView] Invalid email/emailCode");
+                    errorMsg = @"邮箱不存在";
+                }
             }
         }
         else
@@ -427,7 +456,6 @@
             // We trigger here a registration based on external inputs. All the required data are handled by the session id.
             MXLogDebug(@"[AuthInputsView] prepareParameters: return external registration parameters");
             callback(externalRegistrationParameters, nil);
-            
             // CAUTION: Do not reset this dictionary here, it is used later to handle this registration until the end (see [updateAuthSessionWithCompletedStages:didUpdateParameters:])
             
             return;
@@ -484,7 +512,9 @@
                                            // to keep logging in against old HS.
                                            @"medium": kMX3PIDMediumEmail,
                                            @"invitationCode": self.invitationCodeField.text,
-                                           @"address": user
+                                           @"address": user,
+                                           @"email":self.emailTextField.text,
+                                           @"emailCode":self.emailCodeTextField.text
                                            };
                         }
                         else
@@ -497,7 +527,9 @@
                                                    },
                                            @"password": self.passWordTextField.text,
                                            @"invitationCode": self.invitationCodeField.text,
-                                           @"user": user
+                                           @"user": user,
+                                           @"email":self.emailTextField.text,
+                                           @"emailCode":self.emailCodeTextField.text
                                            };
                         }
                     }
@@ -1163,6 +1195,157 @@
     }
 }
 
+
+- (CADisplayLink *)emailCheckDisplayLink {
+    if(_emailCheckDisplayLink == nil){
+        self.displayLinkTarge  = 60*5.f;
+        _emailCheckDisplayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(updateTimeCount)];
+        _emailCheckDisplayLink.preferredFramesPerSecond = 1.f;
+        [_emailCheckDisplayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
+        _emailCheckDisplayLink.paused = YES;
+    }
+   return _emailCheckDisplayLink;
+}
+
+- (void)updateTimeCount {
+    NSLog(@"self.displayLinkTarge %d",self.displayLinkTarge);
+    self.displayLinkTarge --;
+    [self.emailCodeSendButton setTitle:[NSString stringWithFormat:@"%d s后重发",self.displayLinkTarge] forState:UIControlStateNormal];
+    [self.emailCodeSendButton setTitle:[NSString stringWithFormat:@"%d s 后重发",self.displayLinkTarge] forState:UIControlStateHighlighted];
+    self.emailCodeSendButton.highlighted = NO;
+    self.emailCodeSendButton.userInteractionEnabled = NO;
+    if(self.displayLinkTarge == 0){
+        self.emailCheckDisplayLink.paused = YES;
+        [self.emailCodeSendButton setTitle: [VectorL10n authGetVerificationCode] forState:UIControlStateNormal];
+        [self.emailCodeSendButton setTitle:[VectorL10n authGetVerificationCode] forState:UIControlStateHighlighted];
+        self.emailCodeSendButton.userInteractionEnabled = YES;
+    }
+}
+- (IBAction)sendEmailCodeAction:(id)sender {
+    if (![MXTools isEmailAddress:self.emailTextField.text] )
+    {
+        MXLogDebug(@"[AuthInputsView] Invalid email/emailCode");
+        NSString *  errorMsg = @"邮箱不存在";
+        if (self->inputsAlert)
+        {
+            [self->inputsAlert dismissViewControllerAnimated:NO completion:nil];
+        }
+        __weak typeof(self) weakSelf = self;
+        self->inputsAlert = [UIAlertController alertControllerWithTitle:[VectorL10n error] message:errorMsg preferredStyle:UIAlertControllerStyleAlert];
+        [self->inputsAlert addAction:[UIAlertAction actionWithTitle:[VectorL10n ok]
+                                                              style:UIAlertActionStyleDefault
+                                                            handler:^(UIAlertAction * action) {
+
+                                                                if (weakSelf)
+                                                                {
+                                                                    typeof(self) self = weakSelf;
+                                                                    self->inputsAlert = nil;
+                                                                    if (self.delegate && [self.delegate respondsToSelector:@selector(authInputsViewDidCancelOperation:)])
+                                                                    {
+                                                                        [self.delegate authInputsViewDidCancelOperation:self];
+                                                                    }
+                                                                }
+
+                                                            }]];
+
+        [self.delegate authInputsView:self presentAlertController:self->inputsAlert];
+        return;
+    }
+    if([self.delegate respondsToSelector:@selector(authInputsViewShowCaptcha:startAnimating:)]){
+        [self.delegate authInputsViewShowCaptcha:self startAnimating:YES];
+    }
+    MXRestClient *restClient;
+    if (self.delegate && [self.delegate respondsToSelector:@selector(authInputsViewThirdPartyIdValidationRestClient:)])
+    {
+        restClient = [self.delegate authInputsViewThirdPartyIdValidationRestClient:self];
+    }
+    
+    if (restClient)
+    {
+        __weak typeof(self) weakSelf = self;
+        NSString *clientSecret = [MXTools generateSecret];
+        [restClient emilCheckForEmail:self.emailTextField.text
+                               clientSecret:clientSecret
+                           sendAttempt:1 username:self.userLoginTextField.text isForget:2 token:@"" success:^(NSDictionary *response)
+          {
+             MXLogDebug(@"[EmilCheckInputsView] success %@",response);
+              typeof(weakSelf) strongSelf = weakSelf;
+            if([self.delegate respondsToSelector:@selector(authInputsViewShowCaptcha:startAnimating:)]){
+                [self.delegate authInputsViewShowCaptcha:self startAnimating:NO];
+            }
+             if([response[@"code"] intValue] == 0){
+                 strongSelf.displayLinkTarge  = 60*5.f;
+                 strongSelf.emailCheckDisplayLink.paused = NO;
+             }else{
+                 
+                 if([strongSelf.delegate respondsToSelector:@selector(authInputsView:showMessageWitchCode:)]){
+                     [strongSelf.delegate authInputsView:strongSelf showMessageWitchCode:[response[@"code"] intValue] ];
+                 }
+             }
+          } failure:^(NSError *error) {
+             MXLogDebug(@"[ForgotPasswordInputsView] Failed to request email token");
+              if([self.delegate respondsToSelector:@selector(authInputsViewShowCaptcha:startAnimating:)]){
+                  [self.delegate authInputsViewShowCaptcha:self startAnimating:NO];
+              }
+              // Ignore connection cancellation error
+              if (([error.domain isEqualToString:NSURLErrorDomain] && error.code == NSURLErrorCancelled))
+              {
+                  return;
+              }
+
+              NSString *errorMessage;
+
+              // Translate the potential MX error.
+              MXError *mxError = [[MXError alloc] initWithNSError:error];
+              if (mxError && [mxError.errcode isEqualToString:kMXErrCodeStringThreePIDNotFound])
+                  errorMessage = [VectorL10n authEmailNotFound];
+              else if (mxError && [mxError.errcode isEqualToString:kMXErrCodeStringServerNotTrusted])
+                  errorMessage = [VectorL10n authUntrustedIdServer];
+              else if (error.userInfo[@"error"])
+                  errorMessage = error.userInfo[@"error"];
+              else
+                  errorMessage = error.localizedDescription;
+
+              if (weakSelf)
+              {
+                  typeof(self) self = weakSelf;
+
+                  if (self->inputsAlert)
+                  {
+                      [self->inputsAlert dismissViewControllerAnimated:NO completion:nil];
+                  }
+
+                  self->inputsAlert = [UIAlertController alertControllerWithTitle:[VectorL10n error] message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
+
+                  [self->inputsAlert addAction:[UIAlertAction actionWithTitle:[VectorL10n ok]
+                                                                        style:UIAlertActionStyleDefault
+                                                                      handler:^(UIAlertAction * action) {
+
+                                                                          if (weakSelf)
+                                                                          {
+                                                                              typeof(self) self = weakSelf;
+                                                                              self->inputsAlert = nil;
+                                                                              if (self.delegate && [self.delegate respondsToSelector:@selector(authInputsViewDidCancelOperation:)])
+                                                                              {
+                                                                                  [self.delegate authInputsViewDidCancelOperation:self];
+                                                                              }
+                                                                          }
+
+                                                                      }]];
+
+                  [self.delegate authInputsView:self presentAlertController:self->inputsAlert];
+              }
+          }];
+
+        // Async response
+        return;
+    }
+    else
+    {
+        MXLogDebug(@"[ForgotPasswordInputsView] Operation failed during the email identity stage");
+    }
+}
+
 #pragma mark -
 
 - (BOOL)areThirdPartyIdentifiersSupported
@@ -1472,7 +1655,7 @@
     self.recaptchaContainer.hidden = YES;
     self.termsView.hidden = YES;
     self.ssoButtonContainer.hidden = YES;
-    
+    self.emailCodeContainer.hidden = YES;
     _currentLastContainer = nil;
 }
 

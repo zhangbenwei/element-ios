@@ -60,11 +60,11 @@
                         <view contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rhx-dD-4EJ" userLabel="Content View">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="485"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="horizontal_logo" translatesAutoresizingMaskIntoConstraints="NO" id="d8r-TX-pwX" userLabel="Welcome Image View">
-                                    <rect key="frame" x="82.666666666666686" y="35" width="210" height="100"/>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="horizontal_logo" translatesAutoresizingMaskIntoConstraints="NO" id="d8r-TX-pwX" userLabel="Welcome Image View">
+                                    <rect key="frame" x="82.666666666666686" y="35" width="210" height="58"/>
                                     <accessibility key="accessibilityConfiguration" identifier="AuthenticationVCWelcomeImageView"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="100" id="URJ-HW-UuW"/>
+                                        <constraint firstAttribute="height" constant="58" id="URJ-HW-UuW"/>
                                     </constraints>
                                 </imageView>
                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xWb-IJ-v7F" userLabel="AuthInputsContainerView">

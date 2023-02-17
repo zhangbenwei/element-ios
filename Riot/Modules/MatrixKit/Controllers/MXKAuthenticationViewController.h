@@ -295,6 +295,7 @@
 
 /// Login with custom parameters
 /// @param parameters Login parameters
+- (void)loginCheckEmailCode:(NSDictionary *)parameters ;
 - (void)loginWithParameters:(NSDictionary*)parameters;
 
 /// Create an account with the given credentials

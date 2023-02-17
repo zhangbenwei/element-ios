@@ -42,8 +42,7 @@ class PasswordValidatorTests: XCTestCase {
             .maxLength(4),
             .containUppercaseLetter,
             .containLowercaseLetter,
-            .containNumber,
-            .containSymbol
+            .containNumber
         ])
 
         //  this should pass
@@ -85,14 +84,7 @@ class PasswordValidatorTests: XCTestCase {
             XCTAssertEqual(error.unmetRules.first, .containNumber)
         }
 
-        do {
-            //  this should fail with only symbol rule
-            try validator.validate(password: "Abc1")
-            XCTFail("Should fail with only symbol rule")
-        } catch let error as PasswordValidatorError {
-            XCTAssertEqual(error.unmetRules.count, 1)
-            XCTAssertEqual(error.unmetRules.first, .containSymbol)
-        }
+        
     }
 
 }
